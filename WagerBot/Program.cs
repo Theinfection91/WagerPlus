@@ -17,7 +17,7 @@ namespace WagerBot
         private IServiceProvider _services;
         private InteractionService _interactionService;
 
-        public static async void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var program = new Program();
             await program.RunAsync();
