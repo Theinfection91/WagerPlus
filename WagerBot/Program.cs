@@ -25,7 +25,28 @@ namespace WagerBot
 
         public async Task RunAsync()
         {
+            // Create a shared instance of DiscordSocketClient
+            _client = new DiscordSocketClient(new DiscordSocketConfig
+            {
+                LogLevel = LogSeverity.Info,
+                GatewayIntents =
+                    GatewayIntents.AllUnprivileged |
+                    GatewayIntents.MessageContent |
+                    GatewayIntents.GuildMessages |
+                    GatewayIntents.Guilds
+            });
 
+            var host = Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    // Register services
+                    services.AddSingleton(_client);
+                    services.AddSingleton<CommandService>();
+                    services.AddSingleton<InteractionService>();
+
+                    // TODO: Register Managers, Models, Data, etc.
+                })
+                .Build();
         }
     }
 }
