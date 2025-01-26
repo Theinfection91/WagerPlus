@@ -1,7 +1,7 @@
-# Wager Bot Design Document
+# WagerPlus Design Document
 
 ## Overview
-The Currency Bot is a companion bot for Ladderbot4, leveraging its Git repository storage data. The bot introduces a custom currency system for Discord servers, allowing members to earn and spend currency based on activity, league events, and admin-defined custom events. The bot focuses on interaction, fun, and server engagement while integrating closely with Ladderbot4's leagues and challenges. 
+The WagerPlus Discord bot is a standalone as well as a companion bot for Ladderbot4, leveraging its Git repository storage data. The bot introduces a custom currency system for Discord servers, allowing members to earn and spend currency based on activity, league events, and admin-defined custom events. The bot focuses on interaction, fun, and server engagement while integrating closely with Ladderbot4's leagues and challenges. 
 
 ---
 
