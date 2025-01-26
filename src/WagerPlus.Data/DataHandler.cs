@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Data
 {
-    public class Data
+    public abstract class DataHandler
     {
 
     }
