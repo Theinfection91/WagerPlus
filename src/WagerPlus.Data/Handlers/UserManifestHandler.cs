@@ -7,11 +7,8 @@ using WagerPlus.Data.DataModels;
 
 namespace WagerPlus.Data.Handlers
 {
-    public class UserDataHandler : DataHandler<UserManifest>
+    public class UserManifestHandler : DataHandler<UserManifest>
     {
-        public UserDataHandler() : base("user_manifest.json", "Databases")
-        {
-
-        }
+        public UserManifestHandler() : base("user_manifest.json", "Databases") { }
     }
 }

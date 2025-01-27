@@ -3,8 +3,12 @@ using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
+using Ladderbot4.Data;
+using Ladderbot4.Managers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WagerPlus.Core.Managers;
+using WagerPlus.Data.Handlers;
 
 namespace WagerPlus.Bot
 {
@@ -14,6 +18,10 @@ namespace WagerPlus.Bot
         private DiscordSocketClient? _client;
         private CommandService? _commands;
         private InteractionService? _interactionService;
+
+        private ConfigManager? _configManager;
+        private DiscordConfigHandler? _discordConfigHandler;
+
         public static async Task Main(string[] args)
         {
             Program program = new();
@@ -38,10 +46,19 @@ namespace WagerPlus.Bot
                     services.AddSingleton(_client);
                     services.AddSingleton<CommandService>();
                     services.AddSingleton<InteractionService>();
+
+                    // Core
+                    services.AddSingleton<ConfigManager>();
+
+                    // Data
+                    services.AddSingleton<DiscordConfig>();
+                    services.AddSingleton<DiscordConfigHandler>();
                 })
                 .Build();
 
             _services = host.Services;
+            _configManager = _services.GetRequiredService<ConfigManager>();
+            _discordConfigHandler = _services.GetRequiredService<DiscordConfigHandler>();
 
             await RunBotAsync();
         }
