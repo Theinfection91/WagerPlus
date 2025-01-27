@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WagerPlus.Core.Models
+namespace WagerPlus.Data.DataModels
 {
     public class UserManifest
     {
-
     }
 }

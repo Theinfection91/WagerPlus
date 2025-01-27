@@ -13,4 +13,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\WagerPlus.Core\WagerPlus.Data.csproj" />
+		<ProjectReference Include="..\WagerPlus.Data\WagerPlus.Data.csproj" />
+	</ItemGroup>
+
 </Project>

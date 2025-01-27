@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace WagerPlus.Data
+namespace WagerPlus.Data.Handlers
 {
     public abstract class DataHandler<T> where T : new()
     {
