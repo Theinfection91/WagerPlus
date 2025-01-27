@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WagerPlus.Data.Handlers
+namespace WagerPlus.Core.Models
 {
-    public class MemberDataHandler : DataHandler
+    public class UserManifest
     {
 
     }
