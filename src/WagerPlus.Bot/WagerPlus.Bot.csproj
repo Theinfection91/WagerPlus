@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WagerPlus.CommandLogic\WagerPlus.CommandLogic.csproj" />
     <ProjectReference Include="..\WagerPlus.Core\WagerPlus.Core.csproj" />
     <ProjectReference Include="..\WagerPlus.Data\WagerPlus.Data.csproj" />
     <ProjectReference Include="..\WagerPlus.Managers\WagerPlus.Managers.csproj" />

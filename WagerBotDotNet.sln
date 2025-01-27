@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WagerPlus.Data", "src\Wager
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WagerPlus.Managers", "src\WagerPlus.Managers\WagerPlus.Managers.csproj", "{9722022F-803D-4C5E-B154-682444F2A57F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WagerPlus.CommandLogic", "src\WagerPlus.CommandLogic\WagerPlus.CommandLogic.csproj", "{07681641-8519-48F7-B485-D89828E4A497}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9722022F-803D-4C5E-B154-682444F2A57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9722022F-803D-4C5E-B154-682444F2A57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9722022F-803D-4C5E-B154-682444F2A57F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07681641-8519-48F7-B485-D89828E4A497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07681641-8519-48F7-B485-D89828E4A497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07681641-8519-48F7-B485-D89828E4A497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07681641-8519-48F7-B485-D89828E4A497}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

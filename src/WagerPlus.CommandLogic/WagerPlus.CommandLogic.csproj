@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WagerPlus.Core\WagerPlus.Core.csproj" />
+    <ProjectReference Include="..\WagerPlus.Data\WagerPlus.Data.csproj" />
+    <ProjectReference Include="..\WagerPlus.Managers\WagerPlus.Managers.csproj" />
+  </ItemGroup>
+
+</Project>

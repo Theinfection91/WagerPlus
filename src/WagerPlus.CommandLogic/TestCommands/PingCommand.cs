@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WagerPlus.Core.CommandsLogic
+namespace WagerPlus.CommandLogic.TestCommands
 {
-    public class CheckBalanceLogic
+    public class PingCommand
     {
 
     }
