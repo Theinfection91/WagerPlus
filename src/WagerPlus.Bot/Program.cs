@@ -3,12 +3,10 @@ using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Ladderbot4.Data;
-using Ladderbot4.Managers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WagerPlus.Core.Managers;
 using WagerPlus.Data.Handlers;
+using WagerPlus.Managers;
 
 namespace WagerPlus.Bot
 {

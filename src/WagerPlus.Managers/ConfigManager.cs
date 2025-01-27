@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WagerPlus.Data.Handlers;
 
-namespace WagerPlus.Core.Managers
+namespace WagerPlus.Managers
 {
     public class ConfigManager
     {
