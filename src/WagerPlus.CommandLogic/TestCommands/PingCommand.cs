@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.CommandLogic.TestCommands
 {
-    public class PingCommand
+    public class PingCommand : Logic
     {
+        public PingCommand() : base("Ping")
+        {
 
+        }
+
+        public string PingLogic()
+        {
+            return "pong";
+        }
     }
 }
