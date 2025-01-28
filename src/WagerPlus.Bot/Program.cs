@@ -18,7 +18,6 @@ namespace WagerPlus.Bot
         private InteractionService? _interactionService;
 
         private ConfigManager? _configManager;
-        private DiscordConfigHandler? _discordConfigHandler;
 
         public static async Task Main(string[] args)
         {
@@ -45,8 +44,9 @@ namespace WagerPlus.Bot
                     services.AddSingleton<CommandService>();
                     services.AddSingleton<InteractionService>();
 
-                    // Core
+                    // Managers
                     services.AddSingleton<ConfigManager>();
+                    services.AddSingleton<DataManager>();
 
                     // Data
                     services.AddSingleton<DiscordConfig>();
@@ -56,7 +56,6 @@ namespace WagerPlus.Bot
 
             _services = host.Services;
             _configManager = _services.GetRequiredService<ConfigManager>();
-            _discordConfigHandler = _services.GetRequiredService<DiscordConfigHandler>();
 
             await RunBotAsync();
         }
@@ -90,7 +89,7 @@ namespace WagerPlus.Bot
             };
 
             // TODO: Login and start the bot
-            await _client.LoginAsync(TokenType.Bot, "");
+            await _client.LoginAsync(TokenType.Bot, _configManager.GetDiscordToken());
             await _client.StartAsync();
 
             // Start Connection Health log timer
@@ -118,8 +117,8 @@ namespace WagerPlus.Bot
             await _interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
             // TODO: Register commands to guild
-            await _interactionService.RegisterCommandsToGuildAsync(0);
-            Console.WriteLine($"{DateTime.Now} - Commands registered to guild {"In Progress: Add Guild ID Process"}");
+            await _interactionService.RegisterCommandsToGuildAsync(_configManager.GetGuildId());
+            Console.WriteLine($"{DateTime.Now} - Commands registered to guild {_configManager.GetGuildId()}");
         }
 
         private async Task HandleInteractionAsync(SocketInteraction interaction)
@@ -134,7 +133,7 @@ namespace WagerPlus.Bot
 
             int argPos = 0;
             // TODO: Add variable to change non slash command prefix in config
-            if (message.HasStringPrefix("!", ref argPos) ||
+            if (message.HasStringPrefix(_configManager.GetCommandPrefix(), ref argPos) ||
                 message.HasMentionPrefix(_client.CurrentUser, ref argPos))
             {
                 var context = new SocketCommandContext(_client, message);

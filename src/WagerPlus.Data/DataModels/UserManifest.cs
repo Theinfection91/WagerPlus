@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WagerPlus.Data.DataInterfaces;
+using WagerPlus.Core.Models;
 
 namespace WagerPlus.Data.DataModels
 {
     public class UserManifest
     {
-        public List<IUserSavable> Users { get; set; } = [];
+        public List<UserProfile> Users { get; set; } = [];
         public UserManifest() { }
     }
 }

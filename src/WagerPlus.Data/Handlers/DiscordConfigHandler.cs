@@ -7,8 +7,8 @@ using WagerPlus.Data.DataModels;
 
 namespace WagerPlus.Data.Handlers
 {
-    public class DiscordConfigHandler : DataHandler<DiscordConfig>
+    public class DiscordConfigHandler : DataHandler<DiscordConfigFile>
     {
-        public DiscordConfigHandler() : base("discord_config.json", "Configs") { Console.WriteLine("Test"); }
+        public DiscordConfigHandler() : base("discord_config.json", "Configs") { }
     }
 }

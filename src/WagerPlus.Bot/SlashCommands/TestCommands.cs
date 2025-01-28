@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Discord.Interactions;
 using WagerPlus.Core.Models;
 
 namespace WagerPlus.Bot.SlashCommands
 {
-    public class TestCommands
+    public class TestCommands : InteractionModuleBase<SocketInteractionContext>
     {
 
     }

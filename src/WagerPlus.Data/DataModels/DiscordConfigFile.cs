@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Data.DataModels
 {
-    public class DiscordConfig
+    public class DiscordConfigFile
     {
         public string DiscordBotToken { get; set; } = "ENTER_BOT_TOKEN_HERE";
         public ulong GuildId { get; set; } = 0;
         public string CommandPrefix { get; set; } = "/";
 
-        public DiscordConfig() { }
+        public DiscordConfigFile() { }
     }
 }
