@@ -9,14 +9,14 @@ namespace WagerPlus.Core.Models
 {
     public class Choice
     {
-        public required string Name { get; set; }
+        public required string Title { get; set; }
         public string? Description { get; set; }
         public Target Target { get; set; }
         public WagerCondition Condition { get; set; }
 
-        public Choice(string name, Target target, WagerCondition condition, string? description = null)
+        public Choice(string title, Target target, WagerCondition condition, string? description = null)
         {
-            Name = name;
+            Title = title;
             Description = description ?? string.Empty;
             Target = target;
             Condition = condition;

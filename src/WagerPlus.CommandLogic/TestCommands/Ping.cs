@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.CommandLogic.TestCommands
 {
-    public class PingCommand : Logic
+    public class Ping : Logic
     {
-        public PingCommand() : base("Ping")
+        public Ping() : base("Ping")
         {
 
         }

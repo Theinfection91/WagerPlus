@@ -46,7 +46,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<InteractionService>();
 
                     // Command Logic
-                    services.AddSingleton<PingCommand>();
+                    services.AddSingleton<Ping>();
 
                     // Managers
                     services.AddSingleton<ConfigManager>();

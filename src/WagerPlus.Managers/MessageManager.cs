@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Managers
 {
-    public class PoolManager : DataDrivenManager
+    public class MessageManager
     {
-        public PoolManager(DataManager dataManager) : base("PoolManager", dataManager)
-        {
 
-        }
     }
 }

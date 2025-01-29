@@ -13,9 +13,9 @@ namespace WagerPlus.Bot.SlashCommands
     [Group("test", "Test slash commands and modals")]
     public class TestCommands : InteractionModuleBase<SocketInteractionContext>
     {
-        private PingCommand _pingCommand;
+        private Ping _pingCommand;
 
-        public TestCommands(PingCommand pingCommand)
+        public TestCommands(Ping pingCommand)
         {
             _pingCommand = pingCommand;
         }
