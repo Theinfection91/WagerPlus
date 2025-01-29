@@ -7,8 +7,8 @@ using WagerPlus.Data.DataModels;
 
 namespace WagerPlus.Data.Handlers
 {
-    public class UserManifestHandler : DataHandler<UserProfileList>
+    public class CurrencyConfigHandler : DataHandler<CurrencyConfigFile>
     {
-        public UserManifestHandler() : base("user_manifest.json", "Databases") { }
+        public CurrencyConfigHandler() : base("currency_config.json", "Configs") { }
     }
 }

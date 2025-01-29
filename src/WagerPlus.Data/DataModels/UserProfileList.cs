@@ -7,9 +7,9 @@ using WagerPlus.Core.Models;
 
 namespace WagerPlus.Data.DataModels
 {
-    public class UserManifest
+    public class UserProfileList
     {
         public List<UserProfile> Users { get; set; } = [];
-        public UserManifest() { }
+        public UserProfileList() { }
     }
 }

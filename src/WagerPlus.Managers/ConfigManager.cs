@@ -21,35 +21,35 @@ namespace WagerPlus.Managers
         #region Discord Config
         public string GetCommandPrefix()
         {
-            return _dataManager.discordConfigFile.CommandPrefix;
+            return _dataManager.DiscordConfigFile.CommandPrefix;
         }
 
         public void SetCommandPrefix(string prefix)
         {
-            _dataManager.discordConfigFile.CommandPrefix = prefix;
-            _dataManager.SaveDiscordConfigFile(_dataManager.discordConfigFile);
+            _dataManager.DiscordConfigFile.CommandPrefix = prefix;
+            _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
         }
 
         public string GetDiscordToken()
         {
-            return _dataManager.discordConfigFile.DiscordBotToken;
+            return _dataManager.DiscordConfigFile.DiscordBotToken;
         }
 
         public void SetDiscordToken(string discordToken)
         {
-            _dataManager.discordConfigFile.DiscordBotToken = discordToken;
-            _dataManager.SaveDiscordConfigFile(_dataManager.discordConfigFile);
+            _dataManager.DiscordConfigFile.DiscordBotToken = discordToken;
+            _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
         }
 
         public ulong GetGuildId()
         {
-            return _dataManager.discordConfigFile.GuildId;
+            return _dataManager.DiscordConfigFile.GuildId;
         }
 
         public void SetGuildId(ulong guildId)
         {
-            _dataManager.discordConfigFile.GuildId = guildId;
-            _dataManager.SaveDiscordConfigFile(_dataManager.discordConfigFile);
+            _dataManager.DiscordConfigFile.GuildId = guildId;
+            _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
         }        
         #endregion
     }

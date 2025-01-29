@@ -11,26 +11,57 @@ namespace WagerPlus.Managers
     public class DataManager
     {
         #region Fields and Constructor
-        // Discord Config JSON model and read/write Handler
-        public DiscordConfigFile discordConfigFile {  get; set; }
+        // Currency Config
+        public CurrencyConfigFile CurrencyConfigFile { get; set; }
+        private readonly CurrencyConfigHandler _currencyConfigHandler;
+
+        // Discord Config
+        public DiscordConfigFile DiscordConfigFile {  get; set; }
         private readonly DiscordConfigHandler _discordConfigHandler;
 
-        public DataManager(DiscordConfigHandler discordConfigHandler)
+        public DataManager(CurrencyConfigHandler currencyConfigHandler, DiscordConfigHandler discordConfigHandler)
         {
+            _currencyConfigHandler = currencyConfigHandler;
+            LoadCurrencyConfigFile();
+            
             _discordConfigHandler = discordConfigHandler;
             LoadDiscordConfigFile();
         }
         #endregion
 
-        #region Discord Configuration File Read/Write Methods
+        #region Currency Configuration
+        public void LoadCurrencyConfigFile()
+        {
+            CurrencyConfigFile = _currencyConfigHandler.Load();
+        }
+
+        public void SaveCurrencyConfigFile(CurrencyConfigFile currencyConfigFile)
+        {
+            _currencyConfigHandler.Save(currencyConfigFile);
+        }
+
+        public void SaveAndReloadCurrencyConfigFile()
+        {
+            SaveCurrencyConfigFile(CurrencyConfigFile);
+            LoadCurrencyConfigFile();
+        }
+        #endregion
+
+        #region Discord Configuration
         public void LoadDiscordConfigFile()
         {
-            discordConfigFile = _discordConfigHandler.Load();
+            DiscordConfigFile = _discordConfigHandler.Load();
         }
 
         public void SaveDiscordConfigFile(DiscordConfigFile discordConfigFile)
         {
             _discordConfigHandler.Save(discordConfigFile);
+        }
+
+        public void SaveAndReloadDiscordConfigFile()
+        {
+            SaveDiscordConfigFile(DiscordConfigFile);
+            LoadDiscordConfigFile();
         }
         #endregion
     }
