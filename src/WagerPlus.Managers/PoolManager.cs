@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Managers
 {
-    public class CurrencyManager : Manager
+    public class PoolManager : Manager
     {
-        public CurrencyManager(DataManager dataManager) : base("CurrencyManager", dataManager)
+        public PoolManager(DataManager dataManager) : base("PoolManager", dataManager)
         {
 
         }

@@ -11,6 +11,8 @@ namespace WagerPlus.Managers
     public class DataManager
     {
         #region Fields and Constructor
+        public string Name { get; set; } = "DataManager";
+
         // Currency Config
         public CurrencyConfigFile CurrencyConfigFile { get; set; }
         private readonly CurrencyConfigHandler _currencyConfigHandler;
