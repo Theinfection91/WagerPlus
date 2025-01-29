@@ -4,19 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
+using Discord.Interactions;
+using WagerPlus.Core.Enums;
+using WagerPlus.Managers;
 
 namespace WagerPlus.CommandLogic.PoolCommands
 {
     public class CreatePool : Logic
     {
-        public CreatePool() : base("Create Pool")
-        {
+        private PoolManager _poolManager;
 
+        public CreatePool(PoolManager poolManager) : base("Create Pool")
+        {
+            _poolManager = poolManager;
         }
 
-        public Embed? CreatePoolAsync()
+        public string CreatePoolLogic(SocketInteractionContext context, string name, PoolType poolType, string? description = null)
         {
-            return null;
+            _poolManager.CreateAndAddNewPool(name, poolType, context.User.Id, context.User.Username, description);
+            return "Let's see";
         }
     }
 }

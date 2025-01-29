@@ -5,6 +5,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.CommandLogic.TestCommands;
 using WagerPlus.Data.Handlers;
 using WagerPlus.Managers;
@@ -45,14 +46,22 @@ namespace WagerPlus.Bot
                     services.AddSingleton<CommandService>();
                     services.AddSingleton<InteractionService>();
 
-                    // Command Logic
+                    //      Command Logic
+                    ///////////////////////////
+                    // Pool Commands
+                    services.AddSingleton<CreatePool>();
+                    services.AddSingleton<AddChoice>();
+
+                    // Test
                     services.AddSingleton<Ping>();
 
                     // Managers
                     services.AddSingleton<ConfigManager>();
                     services.AddSingleton<DataManager>();
+                    services.AddSingleton<PoolManager>();
 
                     // Data
+                    services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
                     services.AddSingleton<DiscordConfigHandler>();
                 })
