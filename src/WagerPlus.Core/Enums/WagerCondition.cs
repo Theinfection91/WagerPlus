@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Core.Enums
 {
-    public enum WagerType
+    public enum WagerCondition
     {
-        Fixed,
-        Dynamic,
-        Jackpot,
-        Custom
+        Win,
+        Lose
     }
 }

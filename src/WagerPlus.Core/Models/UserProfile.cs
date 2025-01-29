@@ -15,6 +15,12 @@ namespace WagerPlus.Core.Models
         // Currency
         public int CurrencyAmount { get; set; }
 
+        // Stats
+        public int WagersWon { get; set; } = 0;
+        public int WagersLost { get; set; } = 0;
+        public int LargestWin { get; set; } = 0;
+        public int LargestLoss { get; set; } = 0;
+
         public UserProfile(string displayName, ulong discordId)
         {
             DisplayName = displayName;

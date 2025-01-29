@@ -14,12 +14,11 @@ namespace WagerPlus.Core.Models
         public required string DisplayName { get; set; }
         public string? Description { get; set; }
         
-        // Define Wager Target and Win Condition
-        public required Target Target { get; set; }
-        public required Condition Condition { get; set; }
+        // The user's choice
+        public required Choice Choice { get; set; }
 
         // Wager amount
-        public int Amount { get; set; }
+        public required int Amount { get; set; }
 
         // Timestamp
         public DateTime CreatedOn { get; set; }
