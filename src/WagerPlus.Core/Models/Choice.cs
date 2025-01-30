@@ -9,7 +9,7 @@ namespace WagerPlus.Core.Models
 {
     public class Choice
     {
-        public required string Title { get; set; }
+        public string Title { get; set; }
         public string? Description { get; set; }
         public Target Target { get; set; }
         public WagerCondition Condition { get; set; }

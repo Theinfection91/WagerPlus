@@ -29,9 +29,9 @@ namespace WagerPlus.Bot.SlashCommands
         }
 
         [SlashCommand("add_choice", "Add a choice to wager on in given pool")]
-        public async Task AddChoice(string title, string target, WagerCondition condition, string? description = null)
+        public async Task AddChoice(string poolName, string title, string target, WagerCondition condition, string? description = null)
         {
-            var result = _addChoiceCommand.AddChoiceLogic(Context, title, target, condition, description);
+            var result = _addChoiceCommand.AddChoiceLogic(Context, poolName, title, target, condition, description);
             await RespondAsync(result);
         }
     }

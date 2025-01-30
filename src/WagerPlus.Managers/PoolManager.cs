@@ -15,10 +15,49 @@ namespace WagerPlus.Managers
 
         }
 
-        public void CreateAndAddNewPool(string name, PoolType poolType, ulong ownerDiscordId, string ownerDiscordDisplayName, string? description = null)
+        public void LoadBettingsPoolDatabase()
         {
-            Pool newPool = new(name, poolType, ownerDiscordId, ownerDiscordDisplayName, description);
-            _dataManager.AddPoolToDatabase(newPool);
+            _dataManager.LoadBettingPoolsDatabase();
+        }
+
+        public void SaveBettingsPoolDatabase()
+        {
+            _dataManager.SaveBettingPoolsDatabase(_dataManager.BettingPoolsDatabase);
+        }
+
+        public void SaveAndReloadBettingsPoolDatabase()
+        {
+            SaveBettingsPoolDatabase();
+            LoadBettingsPoolDatabase();
+        }
+
+        public bool IsPoolNameUnique(string poolName)
+        {
+            foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
+            {
+                if (pool.Name.Equals(poolName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public Pool? GetPoolByName(string poolName)
+        {
+            foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
+            {
+                if (pool.Name.Equals(poolName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return pool;
+                }
+            }
+            return null;
+        }
+
+        public void AddPool(Pool pool)
+        {
+            _dataManager.AddPoolToDatabase(pool);
         }
     }
 }

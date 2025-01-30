@@ -18,7 +18,7 @@ namespace WagerPlus.Core.Models
         public DateTime CreatedOn { get; set; }
 
         // Choices
-        public List<Choice> Choices { get; set; }
+        public Dictionary<int, Choice> Choices { get; set; }
 
         // Dynamic Info
         public PoolStatus Status { get; set; }
@@ -38,7 +38,7 @@ namespace WagerPlus.Core.Models
 
         public Pool(string name, PoolType poolType, ulong ownerDIscordId, string ownerDisplayName, string? description = null)
         {
-            Id = new(); 
+            Id = Guid.NewGuid(); 
             Name = name;
             Description = description ?? string.Empty;
             Type = poolType;
@@ -48,6 +48,11 @@ namespace WagerPlus.Core.Models
             Wagers = [];
             OwnerDiscordId = ownerDIscordId;
             OwnerDisplayName = ownerDisplayName;
+        }
+
+        public void AddChoiceToDictionary(Choice choice)
+        {
+            Choices.Add(Choices.Count + 1, choice);
         }
     }
 }
