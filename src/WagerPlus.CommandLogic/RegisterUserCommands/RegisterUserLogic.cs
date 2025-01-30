@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord.Interactions;
+using WagerPlus.Core.Models;
 using WagerPlus.Managers;
 
 namespace WagerPlus.CommandLogic.RegisterUserCommands
 {
     public class RegisterUserLogic : Logic
     {
+        private ConfigManager _configManager;
         private UserProfileManager _userProfileManager;
-        public RegisterUserLogic(UserProfileManager userProfileManager) : base("Register User")
+        public RegisterUserLogic(ConfigManager configManager, UserProfileManager userProfileManager) : base("Register User")
         {
+            _configManager = configManager;
             _userProfileManager = userProfileManager;
         }
 
@@ -21,7 +24,11 @@ namespace WagerPlus.CommandLogic.RegisterUserCommands
             // Check if user is registered already
             if (!_userProfileManager.IsUserRegistered(context.User.Id))
             {
-                _userProfileManager.RegisterNewUserProfile(context.User.Id, context.User.Username);
+                UserProfile userProfile = new(context.User.Username, context.User.Id)
+                {
+                    Currency = new(_configManager.GetCurrencyName(), _configManager.GetCurrencyAbbreviation())
+                };
+                _userProfileManager.RegisterNewUserProfile(userProfile);
 
                 return $"New User Profile has been registered to - {context.User.Username} ({context.User.Username})";
             }

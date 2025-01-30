@@ -68,6 +68,7 @@ namespace WagerPlus.Bot
                     
                     // Managers
                     services.AddSingleton<ConfigManager>();
+                    services.AddSingleton<CurrencyManager>();
                     services.AddSingleton<DataManager>();
                     services.AddSingleton<PoolManager>();
                     services.AddSingleton<WagerManager>();

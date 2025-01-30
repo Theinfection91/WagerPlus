@@ -42,9 +42,8 @@ namespace WagerPlus.Managers
             return false;
         }
 
-        public void RegisterNewUserProfile(ulong discordId, string displayName)
+        public void RegisterNewUserProfile(UserProfile userProfile)
         {
-            UserProfile userProfile = new(displayName, discordId);
             _dataManager.UserProfileList.Users.Add(userProfile);
             SaveAndReloadUserProfileList();
         }

@@ -17,6 +17,41 @@ namespace WagerPlus.Managers
         }
         #endregion
 
+        #region Currency Config
+        public string GetCurrencyName()
+        {
+            return _dataManager.CurrencyConfigFile.CurrencyName;
+        }
+
+        public void SetCurrencyName(string currencyName)
+        {
+            _dataManager.CurrencyConfigFile.CurrencyName = currencyName;
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
+
+        public string GetCurrencyAbbreviation()
+        {
+            return _dataManager.CurrencyConfigFile.CurrencyAbbreviation;
+        }
+
+        public void SetCurrentAbbreviation(string currencyAbbreviation)
+        {
+            _dataManager.CurrencyConfigFile.CurrencyAbbreviation = currencyAbbreviation;
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
+
+        public bool GetIsCurrencySetupComplete()
+        {
+            return _dataManager.CurrencyConfigFile.IsCurrencySetupComplete;
+        }
+
+        public void SetIsCurrentlySetupComplete(bool isComplete)
+        {
+            _dataManager.CurrencyConfigFile.IsCurrencySetupComplete = isComplete;
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
+        #endregion
+
         #region Discord Config
         public string GetCommandPrefix()
         {
