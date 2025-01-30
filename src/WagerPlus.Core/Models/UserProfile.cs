@@ -13,7 +13,7 @@ namespace WagerPlus.Core.Models
         public ulong DiscordId { get; set; }
 
         // Currency
-        public int CurrencyAmount { get; set; }
+        public Currency CurrencyAmount { get; set; }
 
         // Stats
         public int WagersWon { get; set; } = 0;
@@ -26,7 +26,7 @@ namespace WagerPlus.Core.Models
             DisplayName = displayName;
             DiscordId = discordId;
             // TODO: Decide on starting amount for new Users
-            CurrencyAmount = 50;
+            CurrencyAmount = new("", "");
         }
     }
 }
