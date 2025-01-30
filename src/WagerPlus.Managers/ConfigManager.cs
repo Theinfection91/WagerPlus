@@ -7,7 +7,7 @@ using WagerPlus.Data.Handlers;
 
 namespace WagerPlus.Managers
 {
-    public class ConfigManager : DataDrivenManager
+    public class ConfigManager : DataDriven
     {
         #region Fields and Constructor
 

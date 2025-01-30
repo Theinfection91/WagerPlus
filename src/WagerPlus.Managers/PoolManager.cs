@@ -10,7 +10,7 @@ using WagerPlus.Core.Models.Pools;
 
 namespace WagerPlus.Managers
 {
-    public class PoolManager : DataDrivenManager
+    public class PoolManager : DataDriven
     {
         public PoolManager(DataManager dataManager) : base("PoolManager", dataManager)
         {
@@ -60,23 +60,21 @@ namespace WagerPlus.Managers
 
         public PoolTarget GetCorrectTargetEnum(Pool pool)
         {
-            switch (pool.Targets.Count)
+
+            if (pool.Targets.Count == 0)
             {
-                case 0:
-                    return PoolTarget.TargetOne;
-
-                case 1:
-                    return PoolTarget.TargetTwo;
-
-                default:
-                    return PoolTarget.Error;
+                return PoolTarget.TargetOne;
+            }
+            else
+            {
+                return PoolTarget.TargetTwo;
             }
         }
 
         public (Choice, Choice) GetCorrectChoices(Pool pool)
         {
-            Choice choiceOne = null;
-            Choice choiceTwo = null;
+            Choice? choiceOne = null;
+            Choice? choiceTwo = null;
 
             foreach (var target in pool.Targets)
             {
@@ -89,7 +87,6 @@ namespace WagerPlus.Managers
                     choiceTwo = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
                 }
             }
-
             return (choiceOne, choiceTwo);
         }
 

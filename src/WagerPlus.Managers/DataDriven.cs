@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Managers
 {
-    public abstract class DataDrivenManager
+    public abstract class DataDriven
     {
         public required string Name {  get; set; }
         internal DataManager _dataManager;
 
-        public DataDrivenManager(string name, DataManager dataManager)
+        public DataDriven(string name, DataManager dataManager)
         {
             Name = name;
             _dataManager = dataManager;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.Managers
 {
-    public class CurrencyManager : DataDrivenManager
+    public class CurrencyManager : DataDriven
     {
         public CurrencyManager(DataManager dataManager) : base("CurrencyManager", dataManager)
         {
