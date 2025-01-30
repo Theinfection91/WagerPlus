@@ -45,6 +45,15 @@ namespace WagerPlus.Managers
             return true;
         }
 
+        public bool IsPoolOpen(Pool pool)
+        {
+            if (pool.Status.Equals(PoolStatus.Open))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool IsTargetNameUnique(string poolName, string targetName)
         {
             Pool? pool = GetPoolByName(poolName);

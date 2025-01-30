@@ -42,19 +42,32 @@ namespace WagerPlus.Bot.SlashCommands
             }
         }
 
-        [RequireUserRegistered]
+        
         [SlashCommand("generate_choices", "Generate choices to wager on when a pool has two targets.")]
-        public async Task AddChoice(string poolName, string? description = null)
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task GenerateChoices(string poolName, string? description = null)
         {
             var result = _generateChoicesCommand.GenerateChoicesProcess(Context, poolName, description);
             await RespondAsync(result);
         }
 
         [SlashCommand("add_target", "Add a choice to wager on in given pool.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
         public async Task AddTarget(string poolName, string name, string? description = null)
         {
             var result = _addTargetCommand.AddTargetProcess(Context, poolName, name, description);
             await RespondAsync(result);
         }
+
+        [SlashCommand("open", "Set the pool status of given Pool to Open, allowing wagers.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task OpenPool(string poolName)
+        {
+
+        }
+
     }
 }
