@@ -6,6 +6,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WagerPlus.CommandLogic.PoolCommands;
+using WagerPlus.CommandLogic.RegisterUserCommands;
 using WagerPlus.CommandLogic.TestCommands;
 using WagerPlus.CommandLogic.WagerCommands;
 using WagerPlus.Data.Handlers;
@@ -60,6 +61,9 @@ namespace WagerPlus.Bot
                     // Wager Commands
                     services.AddSingleton<CreateWagerLogic>();
 
+                    // Register User Command
+                    services.AddSingleton<RegisterUserLogic>();
+
                     ///////////////////////////////
                     
                     // Managers
@@ -67,11 +71,13 @@ namespace WagerPlus.Bot
                     services.AddSingleton<DataManager>();
                     services.AddSingleton<PoolManager>();
                     services.AddSingleton<WagerManager>();
+                    services.AddSingleton<UserProfileManager>();
 
                     // Data
                     services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
                     services.AddSingleton<DiscordConfigHandler>();
+                    services.AddSingleton<UserProfileHandler>();
                 })
                 .Build();
 

@@ -38,7 +38,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
                     pool.AddWagerToList(newWager);
 
                     // Save and reload
-                    _poolManager.SaveAndReloadBettingsPoolDatabase();
+                    _poolManager.SaveAndReloadBettingPoolsDatabase();
 
                     return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Choice} - Amount: {newWager.Amount}";
                 }

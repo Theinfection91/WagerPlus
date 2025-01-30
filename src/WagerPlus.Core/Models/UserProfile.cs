@@ -9,8 +9,8 @@ namespace WagerPlus.Core.Models
     public class UserProfile
     {
         // Name and Discord ID
-        public required string DisplayName { get; set; }
-        public required ulong DiscordId { get; set; }
+        public string DisplayName { get; set; }
+        public ulong DiscordId { get; set; }
 
         // Currency
         public int CurrencyAmount { get; set; }

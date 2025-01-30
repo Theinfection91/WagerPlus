@@ -42,7 +42,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                         pool?.AddTargetToDictionary(target);
 
                         // Save and reload Pools
-                        _poolManager.SaveAndReloadBettingsPoolDatabase();
+                        _poolManager.SaveAndReloadBettingPoolsDatabase();
 
                         return $"{target.Name} was added to {pool?.Name} as Target #{pool?.Targets.FirstOrDefault(x => x.Value == target).Key}";
                     }

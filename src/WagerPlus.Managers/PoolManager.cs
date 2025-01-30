@@ -17,20 +17,20 @@ namespace WagerPlus.Managers
 
         }
 
-        public void LoadBettingsPoolDatabase()
+        public void LoadBettingPoolsDatabase()
         {
             _dataManager.LoadBettingPoolsDatabase();
         }
 
-        public void SaveBettingsPoolDatabase()
+        public void SaveBettingPoolsDatabase()
         {
             _dataManager.SaveBettingPoolsDatabase(_dataManager.BettingPoolsDatabase);
         }
 
-        public void SaveAndReloadBettingsPoolDatabase()
+        public void SaveAndReloadBettingPoolsDatabase()
         {
-            SaveBettingsPoolDatabase();
-            LoadBettingsPoolDatabase();
+            SaveBettingPoolsDatabase();
+            LoadBettingPoolsDatabase();
         }
 
         public bool IsPoolNameUnique(string poolName)

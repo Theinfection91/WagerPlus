@@ -9,6 +9,6 @@ namespace WagerPlus.Data.Handlers
 {
     public class UserProfileHandler : DataHandler<UserProfileList>
     {
-        public UserProfileHandler() : base("user_manifest.json", "Databases") { }
+        public UserProfileHandler() : base("user_profiles.json", "Databases") { }
     }
 }

@@ -43,7 +43,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                         pool?.AddChoiceToDictionary(choices.Item2);
 
                         // Save and reload Pools Database
-                        _poolManager.SaveAndReloadBettingsPoolDatabase();
+                        _poolManager.SaveAndReloadBettingPoolsDatabase();
 
                         return $"Choices have been generated for {pool.Name} successfully.";
                     }
