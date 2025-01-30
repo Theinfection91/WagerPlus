@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WagerPlus.Core.Enums;
+using WagerPlus.Core.Enums.PoolEnums;
 using WagerPlus.Core.Models;
+using WagerPlus.Core.Models.Pools;
 
 namespace WagerPlus.Managers
 {
@@ -41,6 +43,54 @@ namespace WagerPlus.Managers
                 }
             }
             return true;
+        }
+
+        public bool IsTargetNameUnique(string poolName, string targetName)
+        {
+            Pool? pool = GetPoolByName(poolName);
+            foreach (var target in pool.Targets)
+            {
+                if (string.Equals(target.Value.Name, targetName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public PoolTarget GetCorrectTargetEnum(Pool pool)
+        {
+            switch (pool.Targets.Count)
+            {
+                case 0:
+                    return PoolTarget.TargetOne;
+
+                case 1:
+                    return PoolTarget.TargetTwo;
+
+                default:
+                    return PoolTarget.Error;
+            }
+        }
+
+        public (Choice, Choice) GetCorrectChoices(Pool pool)
+        {
+            Choice choiceOne = null;
+            Choice choiceTwo = null;
+
+            foreach (var target in pool.Targets)
+            {
+                if (target.Value.PoolTarget == PoolTarget.TargetOne)
+                {
+                    choiceOne = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
+                }
+                else if (target.Value.PoolTarget == PoolTarget.TargetTwo)
+                {
+                    choiceTwo = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
+                }
+            }
+
+            return (choiceOne, choiceTwo);
         }
 
         public Pool? GetPoolByName(string poolName)

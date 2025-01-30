@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WagerPlus.Core.Enums
+namespace WagerPlus.Core.Enums.PoolEnums
 {
-    public enum PoolStatus
+    public enum PoolChoice
     {
-        Open,
-        Closed,
-        Resolved
+        ChoiceOne,
+        ChoiceTwo,
+        Error
     }
 }

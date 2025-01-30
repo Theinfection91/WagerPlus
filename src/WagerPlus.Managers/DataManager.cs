@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WagerPlus.Core.Models;
+using WagerPlus.Core.Models.Pools;
 using WagerPlus.Data.DataModels;
 using WagerPlus.Data.Handlers;
 

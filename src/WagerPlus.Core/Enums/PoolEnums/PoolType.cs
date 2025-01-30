@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WagerPlus.Core.Enums
+namespace WagerPlus.Core.Enums.PoolEnums
 {
     public enum PoolType
     {

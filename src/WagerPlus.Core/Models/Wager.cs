@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WagerPlus.Core.Enums;
+using WagerPlus.Core.Enums.PoolEnums;
 
 namespace WagerPlus.Core.Models
 {
@@ -15,7 +15,7 @@ namespace WagerPlus.Core.Models
         public string? Description { get; set; }
         
         // The user's choice
-        public required Choice Choice { get; set; }
+        public required PoolChoice Choice { get; set; }
 
         // Wager amount
         public required int Amount { get; set; }
