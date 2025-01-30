@@ -27,6 +27,7 @@ namespace WagerPlus.Bot.SlashCommands
 
         [SlashCommand("create", "Create a new betting pool of specified type.")]
         [RequireCurrencySetup]
+        [RequireUserRegistered]
         public async Task CreatePoolAsync(string name, PoolType poolType, string? description = null)
         {
             try
@@ -41,7 +42,7 @@ namespace WagerPlus.Bot.SlashCommands
             }
         }
 
-
+        [RequireUserRegistered]
         [SlashCommand("generate_choices", "Generate choices to wager on when a pool has two targets.")]
         public async Task AddChoice(string poolName, string? description = null)
         {

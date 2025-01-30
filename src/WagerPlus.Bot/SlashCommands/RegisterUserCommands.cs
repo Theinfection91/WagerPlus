@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord.Interactions;
+using WagerPlus.Bot.PreconditionAttributes;
 using WagerPlus.CommandLogic.RegisterUserCommands;
 
 namespace WagerPlus.Bot.SlashCommands
@@ -17,6 +18,7 @@ namespace WagerPlus.Bot.SlashCommands
             _registerUserLogic = registerUserLogic;
         }
 
+        [RequireCurrencySetup]
         [SlashCommand("register_user", "The first command all users must run to begin.")]
         public async Task RegisterUserAsync()
         {

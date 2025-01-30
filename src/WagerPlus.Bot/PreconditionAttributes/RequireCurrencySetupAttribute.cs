@@ -15,25 +15,20 @@ namespace WagerPlus.Bot.PreconditionAttributes
         {
             try
             {
-                Console.WriteLine("Test"); // Debugging log
+                ConfigManager? configManager = services.GetService(typeof(ConfigManager)) as ConfigManager;
 
-                ConfigManager? service = services.GetService(typeof(ConfigManager)) as ConfigManager;
-
-                if (service == null)
+                if (configManager == null)
                 {
-                    Console.WriteLine("Error: ConfigManager is null");
                     await context.Interaction.RespondAsync("⚠️ **Error:** Unable to retrieve configuration settings.", ephemeral: true);
                     return PreconditionResult.FromError("Unable to grab ConfigManager from service binder for DI.");
                 }
 
-                if (!service.GetIsCurrencySetupComplete())
+                if (!configManager.GetIsCurrencySetupComplete())
                 {
-                    Console.WriteLine("Error: Currency setup not complete");
                     await context.Interaction.RespondAsync("⚠️ **Error:** Currency setup is not complete. An admin must set this up using `/currency set_up`.", ephemeral: true);
                     return PreconditionResult.FromError("Currency setup is not complete.");
                 }
 
-                Console.WriteLine("Currency is set up!");
                 return PreconditionResult.FromSuccess();
             }
             catch (Exception ex)
