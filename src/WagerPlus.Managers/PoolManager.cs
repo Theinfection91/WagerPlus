@@ -33,6 +33,18 @@ namespace WagerPlus.Managers
             LoadBettingPoolsDatabase();
         }
 
+        public bool IsPoolIdInDatabase(string poolId)
+        {
+            foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
+            {
+                if (pool.Id.Equals(poolId))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool IsPoolNameUnique(string poolName)
         {
             foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
@@ -67,6 +79,15 @@ namespace WagerPlus.Managers
             return true;
         }
 
+        public bool IsUserPoolOwner(ulong discordId, Pool pool)
+        {
+            if (discordId.Equals(pool.OwnerDiscordId))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public PoolTarget GetCorrectTargetEnum(Pool pool)
         {
 
@@ -99,6 +120,18 @@ namespace WagerPlus.Managers
             return (choiceOne, choiceTwo);
         }
 
+        public Pool? GetPoolById(string poolId)
+        {
+            foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
+            {
+                if (pool.Id.Equals(poolId))
+                {
+                    return pool;
+                }
+            }
+            return null;
+        }
+
         public Pool? GetPoolByName(string poolName)
         {
             foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
@@ -110,6 +143,29 @@ namespace WagerPlus.Managers
             }
             return null;
         }
+
+        public string? GeneratePoolId()
+        {
+            bool isPoolIdUnique = false;
+            string uniqueId;
+
+            while (!isPoolIdUnique)
+            {
+                Random random = new();
+                int randomInt = random.Next(100, 1000);
+                uniqueId = $"P{randomInt}{(_dataManager.BettingPoolsDatabase.Pools.Count + 1)}";
+
+                // Check if the ID is unique in the database
+                if (!IsPoolIdInDatabase(uniqueId))
+                {
+                    isPoolIdUnique = true;
+                    return uniqueId;
+                }
+            }
+
+            return null;
+        }
+
 
         public void AddPool(Pool pool)
         {

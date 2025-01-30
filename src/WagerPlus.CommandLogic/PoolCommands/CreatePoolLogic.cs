@@ -22,7 +22,11 @@ namespace WagerPlus.CommandLogic.PoolCommands
 
         public string CreatePoolProcess(SocketInteractionContext context, string name, PoolType poolType, string? description = null)
         {
-            Pool newPool = new(name, poolType, context.User.Id, context.User.Username, description);
+            string newId = _poolManager.GeneratePoolId();
+            Pool newPool = new(name, poolType, context.User.Id, context.User.Username, description)
+            {
+                Id = newId
+            };
             _poolManager.AddPool(newPool);
 
             return $"A new {poolType.ToString()} Pool named {newPool.Name} has been created by {newPool.OwnerDisplayName}!";

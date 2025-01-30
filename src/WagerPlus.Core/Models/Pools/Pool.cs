@@ -10,7 +10,7 @@ namespace WagerPlus.Core.Models.Pools
     public class Pool
     {
         // Basic Info
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
         public PoolType Type { get; set; }
@@ -38,7 +38,6 @@ namespace WagerPlus.Core.Models.Pools
 
         public Pool(string name, PoolType poolType, ulong ownerDiscordId, string ownerDisplayName, string? description = null)
         {
-            Id = Guid.NewGuid();
             Name = name;
             Description = description ?? string.Empty;
             Type = poolType;

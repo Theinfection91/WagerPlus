@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord.Interactions;
+using WagerPlus.Bot.Modals.PoolModals;
 using WagerPlus.Bot.PreconditionAttributes;
 using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.Core.Enums;
@@ -64,9 +65,9 @@ namespace WagerPlus.Bot.SlashCommands
         [SlashCommand("open", "Set the pool status of given Pool to Open, allowing wagers.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task OpenPool(string poolName)
+        public async Task OpenPool()
         {
-
+            await RespondWithModalAsync<OpenPoolModal>("open_pool");
         }
 
     }
