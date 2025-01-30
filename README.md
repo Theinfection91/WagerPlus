@@ -1,103 +1,97 @@
 # WagerPlus Design Document
 
 ## Overview
-The WagerPlus Discord bot is a standalone as well as a companion bot for Ladderbot4, leveraging its Git repository storage data. The bot introduces a custom currency system for Discord servers, allowing members to earn and spend currency based on activity, league events, and admin-defined custom events. The bot focuses on interaction, fun, and server engagement while integrating closely with Ladderbot4's leagues and challenges. 
-
----
-
-# **Everything below is subject to change as development continues.**
-
----
+**WagerPlus** is a Discord-based betting system designed to handle structured wagers on various events, such as competitive matches, individual duels, or custom scenarios. The bot manages betting pools, calculates odds dynamically, and tracks wagers placed by users.  
 
 ## Features
-
-### Currency System
-- **Base Currency**: Every member starts with a base amount of currency (e.g., 50).
-- **Earning Mechanisms**:
-  - **Message Activity**: Members earn currency for sending messages in the server.
-  - **Passive Income**: Members earn a small amount of currency periodically for being active in the guild.
-- **Spending Options**:
-  - **Wagering on Challenges**: Members can bet on active challenges from Ladderbot4's leagues.
-  - **League Bets**:
-    - Bet on the winner of the league.
-    - Bet on most wins or most losses for a team.
-  - **Custom Events**: Admins can add events for members to bet on, such as other tournaments or competitions hosted on the server.
+- **Fixed and Dynamic Betting Pools**  
+  - Fixed pools have set odds that do not change.  
+  - Dynamic pools adjust odds in real-time based on total bets.  
+- **Flexible Betting Targets**  
+  - Users can wager on teams, individuals, or custom-defined targets.  
+- **Odds Calculation**  
+  - Real-time adjustments based on wager distribution.  
+- **Lottery System**  
+  - Daily jackpot where users purchase tickets for a randomized draw.  
 
 ---
 
-## Key Commands
+## Core Concepts
 
-### Admin Commands
-1. **Add Currency**: Add currency to a specific member or all members.
-   - Example: `/currency add <member> <amount>`
-2. **Deduct Currency**: Remove currency from a specific member.
-   - Example: `/currency deduct <member> <amount>`
-3. **Set Custom Event**: Create a custom event for betting.
-   - Example: `/event create <event_name> <details>`
-4. **Manage Bets**: Close bets, declare winners, or adjust odds for events.
-   - Example: `/bets close <event_id>`
+### **Betting Pools**
+A **pool** represents a single betting instance where users place wagers on predefined choices. Each pool consists of:  
+- **Choices**: The selectable outcomes users can bet on.  
+- **Targets**: The entities (teams, players, etc.) that represent each choice.  
+- **Wagers**: A list of bets placed by users.  
+- **Odds**: The payout multipliers calculated based on bet distribution.  
 
-### Member Commands
-1. **Check Balance**: View your current currency balance.
-   - Example: `/balance`
-2. **Bet on Challenge**: Place a wager on an active challenge in Ladderbot4's leagues.
-   - Example: `/bet challenge <challenge_id> <amount>`
-3. **Bet on League Outcome**: Place bets on overall league outcomes.
-   - Example: `/bet league <league_id> <team_id> <amount>`
-4. **Bet on Custom Event**: Place bets on admin-defined events.
-   - Example: `/bet event <event_id> <amount>`
-5. **Wager/Bets Leaderboard**: View the top wagers and bets made.
-   - Example: `/leaderboard`
+### **Choices & Targets**
+Each **choice** is linked to a **target**, which represents an entity involved in the wager.  
+- A target can be a **team**, **player**, or any custom event option.  
+- Choices specify the expected outcome (e.g., win/loss).  
 
----
+Example:
+```
+Match: Team A vs Team B Choices:
 
-## Data Integration with Ladderbot4
+"Team A Wins"
+"Team B Wins"
+```
 
-### Data Sources
-- **Challenges Data**: Access active challenges from Ladderbot4's leagues via the Git repository.
-- **League Data**: Pull league information (teams, standings, results) for betting purposes.
-
-### Interaction
-- The bot reads from Ladderbot4's Git repository for live data on leagues and challenges.
-- Bets placed on challenges or leagues are dynamically updated based on Ladderbot4's outcomes.
+### **Wagers**
+- Users place a **wager** by selecting a choice and specifying an amount.  
+- The wager amount contributes to the odds calculation.  
 
 ---
 
-## Database Design
+## Odds Calculation
 
-### Tables
-1. **Members**
-   - `member_id`: Discord user ID.
-   - `balance`: Current currency balance.
-   - `total_earned`: Total currency earned.
-   - `total_spent`: Total currency spent.
+### **Fixed Odds System**
+- Odds remain constant regardless of bets placed.  
+- Typically used for structured, pre-balanced betting.  
 
-2. **Bets**
-   - `bet_id`: Unique identifier for the bet.
-   - `member_id`: ID of the member placing the bet.
-   - `event_id`: Associated challenge/league/custom event.
-   - `amount`: Currency wagered.
-   - `outcome`: Result of the bet (e.g., `win`, `lose`).
+### **Dynamic Odds System**
+- Odds shift based on total bet distribution.  
+- Calculated as:
+```
+Odds = (Total Wagered on Opponent) / (Total Wagered on Current Choice)
+```
 
-3. **Events**
-   - `event_id`: Unique identifier for the event.
-   - `event_type`: Type of event (e.g., `challenge`, `league`, `custom`).
-   - `details`: Description of the event.
-   - `status`: Current status (`open`, `closed`, etc.).
+- Higher betting activity on one side reduces its payout potential, making underdog bets more lucrative.  
 
----
-
-## Future Enhancements
-- **Shop System**: Allow members to purchase items or perks with their currency.
-- **Daily Rewards**: Introduce a daily login reward for active members.
-- **Odds and Multipliers**: Implement dynamic odds and multipliers for betting.
-- **Integration with Other Games**: Extend support for other tournament data beyond Ladderbot4.
+Example:  
+```
+Total Bets on Team A: $500
+Total Bets on Team B: $200
+Odds for Team A: 200 / 500 = 0.4x (Lower payout due to more bets)
+Odds for Team B: 500 / 200 = 2.5x (Higher payout due to fewer bets)
+```
 
 ---
 
-## Development Goals
-1. Implement core currency and activity-based earning.
-2. Add Ladderbot4 integration for league and challenge betting.
-3. Develop custom event management and admin tools.
-4. Test and refine betting mechanics and database integration.
-5. Release v1.0 to a test server for feedback and improvements.
+## Lottery System
+A separate feature that allows users to buy lottery tickets for a daily jackpot draw.  
+- Each ticket has a unique number.  
+- The winning number is drawn randomly at a set time.  
+- The jackpot grows based on ticket purchases.  
+
+---
+
+## Tech Stack
+- **Language**: C# (.NET 9.0)  
+- **Storage**: JSON-based data management  
+- **Framework**: Discord.NET for bot interactions  
+- **Hosting**: Docker on a Linux server  
+
+---
+
+## Notes
+- Pools can support both **fixed** and **dynamic** odds systems.  
+- Betting is not limited to traditional sports or games; it can apply to any structured event.  
+- The lottery system functions independently of the main betting pools.  
+
+---
+
+## Author
+*Designed by Chase Carter*
+
