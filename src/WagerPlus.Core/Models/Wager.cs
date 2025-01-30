@@ -10,17 +10,27 @@ namespace WagerPlus.Core.Models
     public class Wager
     {
         // Id and Name are from UserProfile that creates the Wager
-        public required ulong DiscordId { get; set; }
-        public required string DisplayName { get; set; }
+        public ulong DiscordId { get; set; }
+        public string DisplayName { get; set; }
         public string? Description { get; set; }
         
         // The user's choice
-        public required PoolChoice Choice { get; set; }
+        public PoolChoice Choice { get; set; }
 
         // Wager amount
-        public required int Amount { get; set; }
+        public int Amount { get; set; }
 
         // Timestamp
         public DateTime CreatedOn { get; set; }
+
+        public Wager(ulong discordId, string displayName, PoolChoice choice, int wagerAmount, string? description = null)
+        {
+            DiscordId = discordId;
+            DisplayName = displayName;
+            Description = description;
+            Choice = choice;
+            Amount = wagerAmount;
+            CreatedOn = DateTime.Now;
+        }
     }
 }

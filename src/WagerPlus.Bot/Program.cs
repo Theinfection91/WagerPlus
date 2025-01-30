@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.CommandLogic.TestCommands;
+using WagerPlus.CommandLogic.WagerCommands;
 using WagerPlus.Data.Handlers;
 using WagerPlus.Managers;
 
@@ -46,20 +47,26 @@ namespace WagerPlus.Bot
                     services.AddSingleton<CommandService>();
                     services.AddSingleton<InteractionService>();
 
-                    //      Command Logic
-                    ///////////////////////////
+                    //    ==-Command Logic-==     //
+                    ///////////////////////////////
                     // Pool Commands
                     services.AddSingleton<CreatePoolLogic>();
                     services.AddSingleton<GenerateChoicesLogic>();
                     services.AddSingleton<AddTargetLogic>();
 
-                    // Test
+                    // Test Commands
                     services.AddSingleton<Ping>();
 
+                    // Wager Commands
+                    services.AddSingleton<CreateWagerLogic>();
+
+                    ///////////////////////////////
+                    
                     // Managers
                     services.AddSingleton<ConfigManager>();
                     services.AddSingleton<DataManager>();
                     services.AddSingleton<PoolManager>();
+                    services.AddSingleton<WagerManager>();
 
                     // Data
                     services.AddSingleton<BettingPoolsHandler>();

@@ -44,6 +44,8 @@ namespace WagerPlus.CommandLogic.PoolCommands
 
                         // Save and reload Pools Database
                         _poolManager.SaveAndReloadBettingsPoolDatabase();
+
+                        return $"Choices have been generated for {pool.Name} successfully.";
                     }
                     return $"Incorrect amount of targets in the given pool. Must have two targets, pool currently has: {pool.Targets.Count}";
                 }
