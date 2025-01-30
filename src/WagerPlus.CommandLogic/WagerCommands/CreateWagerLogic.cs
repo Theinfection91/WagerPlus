@@ -30,19 +30,24 @@ namespace WagerPlus.CommandLogic.WagerCommands
                 // Grab pool
                 Pool? pool = _poolManager.GetPoolByName(poolName);
 
-                // Check if user has already placed wager in pool
-                if (!_wagerManager.IsUserInWagersList(context.User.Id, pool.Wagers))
+                // Check if pool is open for wagers
+                if (_poolManager.IsPoolOpen(pool))
                 {
-                    // Create wager and add to pool
-                    Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, description);
-                    pool.AddWagerToList(newWager);
+                    // Check if user has already placed wager in pool
+                    if (!_wagerManager.IsUserInWagersList(context.User.Id, pool.Wagers))
+                    {
+                        // Create wager and add to pool
+                        Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, description);
+                        pool.AddWagerToList(newWager);
 
-                    // Save and reload
-                    _poolManager.SaveAndReloadBettingPoolsDatabase();
+                        // Save and reload
+                        _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                    return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Choice} - Amount: {newWager.Amount}";
+                        return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Choice} - Amount: {newWager.Amount}";
+                    }
+                    return $"User with the given ID already found in Wagers list in given pool. ID: {context.User.Id} - Pool: {pool.Name}";
                 }
-                return $"User with the given ID already found in Wagers list in given pool. ID: {context.User.Id} - Pool: {pool.Name}";
+                return $"{pool.Name} is not currently open for wagers yet.";
             }
             return $"The pool name given was not found in the database: {poolName}";
         }

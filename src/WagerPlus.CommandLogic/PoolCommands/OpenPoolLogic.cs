@@ -32,17 +32,27 @@ namespace WagerPlus.CommandLogic.PoolCommands
                     // TODO: Check if invoker is owner of pool (or admin)
                     if (_poolManager.IsUserPoolOwner(context.User.Id, pool))
                     {
-                        // Check current status
-                        if (!_poolManager.IsPoolOpen(pool))
+                        // Check if targets were set
+                        if (_poolManager.IsBothTargetsSetInPool(pool))
                         {
-                            // Change status
-                            pool.Status = PoolStatus.Open;
+                            // Check if choices were generated from targets
+                            if (_poolManager.IsChoicesGeneratedInPool(pool))
+                            {
+                                // Check current status
+                                if (!_poolManager.IsPoolOpen(pool))
+                                {
+                                    // Change status
+                                    pool.Status = PoolStatus.Open;
 
-                            _poolManager.SaveAndReloadBettingPoolsDatabase();
+                                    _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                            return $"{pool.Name} is now {pool.Status} for wagers!";
+                                    return $"{pool.Name} is now {pool.Status} for wagers!";
+                                }
+                                return $"The pool is already open.";
+                            }
+                            return $"Choices have not been generated for {pool.Name}";
                         }
-                        return $"The pool is already open.";
+                        return $"Both targets have not been set in {pool.Name}";
                     }
                     return $"You are not the owner of {pool.Name}... {pool.OwnerDisplayName} is the owner.";
                 }

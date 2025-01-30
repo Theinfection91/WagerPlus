@@ -79,6 +79,30 @@ namespace WagerPlus.Managers
             return true;
         }
 
+        public bool IsBothTargetsSetInPool(Pool pool)
+        {
+            if (pool.Targets.Count == 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsChoicesGeneratedInPool(Pool pool)
+        {
+            if (pool.Choices.Count == 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool IsUserPoolOwner(ulong discordId, Pool pool)
         {
             if (discordId.Equals(pool.OwnerDiscordId))

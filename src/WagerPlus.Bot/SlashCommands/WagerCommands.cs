@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord.Interactions;
+using WagerPlus.Bot.PreconditionAttributes;
 using WagerPlus.CommandLogic.WagerCommands;
 using WagerPlus.Core.Enums.PoolEnums;
 
@@ -20,6 +21,8 @@ namespace WagerPlus.Bot.SlashCommands
         }
 
         [SlashCommand("create", "Creates a wager in the given pool")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
         public async Task CreateWagerAsync(string poolName, PoolChoice choice, int amount)
         {
             var result = _createWagerLogic.CreateWagerProcess(Context, poolName, choice, amount);
