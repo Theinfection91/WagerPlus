@@ -26,7 +26,6 @@ namespace WagerPlus.Managers
         public void SetCurrencyName(string currencyName)
         {
             _dataManager.CurrencyConfigFile.CurrencyName = currencyName;
-            _dataManager.SaveAndReloadCurrencyConfigFile();
         }
 
         public string GetCurrencyAbbreviation()
@@ -37,7 +36,6 @@ namespace WagerPlus.Managers
         public void SetCurrentAbbreviation(string currencyAbbreviation)
         {
             _dataManager.CurrencyConfigFile.CurrencyAbbreviation = currencyAbbreviation;
-            _dataManager.SaveAndReloadCurrencyConfigFile();
         }
 
         public bool GetIsCurrencySetupComplete()
@@ -45,7 +43,7 @@ namespace WagerPlus.Managers
             return _dataManager.CurrencyConfigFile.IsCurrencySetupComplete;
         }
 
-        public void SetIsCurrentlySetupComplete(bool isComplete)
+        public void SetIsCurrencySetupComplete(bool isComplete)
         {
             _dataManager.CurrencyConfigFile.IsCurrencySetupComplete = isComplete;
             _dataManager.SaveAndReloadCurrencyConfigFile();
