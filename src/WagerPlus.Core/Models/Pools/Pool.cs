@@ -111,5 +111,22 @@ namespace WagerPlus.Core.Models.Pools
 
             return (int)Math.Ceiling(1 / (odds - 1));
         }
+
+        public decimal GetOddsForChoice(PoolChoice choice)
+        {
+            Console.WriteLine($"Checking odds for {choice}");
+            Console.WriteLine($"ChoiceOneOdds: {ChoiceOneOdds}, ChoiceTwoOdds: {ChoiceTwoOdds}");
+
+            if (choice == PoolChoice.Choice_1)
+            {
+                return ChoiceOneOdds;
+            }
+            else if (choice == PoolChoice.Choice_2)
+            {
+                return ChoiceTwoOdds;
+            }
+
+            return 0;
+        }
     }
 }

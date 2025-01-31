@@ -37,7 +37,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
                     if (!_wagerManager.IsUserInWagersList(context.User.Id, pool.Wagers))
                     {
                         // Create wager and add to pool
-                        Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, description);
+                        Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, pool.GetOddsForChoice(choice), description);
                         pool.AddWagerToList(newWager);
 
                         // Save and reload
