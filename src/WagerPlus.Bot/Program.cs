@@ -83,7 +83,7 @@ namespace WagerPlus.Bot
                     // Data
                     services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
-                    services.AddSingleton<DiscordConfigHandler>();
+                    services.AddSingleton<DiscordCredentialHandler>();
                     services.AddSingleton<UserProfileHandler>();
                 })
                 .Build();

@@ -9,15 +9,9 @@ namespace WagerPlus.Core.Models
 {
     public class Currency : ICurrency
     {
-        public string Name { get; set; }
-        public string Abbreviation { get; set; }
         public int Total { get; set; }
 
-        public Currency(string name, string abbreviation)
-        {
-            Name = name;
-            Abbreviation = abbreviation;
-        }
+        public Currency() { }
 
         public int GetTotalCurrency()
         {

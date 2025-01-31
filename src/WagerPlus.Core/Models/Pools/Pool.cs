@@ -22,6 +22,10 @@ namespace WagerPlus.Core.Models.Pools
         // Choices
         public Dictionary<int, Choice> Choices { get; set; }
 
+        // Odds
+        public decimal ChoiceOneOdds { get; set; } = 2.0m;
+        public decimal ChoiceTwoOdds { get; set; } = 2.0m;
+
         // Dynamic Info
         public PoolStatus Status { get; set; }
         public int AmountTotal { get; set; }
@@ -63,6 +67,29 @@ namespace WagerPlus.Core.Models.Pools
         public void AddWagerToList(Wager wager)
         {
             Wagers.Add(wager);
+        }
+
+        public int GetProjectedPayoutBasedOnWager(PoolChoice choice, int wagerAmount)
+        {
+            decimal odds = choice == PoolChoice.ChoiceOne ? ChoiceOneOdds : ChoiceTwoOdds;
+
+            // Return total payout including original wager
+            return (int)(wagerAmount * odds);
+        }
+
+        public void EditChoiceOddsAmount(PoolChoice choice, decimal amount)
+        {
+            if (amount >= 1.11m)
+            {
+                if (choice == PoolChoice.ChoiceOne)
+                {
+                    ChoiceOneOdds = amount;
+                }
+                else if (choice == PoolChoice.ChoiceTwo)
+                {
+                    ChoiceTwoOdds = amount;
+                }
+            }
         }
     }
 }

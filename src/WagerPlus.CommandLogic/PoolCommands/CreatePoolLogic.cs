@@ -23,13 +23,28 @@ namespace WagerPlus.CommandLogic.PoolCommands
         public string CreatePoolProcess(SocketInteractionContext context, string name, PoolType poolType, string? description = null)
         {
             string newId = _poolManager.GeneratePoolId();
-            Pool newPool = new(name, poolType, context.User.Id, context.User.Username, description)
+            
+            switch (poolType)
             {
-                Id = newId
-            };
-            _poolManager.AddPool(newPool);
+                case PoolType.Fixed:
+                    FixedPool fixedPool = new(name, poolType, context.User.Id, context.User.Username, description)
+                    {
+                        Id = newId
+                    };
+                    _poolManager.AddPool(fixedPool);
+                    return $"A new {poolType.ToString()} Odds Pool named {fixedPool.Name} has been created by {fixedPool.OwnerDisplayName}! Default odds have been set to **{fixedPool.ChoiceOneOdds}** - Change odds with `/pool set_odds` before a pool is opened!";
 
-            return $"A new {poolType.ToString()} Pool named {newPool.Name} has been created by {newPool.OwnerDisplayName}!";
+                case PoolType.Dynamic:
+                    DynamicPool dynamicPool = new(name, poolType, context.User.Id, context.User.Username, description)
+                    {
+                        Id = newId
+                    };
+                    _poolManager.AddPool(dynamicPool);
+                    return $"A new {poolType.ToString()} Odds Pool named {dynamicPool.Name} has been created by {dynamicPool.OwnerDisplayName}! Default starting odds have been set to **{dynamicPool.ChoiceOneOdds}** - Change odds with `/pool set_odds` before a pool is opened!";
+
+                default:
+                    return "Invalid PoolType given.";
+            }
         }
     }
 }

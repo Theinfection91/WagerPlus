@@ -28,5 +28,13 @@ namespace WagerPlus.Bot.SlashCommands
             var result = _createWagerLogic.CreateWagerProcess(Context, poolName, choice, amount);
             await RespondAsync(result);
         }
+
+        [SlashCommand("simulate", "Returns the value of winning a mock wager")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task SimulateWagerAsync(string poolName, PoolChoice choice, int amount)
+        {
+
+        }
     }
 }

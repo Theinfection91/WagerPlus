@@ -53,7 +53,7 @@ namespace WagerPlus.Bot.SlashCommands
             await RespondAsync(result);
         }
 
-        [SlashCommand("add_target", "Add a choice to wager on in given pool.")]
+        [SlashCommand("add_target", "Add a target for a choice in given pool.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
         public async Task AddTarget(string poolName, string name, string? description = null)

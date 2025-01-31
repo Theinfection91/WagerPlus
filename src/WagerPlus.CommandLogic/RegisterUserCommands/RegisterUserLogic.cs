@@ -24,9 +24,13 @@ namespace WagerPlus.CommandLogic.RegisterUserCommands
             // Check if user is registered already
             if (!_userProfileManager.IsUserRegistered(context.User.Id))
             {
+                // TODO: Decide on new user current amount
                 UserProfile userProfile = new(context.User.Username, context.User.Id)
                 {
-                    Currency = new(_configManager.GetCurrencyName(), _configManager.GetCurrencyAbbreviation())
+                    Currency = new()
+                    {
+                        Total = 50
+                    }
                 };
                 _userProfileManager.RegisterNewUserProfile(userProfile);
 
