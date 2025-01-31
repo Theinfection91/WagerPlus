@@ -71,7 +71,7 @@ namespace WagerPlus.Core.Models.Pools
 
         public int GetProjectedPayoutBasedOnWager(PoolChoice choice, int wagerAmount)
         {
-            decimal odds = choice == PoolChoice.ChoiceOne ? ChoiceOneOdds : ChoiceTwoOdds;
+            decimal odds = choice == PoolChoice.Choice_1 ? ChoiceOneOdds : ChoiceTwoOdds;
 
             // Return total payout including original wager
             return (int)(wagerAmount * odds);
@@ -81,15 +81,35 @@ namespace WagerPlus.Core.Models.Pools
         {
             if (amount >= 1.11m)
             {
-                if (choice == PoolChoice.ChoiceOne)
+                if (choice == PoolChoice.Choice_1)
                 {
                     ChoiceOneOdds = amount;
                 }
-                else if (choice == PoolChoice.ChoiceTwo)
+                else if (choice == PoolChoice.Choice_2)
                 {
                     ChoiceTwoOdds = amount;
                 }
             }
+        }
+
+        public int GetMinimumBetForProfit(PoolChoice choice)
+        {
+            decimal odds;
+
+            if (choice == PoolChoice.Choice_1)
+            {
+                odds = ChoiceOneOdds;
+            }
+            else if (choice == PoolChoice.Choice_2)
+            {
+                odds = ChoiceTwoOdds;
+            }
+            else
+            {
+                return 0;
+            }
+
+            return (int)Math.Ceiling(1 / (odds - 1));
         }
     }
 }

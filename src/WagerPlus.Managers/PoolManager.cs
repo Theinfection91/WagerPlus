@@ -117,11 +117,11 @@ namespace WagerPlus.Managers
 
             if (pool.Targets.Count == 0)
             {
-                return PoolTarget.TargetOne;
+                return PoolTarget.Target_1;
             }
             else
             {
-                return PoolTarget.TargetTwo;
+                return PoolTarget.Target_2;
             }
         }
 
@@ -132,11 +132,11 @@ namespace WagerPlus.Managers
 
             foreach (var target in pool.Targets)
             {
-                if (target.Value.PoolTarget == PoolTarget.TargetOne)
+                if (target.Value.PoolTarget == PoolTarget.Target_1)
                 {
                     choiceOne = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
                 }
-                else if (target.Value.PoolTarget == PoolTarget.TargetTwo)
+                else if (target.Value.PoolTarget == PoolTarget.Target_2)
                 {
                     choiceTwo = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
                 }

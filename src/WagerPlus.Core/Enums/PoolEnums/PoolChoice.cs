@@ -8,7 +8,7 @@ namespace WagerPlus.Core.Enums.PoolEnums
 {
     public enum PoolChoice
     {
-        ChoiceOne,
-        ChoiceTwo
+        Choice_1,
+        Choice_2
     }
 }

@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WagerPlus.Core.Enums.PoolEnums;
+using WagerPlus.Core.Models.Pools;
+using WagerPlus.Managers;
+
+namespace WagerPlus.CommandLogic.WagerCommands
+{
+    public class MinimumWagerLogic : Logic
+    {
+        private PoolManager _poolManager;
+        public MinimumWagerLogic(PoolManager poolManager) : base("Minimum Wager")
+        {
+            _poolManager = poolManager;
+        }
+
+        public string MinimumWagerProcess(string poolName, PoolChoice choice)
+        {
+            // Check if pool by given name exists
+            if (!_poolManager.IsPoolNameUnique(poolName))
+            {
+                // Grab pool
+                Pool? pool = _poolManager.GetPoolByName(poolName);
+
+                // Check if pool is open for wagers
+                if (_poolManager.IsPoolOpen(pool))
+                {
+                    return $"To gain a profit on {choice.ToString()} in {pool.Name} you would have to place a minimum wager amount of {pool.GetMinimumBetForProfit(choice)}.";
+                }
+                return $"**{pool.Name}** is not currently open so the odds may not be what they intend to be when it does. Try again later.";
+            }
+            return $"No pool found by the name of **{poolName}**";
+        }
+    }
+}

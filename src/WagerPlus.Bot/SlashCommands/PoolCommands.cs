@@ -17,12 +17,14 @@ namespace WagerPlus.Bot.SlashCommands
     {
         private CreatePoolLogic _createPoolCommand;
         private GenerateChoicesLogic _generateChoicesCommand;
+        private EditOddsLogic _editOddsLogic;
         private AddTargetLogic _addTargetCommand;
 
-        public PoolCommands(CreatePoolLogic createPoolCommand, GenerateChoicesLogic addChoiceCommand, AddTargetLogic addTarget)
+        public PoolCommands(CreatePoolLogic createPoolCommand, GenerateChoicesLogic addChoiceCommand, EditOddsLogic editOddsLogic, AddTargetLogic addTarget)
         {
             _createPoolCommand = createPoolCommand;
             _generateChoicesCommand = addChoiceCommand;
+            _editOddsLogic = editOddsLogic;
             _addTargetCommand = addTarget;
         }
 
@@ -59,6 +61,15 @@ namespace WagerPlus.Bot.SlashCommands
         public async Task AddTarget(string poolName, string name, string? description = null)
         {
             var result = _addTargetCommand.AddTargetProcess(Context, poolName, name, description);
+            await RespondAsync(result);
+        }
+
+        [SlashCommand("edit_odds", "Edits the odds for a choice in given pool before it opens.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task EditOdds(string poolName, PoolChoice choice, decimal odds)
+        {
+            var result = _editOddsLogic.EditOddsProcess(Context, poolName, choice, odds);
             await RespondAsync(result);
         }
 

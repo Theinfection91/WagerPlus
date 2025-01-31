@@ -8,7 +8,7 @@ namespace WagerPlus.Core.Enums.PoolEnums
 {
     public enum PoolTarget
     {
-        TargetOne,
-        TargetTwo
+        Target_1,
+        Target_2
     }
 }
