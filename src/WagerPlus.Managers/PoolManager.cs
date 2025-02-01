@@ -172,11 +172,30 @@ namespace WagerPlus.Managers
         public void SetPoolStatus(Pool pool, PoolStatus poolStatus)
         {
             pool.Status = poolStatus;
+            SetTimeStamp(pool, poolStatus);
         }
 
         public void SetTargetsLocked(Pool pool, bool trueOrFalse)
         {
             pool.IsTargetsLocked = trueOrFalse;
+        }
+
+        public void SetTimeStamp(Pool pool, PoolStatus poolStatus)
+        {
+            switch (poolStatus)
+            {
+                case PoolStatus.Open:
+                    pool.Opened = DateTime.Now;
+                    break;
+
+                case PoolStatus.Closed:
+                    pool.Closed = DateTime.Now;
+                    break;
+
+                case PoolStatus.Resolved:
+                    pool.Resolved = DateTime.Now;
+                    break;
+            }
         }
 
         public void AddPool(Pool pool)

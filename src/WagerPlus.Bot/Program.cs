@@ -53,15 +53,17 @@ namespace WagerPlus.Bot
                     ///////////////////////////////
                     ///
                     // Currency Commands
-                    
+
 
                     // Pool Commands
+                    services.AddSingleton<AddTargetLogic>();
+                    services.AddSingleton<ClosePoolLogic>();
                     services.AddSingleton<CreatePoolLogic>();
                     services.AddSingleton<LockTargetsLogic>();
-                    services.AddSingleton<SetOddsLogic>();
                     services.AddSingleton<OpenPoolLogic>();
-                    services.AddSingleton<AddTargetLogic>();
-
+                    services.AddSingleton<ResolvePoolLogic>();
+                    services.AddSingleton<SetOddsLogic>();
+                                      
                     // Setup Commands
                     services.AddSingleton<RegisterUserLogic>();
                     services.AddSingleton<SetupCurrencyLogic>();

@@ -92,5 +92,20 @@ namespace WagerPlus.Bot.SlashCommands
             await RespondWithModalAsync<OpenPoolModal>("open_pool");
         }
 
+        [SlashCommand("close", "Set the pool status of given Pool to Closed, not allowing wagers.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task ClosePoolAsync()
+        {
+            await RespondWithModalAsync<ClosePoolModal>("close_pool");
+        }
+
+        [SlashCommand("resolve", "Set the pool status of given Pool to Resolved, and send payouts.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task ResolvePoolAsync()
+        {
+            await RespondWithModalAsync<ResolvePoolModal>("resolve_pool");
+        }
     }
 }

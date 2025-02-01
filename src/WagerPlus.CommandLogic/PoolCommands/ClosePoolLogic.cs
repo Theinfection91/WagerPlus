@@ -11,15 +11,15 @@ using WagerPlus.Managers;
 
 namespace WagerPlus.CommandLogic.PoolCommands
 {
-    public class OpenPoolLogic : Logic
+    public class ClosePoolLogic : Logic
     {
         private PoolManager _poolManager;
-        public OpenPoolLogic(PoolManager poolManager) : base("Open Pool")
+        public ClosePoolLogic(PoolManager poolManager) : base("Close Pool")
         {
             _poolManager = poolManager;
         }
 
-        public string OpenPoolProcess(SocketInteractionContext context, string poolIdOne, string poolIdTwo)
+        public string ClosePoolProcess(SocketInteractionContext context, string poolIdOne, string poolIdTwo)
         {
             // Check if given Id's match exactly
             if (poolIdOne.Equals(poolIdTwo))
@@ -38,27 +38,17 @@ namespace WagerPlus.CommandLogic.PoolCommands
                     bool IsAdmin = guildUser.GuildPermissions.Administrator;
                     if (_poolManager.IsUserPoolOwner(context.User.Id, pool) || IsAdmin)
                     {
-                        // Check if targets were set
-                        if (_poolManager.IsBothTargetsSetInPool(pool))
+                        // Check current status
+                        if (_poolManager.IsPoolOpen(pool))
                         {
-                            // Check if targets are locked so odds are set
-                            if (_poolManager.IsTargetsLocked(pool))
-                            {
-                                // Check current status
-                                if (!_poolManager.IsPoolOpen(pool))
-                                {
-                                    // Change status and time stamp
-                                    _poolManager.SetPoolStatus(pool, PoolStatus.Open);
+                            // Change status
+                            _poolManager.SetPoolStatus(pool, PoolStatus.Closed);
 
-                                    _poolManager.SaveAndReloadBettingPoolsDatabase();
+                            _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                                    return $"{pool.Name} is now {pool.Status} for wagers!";
-                                }
-                                return $"The pool is already {pool.Status}.";
-                            }
-                            return $"Targets have not been set for {pool.Name}";
+                            return $"{pool.Name} is now {pool.Status} for wagers!";
                         }
-                        return $"There are not enough targets in {pool.Name}";
+                        return $"The pool is already {pool.Status}.";
                     }
                     return $"You are not the owner of {pool.Name}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
                 }

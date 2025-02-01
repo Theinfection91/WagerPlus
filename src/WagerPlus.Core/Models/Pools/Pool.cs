@@ -78,6 +78,11 @@ namespace WagerPlus.Core.Models.Pools
             return Targets.Count >= 2;
         }
 
+        public bool IsOddsDifferent()
+        {
+            return TargetOneOdds != TargetTwoOdds;
+        }
+
         public int GetProjectedPayoutBasedOnWager(PoolTarget target, int wagerAmount)
         {
             decimal odds = target == PoolTarget.Target_1 ? TargetOneOdds : TargetTwoOdds;
