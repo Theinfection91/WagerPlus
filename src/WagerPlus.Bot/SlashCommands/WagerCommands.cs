@@ -29,10 +29,10 @@ namespace WagerPlus.Bot.SlashCommands
         [RequireUserRegistered]
         public async Task CreateWagerAsync(
             [Summary("pool_id", "The pool ID to create a wager in")] string poolId,
-            [Summary("pool_choice", "The choice in the pool to wager on")] PoolChoice choice,
+            [Summary("pool_target", "The choice in the pool to wager on")] PoolTarget target,
             [Summary("wager_amount", "The amount the user is wagering")] int amount)
         {
-            var result = _createWagerLogic.CreateWagerProcess(Context, poolId, choice, amount);
+            var result = _createWagerLogic.CreateWagerProcess(Context, poolId, target, amount);
             await RespondAsync(result);
         }
 
@@ -41,9 +41,9 @@ namespace WagerPlus.Bot.SlashCommands
         [RequireUserRegistered]
         public async Task MinimumWagerAsync(
             [Summary("pool_id", "The pool ID to check the minimum in")] string poolId,
-            [Summary("pool_choice", "The choice on which to get the minimum wager for")] PoolChoice choice)
+            [Summary("pool_target", "The target on which to get the minimum wager for")] PoolTarget target)
         {
-            var result = _minimumWagerLogic.MinimumWagerProcess(poolId, choice);
+            var result = _minimumWagerLogic.MinimumWagerProcess(poolId, target);
             await RespondAsync(result);
         }
 
@@ -52,10 +52,10 @@ namespace WagerPlus.Bot.SlashCommands
         [RequireUserRegistered]
         public async Task SimulateWagerAsync(
             [Summary("pool_id", "The pool ID to simulate wager in")] string poolId,
-            [Summary("pool_choice", "The choice to simulate a wager on")] PoolChoice choice,
+            [Summary("pool_target", "The target to simulate a wager on")] PoolTarget target,
             [Summary("wager_amount", "The amount to simulate")] int amount)
         {
-            var result = _simulateWagerLogic.SimulateWagerProcess(poolId, choice, amount);
+            var result = _simulateWagerLogic.SimulateWagerProcess(poolId, target, amount);
             await RespondAsync(result);
         }
     }

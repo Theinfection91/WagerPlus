@@ -12,7 +12,6 @@ namespace WagerPlus.Core.Models
         public string Name { get; set; }
         public PoolTarget PoolTarget { get; set; }
         public string? Description { get; set; }
-        public object? Object { get; set; }
 
         public Target(string name, PoolTarget poolTarget, string? description = null)
         {

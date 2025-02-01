@@ -18,7 +18,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
             _poolManager = poolManager;
         }
 
-        public string SetOddsProcess(SocketInteractionContext context, string poolId, PoolChoice choice, decimal odds)
+        public string SetOddsProcess(SocketInteractionContext context, string poolId, PoolTarget target, decimal odds)
         {
             if (odds < 1.01m)
             {
@@ -36,9 +36,9 @@ namespace WagerPlus.CommandLogic.PoolCommands
                     // Check if pool is closed, cant change odds when its open
                     if (pool.Status.Equals(PoolStatus.Closed))
                     {
-                        pool.EditChoiceOddsAmount(choice, odds);
+                        pool.EditChoiceOddsAmount(target, odds);
                         _poolManager.SaveAndReloadBettingPoolsDatabase();
-                        return $"{choice}'s odds have been set to **{odds}**";
+                        return $"{target}'s odds have been set to **{odds}**";
                     }
                     return $"The pool is currently open or has been resolved.";
                 }

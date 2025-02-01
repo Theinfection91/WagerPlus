@@ -26,7 +26,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
             _wagerManager = wagerManager;
         }
 
-        public string CreateWagerProcess(SocketInteractionContext context, string poolId, PoolChoice choice, int wagerAmount, string? description = null)
+        public string CreateWagerProcess(SocketInteractionContext context, string poolId, PoolTarget target, int wagerAmount, string? description = null)
         {
             if (wagerAmount > 0)
             {
@@ -49,21 +49,21 @@ namespace WagerPlus.CommandLogic.WagerCommands
                             if (_currencyManager.HasEnoughFunds(userProfile, wagerAmount))
                             {
                                 // Check if wager will net any profit
-                                if (_wagerManager.IsWagerProfitable(wagerAmount, pool.GetMinimumBetForProfit(choice)))
+                                if (_wagerManager.IsWagerProfitable(wagerAmount, pool.GetMinimumBetForProfit(target)))
                                 {
                                     // Subtract wager amount from user
                                     _currencyManager.SubtractAmountFromUserCurrency(userProfile, wagerAmount);
                                     // Create wager and add to pool
-                                    Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, pool.GetOddsForChoice(choice), description);
+                                    Wager newWager = new(context.User.Id, context.User.Username, target, wagerAmount, pool.GetOddsForChoice(target), description);
                                     pool.AddWagerToList(newWager);
 
                                     // Save and reload
                                     _poolManager.SaveAndReloadBettingPoolsDatabase();
                                     _userProfileManager.SaveAndReloadUserProfileList();
 
-                                    return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Choice} - Amount: {newWager.Amount}";
+                                    return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Target} - Amount: {newWager.Amount}";
                                 }
-                                return $"A wager amount of {wagerAmount} at {pool.GetOddsForChoice(choice)} would not net any profit. The minimum bet at those odds would be **{pool.GetMinimumBetForProfit(choice)}**";
+                                return $"A wager amount of {wagerAmount} at {pool.GetOddsForChoice(target)} would not net any profit. The minimum bet at those odds would be **{pool.GetMinimumBetForProfit(target)}**";
                             }
                             return $"Not enough funds for given wager amount. Wager Amount: {wagerAmount} - Total Currency: {userProfile.Currency.GetTotalCurrency()}";
                         }

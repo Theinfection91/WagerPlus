@@ -17,7 +17,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
             _poolManager = poolManager;
         }
 
-        public string MinimumWagerProcess(string poolId, PoolChoice choice)
+        public string MinimumWagerProcess(string poolId, PoolTarget target)
         {
             // Check if pool by given name exists
             if (_poolManager.IsPoolIdInDatabase(poolId))
@@ -28,7 +28,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
                 // Check if pool is open for wagers
                 if (_poolManager.IsPoolOpen(pool))
                 {
-                    return $"To gain a profit on {choice.ToString()} in {pool.Name} you would have to place a minimum wager amount of {pool.GetMinimumBetForProfit(choice)}.";
+                    return $"To gain a profit on {target.ToString()} in {pool.Name} you would have to place a minimum wager amount of {pool.GetMinimumBetForProfit(target)}.";
                 }
                 return $"**{pool.Name}** is not currently open so the odds may not be what they intend to be when it does. Try again later.";
             }

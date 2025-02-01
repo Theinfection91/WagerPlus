@@ -17,7 +17,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
             _poolManager = poolManager;
         }
 
-        public string SimulateWagerProcess(string poolId, PoolChoice choice, int wagerAmount)
+        public string SimulateWagerProcess(string poolId, PoolTarget target, int wagerAmount)
         {
             // Check if pool by given name exists
             if (_poolManager.IsPoolIdInDatabase(poolId))
@@ -28,7 +28,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
                 // Check if pool is open for wagers
                 if (_poolManager.IsPoolOpen(pool))
                 {
-                    return $"Placing a wager of {wagerAmount} on {choice} in {pool.Name} would win you {pool.GetProjectedPayoutBasedOnWager(choice, wagerAmount)} (Profit: {pool.GetProjectedPayoutBasedOnWager(choice, wagerAmount) - wagerAmount})";
+                    return $"Placing a wager of {wagerAmount} on {target} in {pool.Name} would win you {pool.GetProjectedPayoutBasedOnWager(target, wagerAmount)} (Profit: {pool.GetProjectedPayoutBasedOnWager(target, wagerAmount) - wagerAmount})";
                 }
                 return $"**{pool.Name}** is not currently open so the odds may not be what they intend to be when it does. Try again later.";
             }

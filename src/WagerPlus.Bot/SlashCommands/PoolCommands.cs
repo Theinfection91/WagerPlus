@@ -16,11 +16,11 @@ namespace WagerPlus.Bot.SlashCommands
     public class PoolCommands : InteractionModuleBase<SocketInteractionContext>
     {
         private CreatePoolLogic _createPoolCommand;
-        private GenerateChoicesLogic _generateChoicesCommand;
+        private LockTargetsLogic _generateChoicesCommand;
         private SetOddsLogic _setOddsLogic;
         private AddTargetLogic _addTargetCommand;
 
-        public PoolCommands(CreatePoolLogic createPoolCommand, GenerateChoicesLogic addChoiceCommand, SetOddsLogic editOddsLogic, AddTargetLogic addTarget)
+        public PoolCommands(CreatePoolLogic createPoolCommand, LockTargetsLogic addChoiceCommand, SetOddsLogic editOddsLogic, AddTargetLogic addTarget)
         {
             _createPoolCommand = createPoolCommand;
             _generateChoicesCommand = addChoiceCommand;
@@ -49,13 +49,13 @@ namespace WagerPlus.Bot.SlashCommands
         }
 
         
-        [SlashCommand("generate_choices", "Generate choices to wager on when a pool has two targets.")]
+        [SlashCommand("lock_targets", "Lock in targets of pool with given odds.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task GenerateChoicesAsync(
+        public async Task LockTargetsAsync(
             [Summary("pool_id", "The ID of the pool to generate choices in.")] string poolId)
         {
-            var result = _generateChoicesCommand.GenerateChoicesProcess(Context, poolId);
+            var result = _generateChoicesCommand.LockTargetsProcess(Context, poolId);
             await RespondAsync(result);
         }
 
@@ -65,9 +65,10 @@ namespace WagerPlus.Bot.SlashCommands
         public async Task AddTargetAsync(
             [Summary("pool_id", "The pool ID to add a target to")] string poolId,
             [Summary("target_name", "The name you want to give the target")] string name,
+            [Summary("odds", "The odds to set for the target")] decimal odds,
             [Summary("description", "Optional description of the target")] string? description = null)
         {
-            var result = _addTargetCommand.AddTargetProcess(Context, poolId, name, description);
+            var result = _addTargetCommand.AddTargetProcess(Context, poolId, name, odds, description);
             await RespondAsync(result);
         }
 
@@ -76,10 +77,10 @@ namespace WagerPlus.Bot.SlashCommands
         [RequireUserRegistered]
         public async Task SetOddsAsync(
             [Summary("pool_id", "The pool ID to set odds in")] string poolId,
-            [Summary("pool_choice", "The choice to change the odds in")] PoolChoice choice,
+            [Summary("pool_target", "The target to change the odds in")] PoolTarget target,
             [Summary("odds", "The new odds amount to set to the given choice")] decimal odds)
         {
-            var result = _setOddsLogic.SetOddsProcess(Context, poolId, choice, odds);
+            var result = _setOddsLogic.SetOddsProcess(Context, poolId, target, odds);
             await RespondAsync(result);
         }
 

@@ -15,7 +15,7 @@ namespace WagerPlus.Core.Models
         public string? Description { get; set; }
         
         // The user's choice
-        public PoolChoice Choice { get; set; }
+        public PoolTarget Target { get; set; }
 
         // Wager and Odds amount
         public int Amount { get; set; }
@@ -24,12 +24,12 @@ namespace WagerPlus.Core.Models
         // Timestamp
         public DateTime CreatedOn { get; set; }
 
-        public Wager(ulong discordId, string displayName, PoolChoice choice, int wagerAmount, decimal odds, string? description = null)
+        public Wager(ulong discordId, string displayName, PoolTarget target, int wagerAmount, decimal odds, string? description = null)
         {
             DiscordId = discordId;
             DisplayName = displayName;
             Description = description;
-            Choice = choice;
+            Target = target;
             Amount = wagerAmount;
             Odds = odds;
             CreatedOn = DateTime.Now;

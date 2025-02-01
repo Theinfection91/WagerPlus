@@ -57,7 +57,7 @@ namespace WagerPlus.Bot
 
                     // Pool Commands
                     services.AddSingleton<CreatePoolLogic>();
-                    services.AddSingleton<GenerateChoicesLogic>();
+                    services.AddSingleton<LockTargetsLogic>();
                     services.AddSingleton<SetOddsLogic>();
                     services.AddSingleton<OpenPoolLogic>();
                     services.AddSingleton<AddTargetLogic>();

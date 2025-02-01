@@ -33,6 +33,11 @@ namespace WagerPlus.Managers
             LoadBettingPoolsDatabase();
         }
 
+        public bool IsOddsAmountValid(decimal odds)
+        {
+            return odds >= 1.01m;
+        }
+
         public bool IsPoolIdInDatabase(string poolId)
         {
             foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
@@ -91,16 +96,9 @@ namespace WagerPlus.Managers
             }
         }
 
-        public bool IsChoicesGeneratedInPool(Pool pool)
+        public bool IsTargetsLocked(Pool pool)
         {
-            if (pool.Choices.Count == 2)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return pool.IsTargetsLocked;
         }
 
         public bool IsUserPoolOwner(ulong discordId, Pool pool)
@@ -123,25 +121,6 @@ namespace WagerPlus.Managers
             {
                 return PoolTarget.Target_2;
             }
-        }
-
-        public (Choice?, Choice?) GetCorrectChoices(Pool pool)
-        {
-            Choice? choiceOne = null;
-            Choice? choiceTwo = null;
-
-            foreach (var target in pool.Targets)
-            {
-                if (target.Value.PoolTarget == PoolTarget.Target_1)
-                {
-                    choiceOne = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
-                }
-                else if (target.Value.PoolTarget == PoolTarget.Target_2)
-                {
-                    choiceTwo = new Choice($"{target.Value.Name} {WagerCondition.Win}s", target.Value, WagerCondition.Win);
-                }
-            }
-            return (choiceOne, choiceTwo);
         }
 
         public Pool? GetPoolById(string poolId)
@@ -176,7 +155,7 @@ namespace WagerPlus.Managers
             while (!isPoolIdUnique)
             {
                 Random random = new();
-                int randomInt = random.Next(10, 100);
+                int randomInt = random.Next(100, 1000);
                 uniqueId = $"P{randomInt}";
 
                 // Check if the ID is unique in the database
@@ -193,6 +172,11 @@ namespace WagerPlus.Managers
         public void SetPoolStatus(Pool pool, PoolStatus poolStatus)
         {
             pool.Status = poolStatus;
+        }
+
+        public void SetTargetsLocked(Pool pool, bool trueOrFalse)
+        {
+            pool.IsTargetsLocked = trueOrFalse;
         }
 
         public void AddPool(Pool pool)

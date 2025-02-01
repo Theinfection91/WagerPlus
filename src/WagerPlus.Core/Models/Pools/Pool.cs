@@ -18,13 +18,11 @@ namespace WagerPlus.Core.Models.Pools
 
         // Targets
         public Dictionary<int, Target> Targets { get; set; }
-
-        // Choices
-        public Dictionary<int, Choice> Choices { get; set; }
+        public bool IsTargetsLocked { get; set; }
 
         // Odds
-        public decimal ChoiceOneOdds { get; set; } = 2.0m;
-        public decimal ChoiceTwoOdds { get; set; } = 2.0m;
+        public decimal TargetOneOdds { get; set; } 
+        public decimal TargetTwoOdds { get; set; } 
 
         // Dynamic Info
         public PoolStatus Status { get; set; }
@@ -47,16 +45,11 @@ namespace WagerPlus.Core.Models.Pools
             Type = poolType;
             CreatedOn = DateTime.Now;
             Targets = [];
-            Choices = [];
+            IsTargetsLocked = false;
             Status = PoolStatus.Closed;
             Wagers = [];
             OwnerDiscordId = ownerDiscordId;
             OwnerDisplayName = ownerDisplayName;
-        }
-
-        public void AddChoiceToDictionary(Choice choice)
-        {
-            Choices.Add(Choices.Count + 1, choice);
         }
 
         public void AddTargetToDictionary(Target target)
@@ -82,43 +75,43 @@ namespace WagerPlus.Core.Models.Pools
 
         public bool IsTargetsFull()
         {
-            return Targets.Count < 2;
+            return Targets.Count >= 2;
         }
 
-        public int GetProjectedPayoutBasedOnWager(PoolChoice choice, int wagerAmount)
+        public int GetProjectedPayoutBasedOnWager(PoolTarget target, int wagerAmount)
         {
-            decimal odds = choice == PoolChoice.Choice_1 ? ChoiceOneOdds : ChoiceTwoOdds;
+            decimal odds = target == PoolTarget.Target_1 ? TargetOneOdds : TargetTwoOdds;
 
             // Return total payout including original wager
             return (int)(wagerAmount * odds);
         }
 
-        public void EditChoiceOddsAmount(PoolChoice choice, decimal amount)
+        public void EditChoiceOddsAmount(PoolTarget target, decimal amount)
         {
-            if (amount >= 1.11m)
+            if (amount >= 1.00m)
             {
-                if (choice == PoolChoice.Choice_1)
+                if (target == PoolTarget.Target_1)
                 {
-                    ChoiceOneOdds = amount;
+                    TargetOneOdds = amount;
                 }
-                else if (choice == PoolChoice.Choice_2)
+                else if (target == PoolTarget.Target_2)
                 {
-                    ChoiceTwoOdds = amount;
+                    TargetTwoOdds = amount;
                 }
             }
         }
 
-        public int GetMinimumBetForProfit(PoolChoice choice)
+        public int GetMinimumBetForProfit(PoolTarget target)
         {
             decimal odds;
 
-            if (choice == PoolChoice.Choice_1)
+            if (target == PoolTarget.Target_1)
             {
-                odds = ChoiceOneOdds;
+                odds = TargetOneOdds;
             }
-            else if (choice == PoolChoice.Choice_2)
+            else if (target == PoolTarget.Target_2)
             {
-                odds = ChoiceTwoOdds;
+                odds = TargetTwoOdds;
             }
             else
             {
@@ -128,18 +121,15 @@ namespace WagerPlus.Core.Models.Pools
             return (int)Math.Ceiling(1 / (odds - 1));
         }
 
-        public decimal GetOddsForChoice(PoolChoice choice)
+        public decimal GetOddsForChoice(PoolTarget target)
         {
-            Console.WriteLine($"Checking odds for {choice}");
-            Console.WriteLine($"ChoiceOneOdds: {ChoiceOneOdds}, ChoiceTwoOdds: {ChoiceTwoOdds}");
-
-            if (choice == PoolChoice.Choice_1)
+            if (target == PoolTarget.Target_1)
             {
-                return ChoiceOneOdds;
+                return TargetOneOdds;
             }
-            else if (choice == PoolChoice.Choice_2)
+            else if (target == PoolTarget.Target_2)
             {
-                return ChoiceTwoOdds;
+                return TargetTwoOdds;
             }
 
             return 0;

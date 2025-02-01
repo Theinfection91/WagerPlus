@@ -11,11 +11,11 @@ namespace WagerPlus.Bot.Modals.PoolModals
     {
         public string Title => "Open Pool Confirmation";
 
-        [InputLabel("Enter Pool ID Number (Example: P37)")]
+        [InputLabel("Enter Pool ID Number - Case Sensitive")]
         [ModalTextInput("pool_id_one", placeholder: "Enter pool ID number...")]
         public string PoolIdOne { get; set; }
 
-        [InputLabel("Enter Pool ID Number Again")]
+        [InputLabel("Enter Pool ID Number Again - Case Sensitive")]
         [ModalTextInput("pool_id_two", placeholder: "Enter pool ID number again...")]
         public string PoolIdTwo { get; set; }
     }
