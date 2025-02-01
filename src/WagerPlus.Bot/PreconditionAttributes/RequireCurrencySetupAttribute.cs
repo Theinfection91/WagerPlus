@@ -25,7 +25,7 @@ namespace WagerPlus.Bot.PreconditionAttributes
 
                 if (!configManager.GetIsCurrencySetupComplete())
                 {
-                    await context.Interaction.RespondAsync("⚠️ **Error:** Currency setup is not complete. An admin must set this up using `/currency set_up`.", ephemeral: true);
+                    await context.Interaction.RespondAsync("⚠️ **Error:** Currency setup is not complete. An admin must set this up using `/setup currency`.", ephemeral: true);
                     return PreconditionResult.FromError("Currency setup is not complete.");
                 }
 

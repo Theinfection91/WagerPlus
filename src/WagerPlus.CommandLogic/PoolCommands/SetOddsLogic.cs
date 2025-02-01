@@ -10,15 +10,15 @@ using WagerPlus.Managers;
 
 namespace WagerPlus.CommandLogic.PoolCommands
 {
-    public class EditOddsLogic : Logic
+    public class SetOddsLogic : Logic
     {
         private PoolManager _poolManager;
-        public EditOddsLogic(PoolManager poolManager) : base("Edit Pool Odds")
+        public SetOddsLogic(PoolManager poolManager) : base("Edit Pool Odds")
         {
             _poolManager = poolManager;
         }
 
-        public string EditOddsProcess(SocketInteractionContext context, string poolId, PoolChoice choice, decimal odds)
+        public string SetOddsProcess(SocketInteractionContext context, string poolId, PoolChoice choice, decimal odds)
         {
             if (odds < 1.01m)
             {

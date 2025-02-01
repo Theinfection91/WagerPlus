@@ -23,7 +23,7 @@ namespace WagerPlus.Bot.PreconditionAttributes
 
             if (!userProfileManager.IsUserRegistered(context.User.Id))
             {
-                await context.Interaction.RespondAsync("⚠️ **Error:** You are not registered to the database yet. Please use `/register_user` to begin.", ephemeral: true);
+                await context.Interaction.RespondAsync("⚠️ **Error:** You are not registered to the database yet. Please use `/setup register_user` to begin.", ephemeral: true);
                 return PreconditionResult.FromError($"{context.User.Username} ({context.User.Id}) is not registered in the database.");
             }
 

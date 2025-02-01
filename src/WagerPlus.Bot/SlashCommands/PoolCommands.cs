@@ -17,14 +17,14 @@ namespace WagerPlus.Bot.SlashCommands
     {
         private CreatePoolLogic _createPoolCommand;
         private GenerateChoicesLogic _generateChoicesCommand;
-        private EditOddsLogic _editOddsLogic;
+        private SetOddsLogic _setOddsLogic;
         private AddTargetLogic _addTargetCommand;
 
-        public PoolCommands(CreatePoolLogic createPoolCommand, GenerateChoicesLogic addChoiceCommand, EditOddsLogic editOddsLogic, AddTargetLogic addTarget)
+        public PoolCommands(CreatePoolLogic createPoolCommand, GenerateChoicesLogic addChoiceCommand, SetOddsLogic editOddsLogic, AddTargetLogic addTarget)
         {
             _createPoolCommand = createPoolCommand;
             _generateChoicesCommand = addChoiceCommand;
-            _editOddsLogic = editOddsLogic;
+            _setOddsLogic = editOddsLogic;
             _addTargetCommand = addTarget;
         }
 
@@ -49,7 +49,7 @@ namespace WagerPlus.Bot.SlashCommands
         [SlashCommand("generate_choices", "Generate choices to wager on when a pool has two targets.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task GenerateChoices(string poolId, string? description = null)
+        public async Task GenerateChoicesAsync(string poolId, string? description = null)
         {
             var result = _generateChoicesCommand.GenerateChoicesProcess(Context, poolId, description);
             await RespondAsync(result);
@@ -58,25 +58,25 @@ namespace WagerPlus.Bot.SlashCommands
         [SlashCommand("add_target", "Add a target for a choice in given pool.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task AddTarget(string poolId, string name, string? description = null)
+        public async Task AddTargetAsync(string poolId, string name, string? description = null)
         {
             var result = _addTargetCommand.AddTargetProcess(Context, poolId, name, description);
             await RespondAsync(result);
         }
 
-        [SlashCommand("edit_odds", "Edits the odds for a choice in given pool before it opens.")]
+        [SlashCommand("set_odds", "Edits the odds for a choice in given pool before it opens.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task EditOdds(string poolId, PoolChoice choice, decimal odds)
+        public async Task SetOddsAsync(string poolId, PoolChoice choice, decimal odds)
         {
-            var result = _editOddsLogic.EditOddsProcess(Context, poolId, choice, odds);
+            var result = _setOddsLogic.SetOddsProcess(Context, poolId, choice, odds);
             await RespondAsync(result);
         }
 
         [SlashCommand("open", "Set the pool status of given Pool to Open, allowing wagers.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task OpenPool()
+        public async Task OpenPoolAsync()
         {
             await RespondWithModalAsync<OpenPoolModal>("open_pool");
         }

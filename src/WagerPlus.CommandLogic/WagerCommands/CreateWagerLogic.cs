@@ -28,45 +28,52 @@ namespace WagerPlus.CommandLogic.WagerCommands
 
         public string CreateWagerProcess(SocketInteractionContext context, string poolId, PoolChoice choice, int wagerAmount, string? description = null)
         {
-            // Check if pool by given name exists
-            if (_poolManager.IsPoolIdInDatabase(poolId))
+            if (wagerAmount > 0)
             {
-                // Grab pool
-                Pool? pool = _poolManager.GetPoolById(poolId);
-
-                // Check if pool is open for wagers
-                if (_poolManager.IsPoolOpen(pool))
+                // Check if pool by given name exists
+                if (_poolManager.IsPoolIdInDatabase(poolId))
                 {
-                    // Get user profile
-                    UserProfile? userProfile = _userProfileManager.GetUserProfile(context.User.Id);
+                    // Grab pool
+                    Pool? pool = _poolManager.GetPoolById(poolId);
 
-                    // Check if user has already placed wager in pool
-                    if (!_wagerManager.IsUserInWagersList(userProfile.DiscordId, pool.Wagers))
+                    // Check if pool is open for wagers
+                    if (_poolManager.IsPoolOpen(pool))
                     {
-                        // Check if user has enough currency for given wager amount
-                        if (_currencyManager.HasEnoughFunds(userProfile, wagerAmount))
+                        // Get user profile
+                        UserProfile? userProfile = _userProfileManager.GetUserProfile(context.User.Id);
+
+                        // Check if user has already placed wager in pool
+                        if (!_wagerManager.IsUserInWagersList(userProfile.DiscordId, pool.Wagers))
                         {
-                            // Check if wager will net any profit
-                            if (_wagerManager.IsWagerProfitable(wagerAmount, pool.GetMinimumBetForProfit(choice)))
+                            // Check if user has enough currency for given wager amount
+                            if (_currencyManager.HasEnoughFunds(userProfile, wagerAmount))
                             {
-                                // Create wager and add to pool
-                                Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, pool.GetOddsForChoice(choice), description);
-                                pool.AddWagerToList(newWager);
+                                // Check if wager will net any profit
+                                if (_wagerManager.IsWagerProfitable(wagerAmount, pool.GetMinimumBetForProfit(choice)))
+                                {
+                                    // Subtract wager amount from user
+                                    _currencyManager.SubtractAmountFromUserCurrency(userProfile, wagerAmount);
+                                    // Create wager and add to pool
+                                    Wager newWager = new(context.User.Id, context.User.Username, choice, wagerAmount, pool.GetOddsForChoice(choice), description);
+                                    pool.AddWagerToList(newWager);
 
-                                // Save and reload
-                                _poolManager.SaveAndReloadBettingPoolsDatabase();
+                                    // Save and reload
+                                    _poolManager.SaveAndReloadBettingPoolsDatabase();
+                                    _userProfileManager.SaveAndReloadUserProfileList();
 
-                                return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Choice} - Amount: {newWager.Amount}";
+                                    return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Name}. Choice: {newWager.Choice} - Amount: {newWager.Amount}";
+                                }
+                                return $"A wager amount of {wagerAmount} at {pool.GetOddsForChoice(choice)} would not net any profit. The minimum bet at those odds would be **{pool.GetMinimumBetForProfit(choice)}**";
                             }
-                            return $"A wager amount of {wagerAmount} at {pool.GetOddsForChoice(choice)} would not net any profit. The minimum bet at those odds would be **{pool.GetMinimumBetForProfit(choice)}**";
+                            return $"Not enough funds for given wager amount. Wager Amount: {wagerAmount} - Total Currency: {userProfile.Currency.GetTotalCurrency()}";
                         }
-                        return $"Not enough funds for given wager amount. Wager Amount: {wagerAmount} - Total Currency: {userProfile.Currency.GetTotalCurrency()}";
+                        return $"User with the given ID already found in Wagers list in given pool. ID: {context.User.Id} - Pool: {pool.Name}";
                     }
-                    return $"User with the given ID already found in Wagers list in given pool. ID: {context.User.Id} - Pool: {pool.Name}";
+                    return $"{pool.Name} is not currently open for wagers yet.";
                 }
-                return $"{pool.Name} is not currently open for wagers yet.";
+                return $"The pool Id given was not found in the database: {poolId}";
             }
-            return $"The pool Id given was not found in the database: {poolId}";
+            return $"A wager amount can not be 0 or less.";
         }
     }
 }
