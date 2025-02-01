@@ -126,7 +126,7 @@ namespace WagerPlus.Bot
                 return Task.CompletedTask;
             };
 
-            // TODO: Login and start the bot
+            // Login and start the bot
             await _client.LoginAsync(TokenType.Bot, _configManager.GetDiscordToken());
             await _client.StartAsync();
 
@@ -154,7 +154,7 @@ namespace WagerPlus.Bot
             // Register SlashCommand modules
             await _interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
-            // TODO: Register commands to guild
+            // Register commands to guild
             await _interactionService.RegisterCommandsToGuildAsync(_configManager.GetGuildId());
             Console.WriteLine($"{DateTime.Now} - Commands registered to guild {_configManager.GetGuildId()}");
         }
@@ -170,7 +170,6 @@ namespace WagerPlus.Bot
             if (socketMessage is not SocketUserMessage message || message.Author.IsBot) return;
 
             int argPos = 0;
-            // TODO: Add variable to change non slash command prefix in config
             if (message.HasStringPrefix(_configManager.GetCommandPrefix(), ref argPos) ||
                 message.HasMentionPrefix(_client.CurrentUser, ref argPos))
             {

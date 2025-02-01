@@ -22,7 +22,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
             _poolManager = poolManager;
         }
 
-        public string GenerateChoicesProcess(SocketInteractionContext context, string poolId, string? description = null)
+        public string GenerateChoicesProcess(SocketInteractionContext context, string poolId)
         {
             // Grab Pool from database if it exists
             if (_poolManager.IsPoolIdInDatabase(poolId))

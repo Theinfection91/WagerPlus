@@ -30,7 +30,10 @@ namespace WagerPlus.Bot.SlashCommands
         }
 
         [SlashCommand("currency", "Admin command to setup the initial currency info for bot")]
-        public async Task SetupCurrencyAsync(string currencyName, string currencyAbbreviation)
+        [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        public async Task SetupCurrencyAsync(
+            [Summary("currency_name", "The full name of your new currency")] string currencyName,
+            [Summary("currency_abbrev", "The abbreviation for it (Ex. SB, $Ix, BUX")] string currencyAbbreviation)
         {
             var result = _setupCurrencyLogic.SetupCurrencyProcess(currencyName, currencyAbbreviation);
             await RespondAsync(result);
