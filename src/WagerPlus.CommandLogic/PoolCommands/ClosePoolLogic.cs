@@ -46,11 +46,11 @@ namespace WagerPlus.CommandLogic.PoolCommands
 
                             _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                            return $"{pool.Name} is now {pool.Status} for wagers!";
+                            return $"{pool.Id} is now {pool.Status} for wagers!";
                         }
                         return $"The pool is already {pool.Status}.";
                     }
-                    return $"You are not the owner of {pool.Name}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
+                    return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
                 }
                 return $"Given pool ID not found in Database: {poolIdOne}";
             }

@@ -11,6 +11,7 @@ namespace WagerPlus.Data.DataModels
         public string CurrencyName { get; set; } = "";
         public string CurrencyAbbreviation { get; set; } = "";
         public bool IsCurrencySetupComplete { get; set; } = false;
+        public List<ulong> MonetizedChannels { get; set; } = [];
 
         public CurrencyConfigFile() { }
     }

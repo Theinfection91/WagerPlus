@@ -84,11 +84,11 @@ namespace WagerPlus.CommandLogic.PoolCommands
                         }
                         return "The pool is open. Close it before resolving.";
                     }
-                    return $"You are not the owner of {pool.Name}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
+                    return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
                 }
                 return $"Given pool ID not found in Database: {poolIdOne}";
             }
-            return $"The ID's entered did not match. Make sure the P is capital as well. You entered: '{poolIdOne}' - '{poolIdTwo}'";
+            return $"The ID's entered did not match. You entered: '{poolIdOne}' - '{poolIdTwo}'";
         }
     }
 }

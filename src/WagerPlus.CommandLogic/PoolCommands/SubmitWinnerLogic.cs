@@ -55,7 +55,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                     }
                     return $"A pool must be closed before it can have a winner submitted.";
                 }
-                return $"You are not the owner of {pool.Name}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
+                return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
             }
             return $"Given pool ID not found in Database: {poolId}";
         }

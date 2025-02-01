@@ -45,7 +45,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                             // Save and reload Pools Database
                             _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                            return $"Targets have been locked for {pool.Name} successfully.";
+                            return $"Targets have been locked for {pool.Id} successfully.";
                         }
                         return $"Targets have already been locked.";
                     }

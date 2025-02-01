@@ -28,9 +28,9 @@ namespace WagerPlus.CommandLogic.WagerCommands
                 // Check if pool is open for wagers
                 if (_poolManager.IsPoolOpen(pool))
                 {
-                    return $"To gain a profit on {target.ToString()} in {pool.Name} you would have to place a minimum wager amount of {pool.GetMinimumBetForProfit(target)}.";
+                    return $"To gain a profit on {target.ToString()} in {pool.Id} you would have to place a minimum wager amount of {pool.GetMinimumBetForProfit(target)}.";
                 }
-                return $"**{pool.Name}** is not currently open so the odds may not be what they intend to be when it does. Try again later.";
+                return $"**{pool.Id}** is not currently open so the odds may not be what they intend to be when it does. Try again later.";
             }
             return $"No pool found by the Id of **{poolId}**";
         }

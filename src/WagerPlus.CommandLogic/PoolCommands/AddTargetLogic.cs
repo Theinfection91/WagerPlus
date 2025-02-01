@@ -54,10 +54,9 @@ namespace WagerPlus.CommandLogic.PoolCommands
                                 // Save and reload Pools
                                 _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                                return $"{target.Name} was added to {pool?.Name} as Target #{pool?.Targets.FirstOrDefault(x => x.Value == target).Key} at **{odds}** Odds!";
+                                return $"{target.Name} was added to {pool?.Id} as Target #{pool?.Targets.FirstOrDefault(x => x.Value == target).Key} at **{odds}** Odds!";
                             }
                             return $"Invalids odds amount given. Odds can not be lower than **1.01** to ensure some type of profit on a wager.";
-
                         }
                         return $"The given target name already exists in the given pool Id... Given target name: {name} - Given pool Id: {poolId}";
                     }

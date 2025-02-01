@@ -44,7 +44,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                 }
                 return $"You are not the owner of that pool.";
             }
-            return $"No pool found by the name of **{poolId}**";
+            return $"No pool found by the ID of **{poolId}**";
         }
     }
 }
