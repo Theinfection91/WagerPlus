@@ -37,7 +37,7 @@ namespace WagerPlus.Managers
         {
             foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
             {
-                if (pool.Id.Equals(poolId))
+                if (pool.Id.Equals(poolId, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -66,9 +66,9 @@ namespace WagerPlus.Managers
             return false;
         }
 
-        public bool IsTargetNameUnique(string poolName, string targetName)
+        public bool IsTargetNameUnique(string poolId, string targetName)
         {
-            Pool? pool = GetPoolByName(poolName);
+            Pool? pool = GetPoolById(poolId);
             foreach (var target in pool.Targets)
             {
                 if (string.Equals(target.Value.Name, targetName, StringComparison.OrdinalIgnoreCase))
@@ -125,7 +125,7 @@ namespace WagerPlus.Managers
             }
         }
 
-        public (Choice, Choice) GetCorrectChoices(Pool pool)
+        public (Choice?, Choice?) GetCorrectChoices(Pool pool)
         {
             Choice? choiceOne = null;
             Choice? choiceTwo = null;
@@ -148,7 +148,7 @@ namespace WagerPlus.Managers
         {
             foreach (Pool pool in _dataManager.BettingPoolsDatabase.Pools)
             {
-                if (pool.Id.Equals(poolId))
+                if (pool.Id.Equals(poolId, StringComparison.OrdinalIgnoreCase))
                 {
                     return pool;
                 }
@@ -176,8 +176,8 @@ namespace WagerPlus.Managers
             while (!isPoolIdUnique)
             {
                 Random random = new();
-                int randomInt = random.Next(100, 1000);
-                uniqueId = $"P{randomInt}{(_dataManager.BettingPoolsDatabase.Pools.Count + 1)}";
+                int randomInt = random.Next(10, 100);
+                uniqueId = $"P{randomInt}";
 
                 // Check if the ID is unique in the database
                 if (!IsPoolIdInDatabase(uniqueId))
@@ -190,6 +190,10 @@ namespace WagerPlus.Managers
             return null;
         }
 
+        public void SetPoolStatus(Pool pool, PoolStatus poolStatus)
+        {
+            pool.Status = poolStatus;
+        }
 
         public void AddPool(Pool pool)
         {

@@ -27,27 +27,27 @@ namespace WagerPlus.Bot.SlashCommands
         [SlashCommand("create", "Creates a wager in the given pool")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task CreateWagerAsync(string poolName, PoolChoice choice, int amount)
+        public async Task CreateWagerAsync(string poolId, PoolChoice choice, int amount)
         {
-            var result = _createWagerLogic.CreateWagerProcess(Context, poolName, choice, amount);
+            var result = _createWagerLogic.CreateWagerProcess(Context, poolId, choice, amount);
             await RespondAsync(result);
         }
 
         [SlashCommand("minimum", "Returns the minimum amount needed to make a profit on given choice in given pool")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task MinimumWagerAsync(string poolName, PoolChoice choice)
+        public async Task MinimumWagerAsync(string poolId, PoolChoice choice)
         {
-            var result = _minimumWagerLogic.MinimumWagerProcess(poolName, choice);
+            var result = _minimumWagerLogic.MinimumWagerProcess(poolId, choice);
             await RespondAsync(result);
         }
 
         [SlashCommand("simulate", "Returns the value of winning a mock wager")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task SimulateWagerAsync(string poolName, PoolChoice choice, int amount)
+        public async Task SimulateWagerAsync(string poolId, PoolChoice choice, int amount)
         {
-            var result = _simulateWagerLogic.SimulateWagerProcess(poolName, choice, amount);
+            var result = _simulateWagerLogic.SimulateWagerProcess(poolId, choice, amount);
             await RespondAsync(result);
         }
     }

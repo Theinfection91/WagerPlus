@@ -42,7 +42,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                                 if (!_poolManager.IsPoolOpen(pool))
                                 {
                                     // Change status
-                                    pool.Status = PoolStatus.Open;
+                                    _poolManager.SetPoolStatus(pool, PoolStatus.Open);
 
                                     _poolManager.SaveAndReloadBettingPoolsDatabase();
 

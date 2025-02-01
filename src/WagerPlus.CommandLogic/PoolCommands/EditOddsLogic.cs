@@ -18,17 +18,17 @@ namespace WagerPlus.CommandLogic.PoolCommands
             _poolManager = poolManager;
         }
 
-        public string EditOddsProcess(SocketInteractionContext context, string poolName, PoolChoice choice, decimal odds)
+        public string EditOddsProcess(SocketInteractionContext context, string poolId, PoolChoice choice, decimal odds)
         {
             if (odds < 1.01m)
             {
                 return $"Odds can not dip below 1.01";
             }
-            // Check if pool by given name exists
-            if (!_poolManager.IsPoolNameUnique(poolName))
+            // Check if pool by given Id exists
+            if (_poolManager.IsPoolIdInDatabase(poolId))
             {
                 // Grab pool
-                Pool? pool = _poolManager.GetPoolByName(poolName);
+                Pool? pool = _poolManager.GetPoolById(poolId);
 
                 // Check if invoker is pool owner
                 if (_poolManager.IsUserPoolOwner(context.User.Id, pool))
@@ -44,7 +44,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                 }
                 return $"You are not the owner of that pool.";
             }
-            return $"No pool found by the name of **{poolName}**";
+            return $"No pool found by the name of **{poolId}**";
         }
     }
 }

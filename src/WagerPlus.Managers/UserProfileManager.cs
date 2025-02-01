@@ -42,6 +42,30 @@ namespace WagerPlus.Managers
             return false;
         }
 
+        public UserProfile? GetUserProfile(ulong discordId)
+        {
+            foreach (UserProfile userProfile in _dataManager.UserProfileList.Users)
+            {
+                if (discordId.Equals(userProfile.DiscordId))
+                {
+                    return userProfile;
+                }
+            }
+            return null;
+        }
+
+        public UserProfile? GetUserProfile(string discordName)
+        {
+            foreach (UserProfile userProfile in _dataManager.UserProfileList.Users)
+            {
+                if (discordName.Equals(userProfile.DisplayName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return userProfile;
+                }
+            }
+            return null;
+        }
+
         public void RegisterNewUserProfile(UserProfile userProfile)
         {
             _dataManager.UserProfileList.Users.Add(userProfile);

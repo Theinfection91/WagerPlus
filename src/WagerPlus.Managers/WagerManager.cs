@@ -27,6 +27,11 @@ namespace WagerPlus.Managers
             return false;
         }
 
+        public bool IsWagerProfitable(int wagerAmount, int minimumWagerAmount)
+        {
+            return wagerAmount >= minimumWagerAmount;
+        }
+
         public Wager? GetWagerInPoolFromDiscordId(Pool pool, ulong discordId)
         {
             foreach (Wager wager in pool.Wagers)
@@ -58,6 +63,12 @@ namespace WagerPlus.Managers
         public void AddWagerToPool(Pool pool, Wager wager)
         {
             pool.AddWagerToList(wager);
+            _dataManager.SaveAndReloadBettingPoolsDatabase();
+        }
+
+        public void RemoveWagerFromPool(Pool pool, Wager wager)
+        {
+            pool.RemoveWagerFromList(wager);
             _dataManager.SaveAndReloadBettingPoolsDatabase();
         }
     }

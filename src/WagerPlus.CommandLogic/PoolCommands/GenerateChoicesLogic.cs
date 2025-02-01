@@ -22,12 +22,12 @@ namespace WagerPlus.CommandLogic.PoolCommands
             _poolManager = poolManager;
         }
 
-        public string GenerateChoicesProcess(SocketInteractionContext context, string poolName, string? description = null)
+        public string GenerateChoicesProcess(SocketInteractionContext context, string poolId, string? description = null)
         {
             // Grab Pool from database if it exists
-            if (!_poolManager.IsPoolNameUnique(poolName))
+            if (_poolManager.IsPoolIdInDatabase(poolId))
             {
-                Pool? pool = _poolManager.GetPoolByName(poolName);
+                Pool? pool = _poolManager.GetPoolById(poolId);
 
                 if (pool.Choices.Count != 2 && pool.Choices.Count != 1)
                 {
@@ -51,7 +51,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                 }
                 return $"There are already enough choices for the given betting pool: {pool.Choices.Count}";
             }            
-            return $"The pool name given was not found in the database: {poolName}";
+            return $"The pool Id given was not found in the database: {poolId}";
         }
     }
 }

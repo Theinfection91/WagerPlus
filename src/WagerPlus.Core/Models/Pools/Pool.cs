@@ -69,6 +69,22 @@ namespace WagerPlus.Core.Models.Pools
             Wagers.Add(wager);
         }
 
+        public void RemoveWagerFromList(Wager wagerRef)
+        {
+            foreach (Wager wager in Wagers)
+            {
+                if (wager.DiscordId.Equals(wagerRef.DiscordId))
+                {
+                    Wagers.Remove(wager);
+                }
+            }
+        }
+
+        public bool IsTargetsFull()
+        {
+            return Targets.Count < 2;
+        }
+
         public int GetProjectedPayoutBasedOnWager(PoolChoice choice, int wagerAmount)
         {
             decimal odds = choice == PoolChoice.Choice_1 ? ChoiceOneOdds : ChoiceTwoOdds;

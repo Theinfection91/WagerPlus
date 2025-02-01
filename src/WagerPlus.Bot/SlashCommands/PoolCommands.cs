@@ -49,27 +49,27 @@ namespace WagerPlus.Bot.SlashCommands
         [SlashCommand("generate_choices", "Generate choices to wager on when a pool has two targets.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task GenerateChoices(string poolName, string? description = null)
+        public async Task GenerateChoices(string poolId, string? description = null)
         {
-            var result = _generateChoicesCommand.GenerateChoicesProcess(Context, poolName, description);
+            var result = _generateChoicesCommand.GenerateChoicesProcess(Context, poolId, description);
             await RespondAsync(result);
         }
 
         [SlashCommand("add_target", "Add a target for a choice in given pool.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task AddTarget(string poolName, string name, string? description = null)
+        public async Task AddTarget(string poolId, string name, string? description = null)
         {
-            var result = _addTargetCommand.AddTargetProcess(Context, poolName, name, description);
+            var result = _addTargetCommand.AddTargetProcess(Context, poolId, name, description);
             await RespondAsync(result);
         }
 
         [SlashCommand("edit_odds", "Edits the odds for a choice in given pool before it opens.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task EditOdds(string poolName, PoolChoice choice, decimal odds)
+        public async Task EditOdds(string poolId, PoolChoice choice, decimal odds)
         {
-            var result = _editOddsLogic.EditOddsProcess(Context, poolName, choice, odds);
+            var result = _editOddsLogic.EditOddsProcess(Context, poolId, choice, odds);
             await RespondAsync(result);
         }
 

@@ -11,7 +11,7 @@ namespace WagerPlus.Bot.Modals.PoolModals
     {
         public string Title => "Open Pool Confirmation";
 
-        [InputLabel("Enter Pool ID Number (Example: P1991)")]
+        [InputLabel("Enter Pool ID Number (Example: P37)")]
         [ModalTextInput("pool_id_one", placeholder: "Enter pool ID number...")]
         public string PoolIdOne { get; set; }
 

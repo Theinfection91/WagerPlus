@@ -26,7 +26,7 @@ namespace WagerPlus.Core.Models
         public void Subtract(int amount)
         {
             Total -= amount;
-            if (Total <= 0)
+            if (Total < 0)
             {
                 Total = 0;
             }

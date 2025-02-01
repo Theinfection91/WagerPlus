@@ -20,19 +20,19 @@ namespace WagerPlus.CommandLogic.PoolCommands
             _poolManager = poolManager;
         }
 
-        public string AddTargetProcess(SocketInteractionContext context, string poolName, string name, string? description = null)
+        public string AddTargetProcess(SocketInteractionContext context, string poolId, string name, string? description = null)
         {
             // Check if Pool exists
-            if (!_poolManager.IsPoolNameUnique(poolName))
+            if (_poolManager.IsPoolIdInDatabase(poolId))
             {
                 // Grab pool
-                Pool? pool = _poolManager.GetPoolByName(poolName);
+                Pool? pool = _poolManager.GetPoolById(poolId);
 
                 // Check if pool has room for another target
-                if (pool?.Targets.Count < 2)
+                if (pool.IsTargetsFull())
                 {
                     // Check if target name is unique
-                    if (_poolManager.IsTargetNameUnique(poolName, name))
+                    if (_poolManager.IsTargetNameUnique(poolId, name))
                     {
                         // Assign correct choice enum
                         PoolTarget poolTarget = _poolManager.GetCorrectTargetEnum(pool);
@@ -46,11 +46,11 @@ namespace WagerPlus.CommandLogic.PoolCommands
 
                         return $"{target.Name} was added to {pool?.Name} as Target #{pool?.Targets.FirstOrDefault(x => x.Value == target).Key}";
                     }
-                    return $"The given target name already exists in the given pool name... Given target name: {name} - Given pool name: {poolName}";
+                    return $"The given target name already exists in the given pool Id... Given target name: {name} - Given pool Id: {poolId}";
                 }
                 return $"This type of pool currently has the maximum amount of targets: {pool?.Targets.Count}";                
             }
-            return $"The pool name given was not found in the database: {poolName}";
+            return $"The pool Id given was not found in the database: {poolId}";
         }
     }
 }

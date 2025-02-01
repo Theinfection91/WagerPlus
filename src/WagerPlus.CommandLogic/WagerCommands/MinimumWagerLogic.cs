@@ -17,13 +17,13 @@ namespace WagerPlus.CommandLogic.WagerCommands
             _poolManager = poolManager;
         }
 
-        public string MinimumWagerProcess(string poolName, PoolChoice choice)
+        public string MinimumWagerProcess(string poolId, PoolChoice choice)
         {
             // Check if pool by given name exists
-            if (!_poolManager.IsPoolNameUnique(poolName))
+            if (_poolManager.IsPoolIdInDatabase(poolId))
             {
                 // Grab pool
-                Pool? pool = _poolManager.GetPoolByName(poolName);
+                Pool? pool = _poolManager.GetPoolById(poolId);
 
                 // Check if pool is open for wagers
                 if (_poolManager.IsPoolOpen(pool))
@@ -32,7 +32,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
                 }
                 return $"**{pool.Name}** is not currently open so the odds may not be what they intend to be when it does. Try again later.";
             }
-            return $"No pool found by the name of **{poolName}**";
+            return $"No pool found by the Id of **{poolId}**";
         }
     }
 }
