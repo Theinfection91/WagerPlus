@@ -49,6 +49,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                                 {
                                     // Change status and time stamp
                                     _poolManager.SetPoolStatus(pool, PoolStatus.Open);
+                                    pool.IsFresh = false;
 
                                     _poolManager.SaveAndReloadBettingPoolsDatabase();
 

@@ -26,8 +26,16 @@ namespace WagerPlus.Core.Models.Pools
 
         // Dynamic Info
         public PoolStatus Status { get; set; }
-        public int AmountTotal { get; set; }
         public List<Wager> Wagers { get; set; }
+        public int TargetOneWagerCount => GetWagerCount(PoolTarget.Target_1);
+        public int TargetOnePotTotal => GetTargetPotTotal(PoolTarget.Target_1);
+        public int TargetTwoWagerCount => GetWagerCount(PoolTarget.Target_2);
+        public int TargetTwoPotTotal => GetTargetPotTotal(PoolTarget.Target_2);
+        public int PotTotal => GetBothTargetsPotTotal();
+
+        // Target Winner
+        public PoolTarget WinningTarget { get; set; }
+        public bool IsWinningTargetSet { get; set; }
 
         // Status Timestamps
         public DateTime Opened { get; set; }
@@ -37,6 +45,7 @@ namespace WagerPlus.Core.Models.Pools
         // Creator Info
         public ulong OwnerDiscordId { get; set; }
         public string OwnerDisplayName { get; set; }
+        public bool IsFresh { get; set; }
 
         public Pool(string name, PoolType poolType, ulong ownerDiscordId, string ownerDisplayName, string? description = null)
         {
@@ -46,10 +55,12 @@ namespace WagerPlus.Core.Models.Pools
             CreatedOn = DateTime.Now;
             Targets = [];
             IsTargetsLocked = false;
+            IsWinningTargetSet = false;
             Status = PoolStatus.Closed;
             Wagers = [];
             OwnerDiscordId = ownerDiscordId;
             OwnerDisplayName = ownerDisplayName;
+            IsFresh = true;
         }
 
         public void AddTargetToDictionary(Target target)
@@ -83,12 +94,56 @@ namespace WagerPlus.Core.Models.Pools
             return TargetOneOdds != TargetTwoOdds;
         }
 
+        public string GetNameForTarget(PoolTarget poolTarget)
+        {
+            foreach(var target in Targets.Values)
+            {
+                if (target.PoolTarget.Equals(poolTarget))
+                {
+                    return target.Name;
+                }
+            }
+            return "oops";
+        }
+
         public int GetProjectedPayoutBasedOnWager(PoolTarget target, int wagerAmount)
         {
             decimal odds = target == PoolTarget.Target_1 ? TargetOneOdds : TargetTwoOdds;
 
             // Return total payout including original wager
             return (int)(wagerAmount * odds);
+        }
+
+        public int GetWagerCount(PoolTarget target)
+        {
+            int count = 0;
+            foreach (Wager wager in Wagers)
+            {
+                if (wager.Target.Equals(target))
+                {
+                    count++;
+                    return count;
+                }
+            }
+            return count;
+        }
+
+        public int GetTargetPotTotal(PoolTarget target)
+        {
+            int total = 0;
+            foreach (Wager wager in Wagers)
+            {
+                if (wager.Target.Equals(target))
+                {
+                    total += wager.Amount;
+                }
+            }
+            return total;
+        }
+
+        public int GetBothTargetsPotTotal()
+        {
+            return TargetOnePotTotal + TargetTwoPotTotal;
         }
 
         public void EditChoiceOddsAmount(PoolTarget target, decimal amount)
@@ -138,6 +193,11 @@ namespace WagerPlus.Core.Models.Pools
             }
 
             return 0;
+        }
+
+        public void ClearWagers()
+        {
+            Wagers.Clear();
         }
     }
 }

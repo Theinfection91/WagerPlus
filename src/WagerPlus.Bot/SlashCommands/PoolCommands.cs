@@ -15,17 +15,19 @@ namespace WagerPlus.Bot.SlashCommands
     [Group("pool", "Pool related commands like creating, adding choices, open/close/resolve.")]
     public class PoolCommands : InteractionModuleBase<SocketInteractionContext>
     {
-        private CreatePoolLogic _createPoolCommand;
-        private LockTargetsLogic _generateChoicesCommand;
+        private CreatePoolLogic _createPoolLogic;
+        private LockTargetsLogic _lockTargetsLogic;
         private SetOddsLogic _setOddsLogic;
-        private AddTargetLogic _addTargetCommand;
+        private AddTargetLogic _addTargetLogic;
+        private SubmitWinnerLogic _submitWinnerLogic;
 
-        public PoolCommands(CreatePoolLogic createPoolCommand, LockTargetsLogic addChoiceCommand, SetOddsLogic editOddsLogic, AddTargetLogic addTarget)
+        public PoolCommands(CreatePoolLogic createPoolLogic, LockTargetsLogic addChoiceLogic, SetOddsLogic editOddsLogic, AddTargetLogic addTargetLogic, SubmitWinnerLogic submitWinnerLogic)
         {
-            _createPoolCommand = createPoolCommand;
-            _generateChoicesCommand = addChoiceCommand;
+            _createPoolLogic = createPoolLogic;
+            _lockTargetsLogic = addChoiceLogic;
             _setOddsLogic = editOddsLogic;
-            _addTargetCommand = addTarget;
+            _addTargetLogic = addTargetLogic;
+            _submitWinnerLogic = submitWinnerLogic;
         }
 
         [SlashCommand("create", "Create a new betting pool of specified type.")]
@@ -38,7 +40,7 @@ namespace WagerPlus.Bot.SlashCommands
         {
             try
             {
-                var result = _createPoolCommand.CreatePoolProcess(Context, name, poolType, description);
+                var result = _createPoolLogic.CreatePoolProcess(Context, name, poolType, description);
                 await RespondAsync(result);
             }
             catch (Exception ex)
@@ -55,7 +57,7 @@ namespace WagerPlus.Bot.SlashCommands
         public async Task LockTargetsAsync(
             [Summary("pool_id", "The ID of the pool to generate choices in.")] string poolId)
         {
-            var result = _generateChoicesCommand.LockTargetsProcess(Context, poolId);
+            var result = _lockTargetsLogic.LockTargetsProcess(Context, poolId);
             await RespondAsync(result);
         }
 
@@ -68,7 +70,7 @@ namespace WagerPlus.Bot.SlashCommands
             [Summary("odds", "The odds to set for the target")] decimal odds,
             [Summary("description", "Optional description of the target")] string? description = null)
         {
-            var result = _addTargetCommand.AddTargetProcess(Context, poolId, name, odds, description);
+            var result = _addTargetLogic.AddTargetProcess(Context, poolId, name, odds, description);
             await RespondAsync(result);
         }
 
@@ -98,6 +100,18 @@ namespace WagerPlus.Bot.SlashCommands
         public async Task ClosePoolAsync()
         {
             await RespondWithModalAsync<ClosePoolModal>("close_pool");
+        }
+
+        [SlashCommand("submit_winner", "Designates which target is the winner.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task SubmitWinnerAsync(
+            [Summary("pool_id", "The pool ID to add the winner to")] string poolId,
+            [Summary("pool_target", "Which target to submit as the winner")] PoolTarget poolTarget
+            )
+        {
+            var result = _submitWinnerLogic.SubmitWinnerProcess(Context, poolId, poolTarget);
+            await RespondAsync(result);
         }
 
         [SlashCommand("resolve", "Set the pool status of given Pool to Resolved, and send payouts.")]

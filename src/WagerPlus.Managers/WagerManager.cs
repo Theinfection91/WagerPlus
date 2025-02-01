@@ -60,6 +60,11 @@ namespace WagerPlus.Managers
             return allWagers;
         }
 
+        public int GetWagerPayoutTotal(Wager wager)
+        {
+            return (int)(wager.Amount * wager.Odds);
+        }
+
         public void AddWagerToPool(Pool pool, Wager wager)
         {
             pool.AddWagerToList(wager);
