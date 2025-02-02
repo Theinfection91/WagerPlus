@@ -122,5 +122,13 @@ namespace WagerPlus.Bot.SlashCommands
         {
             await RespondWithModalAsync<ResolvePoolModal>("resolve_pool");
         }
+
+        [SlashCommand("delete", "Deletes the given pool, reimburses all wagers")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task DeletePoolAsync()
+        {
+            await RespondWithModalAsync<DeletePoolModal>("delete_pool");
+        }
     }
 }

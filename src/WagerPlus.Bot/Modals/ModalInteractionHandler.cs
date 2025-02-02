@@ -14,12 +14,14 @@ namespace WagerPlus.Bot.Modals
         private ClosePoolLogic _closePoolLogic;
         private OpenPoolLogic _openPoolLogic;
         private ResolvePoolLogic _resolvePoolLogic;
+        private DeletePoolLogic _deletePoolLogic;
 
-        public ModalInteractionHandler(ClosePoolLogic closePoolLogic, OpenPoolLogic openPoolLogic, ResolvePoolLogic resolvePoolLogic)
+        public ModalInteractionHandler(ClosePoolLogic closePoolLogic, OpenPoolLogic openPoolLogic, ResolvePoolLogic resolvePoolLogic, DeletePoolLogic deletePoolLogic)
         {
             _closePoolLogic = closePoolLogic;
             _openPoolLogic = openPoolLogic;
             _resolvePoolLogic = resolvePoolLogic;
+            _deletePoolLogic = deletePoolLogic;
         }
 
         [ModalInteraction("open_pool")]
@@ -49,6 +51,16 @@ namespace WagerPlus.Bot.Modals
             string poolIdTwo = resolvePoolModal.PoolIdTwo;
 
             var result = _resolvePoolLogic.ResolvePoolProcess(Context, poolIdOne, poolIdTwo);
+            await RespondAsync(result);
+        }
+
+        [ModalInteraction("delete_pool")]
+        public async Task DeletePoolAsync(DeletePoolModal deletePoolModal)
+        {
+            string poolIdOne = deletePoolModal.PoolIdOne;
+            string poolIdTwo = deletePoolModal.PoolIdTwo;
+
+            var result = _deletePoolLogic.DeletePoolProcess(Context, poolIdOne, poolIdTwo);
             await RespondAsync(result);
         }
     }

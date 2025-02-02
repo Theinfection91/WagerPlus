@@ -69,6 +69,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<SubmitWinnerLogic>();
                     services.AddSingleton<ResolvePoolLogic>();
                     services.AddSingleton<SetOddsLogic>();
+                    services.AddSingleton<DeletePoolLogic>();
                                       
                     // Setup Commands
                     services.AddSingleton<DemonetizeChannelLogic>();

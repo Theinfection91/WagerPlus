@@ -195,5 +195,10 @@ namespace WagerPlus.Managers
         {
             _dataManager.AddPoolToDatabase(pool);
         }
+
+        public void RemovePool(Pool pool)
+        {
+            _dataManager.RemovePoolFromDatabase(pool.Id);
+        }
     }
 }

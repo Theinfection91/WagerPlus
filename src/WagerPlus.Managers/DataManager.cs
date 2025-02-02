@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
 using WagerPlus.Core.Models.Pools;
 using WagerPlus.Data.DataModels;
 using WagerPlus.Data.Handlers;
@@ -23,7 +24,7 @@ namespace WagerPlus.Managers
         private readonly CurrencyConfigHandler _currencyConfigHandler;
 
         // Discord Config
-        public DiscordCredentialFile DiscordConfigFile {  get; set; }
+        public DiscordCredentialFile DiscordConfigFile { get; set; }
         private readonly DiscordCredentialHandler _discordConfigHandler;
 
         // User Profiles Data
@@ -37,7 +38,7 @@ namespace WagerPlus.Managers
 
             _currencyConfigHandler = currencyConfigHandler;
             LoadCurrencyConfigFile();
-            
+
             _discordConfigHandler = discordConfigHandler;
             LoadDiscordConfigFile();
 
@@ -70,6 +71,18 @@ namespace WagerPlus.Managers
                 BettingPoolsDatabase.Pools.Add(pool);
                 SaveAndReloadBettingPoolsDatabase();
             }
+        }
+
+        public void RemovePoolFromDatabase(string poolId)
+        {
+            if (poolId != null)
+                for (int i = 0; i < BettingPoolsDatabase.Pools.Count; i++)
+                    if (BettingPoolsDatabase.Pools[i].Id.Equals(poolId))
+                    {
+                        Pool poolToRemove = BettingPoolsDatabase.Pools[i];
+                        BettingPoolsDatabase.Pools.Remove(poolToRemove);
+                        SaveAndReloadBettingPoolsDatabase();
+                    }
         }
         #endregion
 
