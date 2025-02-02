@@ -65,6 +65,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<ClosePoolLogic>();
                     services.AddSingleton<CreatePoolLogic>();
                     services.AddSingleton<LockTargetsLogic>();
+                    services.AddSingleton<UnlockTargetsLogic>();
                     services.AddSingleton<OpenPoolLogic>();
                     services.AddSingleton<SubmitWinnerLogic>();
                     services.AddSingleton<ResolvePoolLogic>();
@@ -76,6 +77,10 @@ namespace WagerPlus.Bot
                     services.AddSingleton<MonetizeChannelLogic>();
                     services.AddSingleton<RegisterUserLogic>();
                     services.AddSingleton<SetupCurrencyLogic>();
+                    services.AddSingleton<AddBookieLogic>();
+                    services.AddSingleton<RemoveBookieLogic>();
+                    services.AddSingleton<AddDeputyAdminLogic>();
+                    services.AddSingleton<RemoveDeputyAdminLogic>();
 
                     // Test Commands
                     services.AddSingleton<Ping>();
@@ -100,6 +105,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
                     services.AddSingleton<DiscordCredentialHandler>();
+                    services.AddSingleton<PermissionsConfigHandler>();
                     services.AddSingleton<UserProfileHandler>();
                 })
                 .Build();

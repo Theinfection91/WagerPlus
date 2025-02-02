@@ -17,14 +17,16 @@ namespace WagerPlus.Bot.SlashCommands
     {
         private CreatePoolLogic _createPoolLogic;
         private LockTargetsLogic _lockTargetsLogic;
+        private UnlockTargetsLogic _unlockTargetsLogic;
         private SetOddsLogic _setOddsLogic;
         private SetTargetLogic _setTargetLogic;
         private SubmitWinnerLogic _submitWinnerLogic;
 
-        public PoolCommands(CreatePoolLogic createPoolLogic, LockTargetsLogic addChoiceLogic, SetOddsLogic editOddsLogic, SetTargetLogic setTargetLogic, SubmitWinnerLogic submitWinnerLogic)
+        public PoolCommands(CreatePoolLogic createPoolLogic, LockTargetsLogic addChoiceLogic, SetOddsLogic editOddsLogic, SetTargetLogic setTargetLogic, SubmitWinnerLogic submitWinnerLogic, UnlockTargetsLogic unlockTargetsLogic)
         {
             _createPoolLogic = createPoolLogic;
             _lockTargetsLogic = addChoiceLogic;
+            _unlockTargetsLogic = unlockTargetsLogic;
             _setOddsLogic = editOddsLogic;
             _setTargetLogic = setTargetLogic;
             _submitWinnerLogic = submitWinnerLogic;
@@ -51,13 +53,23 @@ namespace WagerPlus.Bot.SlashCommands
         }
 
         
-        [SlashCommand("lock_targets", "Lock in targets of pool with given odds.")]
+        [SlashCommand("lock_targets", "Lock in targets of pool.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
         public async Task LockTargetsAsync(
-            [Summary("pool_id", "The ID of the pool to generate choices in.")] string poolId)
+            [Summary("pool_id", "The ID of the pool to lock targets in.")] string poolId)
         {
             var result = _lockTargetsLogic.LockTargetsProcess(Context, poolId);
+            await RespondAsync(result);
+        }
+
+        [SlashCommand("unlock_targets", "Unlock in targets of pool.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task UnlockTargetsAsync(
+            [Summary("pool_id", "The ID of the pool to unlock targets in.")] string poolId)
+        {
+            var result = _unlockTargetsLogic.UnlockTargetsProcess(Context, poolId);
             await RespondAsync(result);
         }
 

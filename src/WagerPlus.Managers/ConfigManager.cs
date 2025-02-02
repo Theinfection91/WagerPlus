@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WagerPlus.Data.DataModels;
 using WagerPlus.Data.Handlers;
 
 namespace WagerPlus.Managers
@@ -140,7 +141,64 @@ namespace WagerPlus.Managers
         {
             _dataManager.DiscordConfigFile.GuildId = guildId;
             _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
-        }        
+        }
+        #endregion
+
+        #region Permissions Config
+        public bool GetCanAnyoneCreatePools()
+        {
+            return _dataManager.PermissionsConfigFile.CanAnyoneCreatePools;
+        }
+
+        public void SetCanAnyoneCreatePools(bool trueOrFalse)
+        {
+            _dataManager.PermissionsConfigFile.CanAnyoneCreatePools = trueOrFalse;
+        }
+
+        public List<ulong> GetAllCertifiedBookies()
+        {
+            return _dataManager.PermissionsConfigFile.CertifiedBookies;
+        }
+
+        public void AddBookieToList(ulong discordId)
+        {
+            _dataManager.PermissionsConfigFile.CertifiedBookies.Add(discordId);
+        }
+
+        public void RemoveBookieFromList(ulong discordId)
+        {
+            for (int i = 0; i < _dataManager.PermissionsConfigFile.CertifiedBookies.Count; i++)
+                if (_dataManager.PermissionsConfigFile.CertifiedBookies[i].Equals(discordId))
+                    _dataManager.PermissionsConfigFile.CertifiedBookies.RemoveAt(i);
+        }
+
+        public void AddDeputyAdminToList(ulong discordId)
+        {
+            _dataManager.PermissionsConfigFile.DeputyAdmins.Add(discordId);
+        }
+
+        public void RemoveDeputyAdminFromList(ulong discordId)
+        {
+            for (int i = 0; i < _dataManager.PermissionsConfigFile.DeputyAdmins.Count; i++)
+                if (_dataManager.PermissionsConfigFile.DeputyAdmins[i].Equals(discordId))
+                    _dataManager.PermissionsConfigFile.DeputyAdmins.RemoveAt(i);
+        }
+
+        public bool IsBookie(ulong discordId)
+        {
+            foreach (ulong bookieId in _dataManager.PermissionsConfigFile.CertifiedBookies)
+                if (bookieId.Equals(discordId))
+                    return true;
+            return false;
+        }
+
+        public bool IsDeputyAdmin(ulong discordId)
+        {
+            foreach (ulong adminId in _dataManager.PermissionsConfigFile.DeputyAdmins)
+                if (adminId.Equals(discordId))
+                    return true;
+            return false;
+        }
         #endregion
     }
 }

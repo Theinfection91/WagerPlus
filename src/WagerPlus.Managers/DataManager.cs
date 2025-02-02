@@ -27,11 +27,15 @@ namespace WagerPlus.Managers
         public DiscordCredentialFile DiscordConfigFile { get; set; }
         private readonly DiscordCredentialHandler _discordConfigHandler;
 
+        // Permissions Config
+        public PermissionsConfigFile PermissionsConfigFile { get; set; }
+        private PermissionsConfigHandler _permissionsConfigFileHandler;
+
         // User Profiles Data
         public UserProfileList UserProfileList { get; set; }
         private readonly UserProfileHandler _userProfileHandler;
 
-        public DataManager(BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, UserProfileHandler userProfileHandler)
+        public DataManager(BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
         {
             _betttingPoolsHandler = bettingPoolsHandler;
             LoadBettingPoolsDatabase();
@@ -41,6 +45,9 @@ namespace WagerPlus.Managers
 
             _discordConfigHandler = discordConfigHandler;
             LoadDiscordConfigFile();
+
+            _permissionsConfigFileHandler = permissionsConfigHandler;
+            LoadPermissionsConfigFile();
 
             _userProfileHandler = userProfileHandler;
             LoadUserProfileList();
@@ -119,6 +126,18 @@ namespace WagerPlus.Managers
         {
             SaveDiscordConfigFile(DiscordConfigFile);
             LoadDiscordConfigFile();
+        }
+        #endregion
+
+        #region Permissions Configuration
+        public void LoadPermissionsConfigFile()
+        {
+            PermissionsConfigFile = _permissionsConfigFileHandler.Load();
+        }
+
+        public void SavePermissionsConfigFile()
+        {
+            _permissionsConfigFileHandler.Save(PermissionsConfigFile);
         }
         #endregion
 

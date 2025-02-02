@@ -32,6 +32,13 @@ namespace WagerPlus.CommandLogic.PoolCommands
             // Grab pool
             Pool? pool = _poolManager.GetPoolById(poolId);
 
+            // Check status
+            if (_poolManager.IsPoolOpen(pool))
+                return $"The pool is already open.";
+
+            if (pool.Status == PoolStatus.Resolved)
+                return $"That pool has already been resolved.";
+
             // Check if there are two targets
             if (!pool.IsTargetsFull())
                 return $"Incorrect amount of targets in the given pool. Must have two targets.";
