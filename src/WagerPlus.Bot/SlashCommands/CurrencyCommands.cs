@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using WagerPlus.Bot.PreconditionAttributes;
-using WagerPlus.CommandLogic.CurrencyCommands;
-using WagerPlus.CommandLogic.RegisterUserCommands;
 
 namespace WagerPlus.Bot.SlashCommands
 {

@@ -33,14 +33,19 @@ namespace WagerPlus.CommandLogic.PoolCommands
                 // Check if invoker is pool owner
                 if (_poolManager.IsUserPoolOwner(context.User.Id, pool))
                 {
-                    // Check if pool is closed, cant change odds when its open
-                    if (pool.Status.Equals(PoolStatus.Closed))
+                    // Check if targets are set
+                    if (pool.IsTargetsFull())
                     {
-                        pool.EditChoiceOddsAmount(target, odds);
-                        _poolManager.SaveAndReloadBettingPoolsDatabase();
-                        return $"{target}'s odds have been set to **{odds}**";
+                        // Check if pool is closed, cant change odds when its open
+                        if (pool.Status.Equals(PoolStatus.Closed))
+                        {
+                            pool.EditChoiceOddsAmount(target, odds);
+                            _poolManager.SaveAndReloadBettingPoolsDatabase();
+                            return $"{target}'s odds have been set to **{odds}**";
+                        }
+                        return $"The pool is currently open or has been resolved.";
                     }
-                    return $"The pool is currently open or has been resolved.";
+                    return $"Both targets must be set to use this command. Initial odds are set when you add a target, this command is to help edit odds in case you entered one wrong in that command.";
                 }
                 return $"You are not the owner of that pool.";
             }

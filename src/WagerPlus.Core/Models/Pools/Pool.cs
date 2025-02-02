@@ -52,7 +52,7 @@ namespace WagerPlus.Core.Models.Pools
             Name = name;
             Description = description ?? string.Empty;
             Type = poolType;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             Targets = [];
             IsTargetsLocked = false;
             IsWinningTargetSet = false;

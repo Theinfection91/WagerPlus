@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WagerPlus.Bot.PreconditionAttributes;
-using WagerPlus.CommandLogic.CurrencyCommands;
-using WagerPlus.CommandLogic.RegisterUserCommands;
+using WagerPlus.CommandLogic.SetupCommands;
 
 namespace WagerPlus.Bot.SlashCommands
 {

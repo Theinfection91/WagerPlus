@@ -185,15 +185,15 @@ namespace WagerPlus.Managers
             switch (poolStatus)
             {
                 case PoolStatus.Open:
-                    pool.Opened = DateTime.Now;
+                    pool.Opened = DateTime.UtcNow;
                     break;
 
                 case PoolStatus.Closed:
-                    pool.Closed = DateTime.Now;
+                    pool.Closed = DateTime.UtcNow;
                     break;
 
                 case PoolStatus.Resolved:
-                    pool.Resolved = DateTime.Now;
+                    pool.Resolved = DateTime.UtcNow;
                     break;
             }
         }

@@ -5,9 +5,9 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WagerPlus.CommandLogic.CurrencyCommands;
+using WagerPlus.Bot.Handlers;
 using WagerPlus.CommandLogic.PoolCommands;
-using WagerPlus.CommandLogic.RegisterUserCommands;
+using WagerPlus.CommandLogic.SetupCommands;
 using WagerPlus.CommandLogic.TestCommands;
 using WagerPlus.CommandLogic.WagerCommands;
 using WagerPlus.Data.Handlers;
@@ -45,13 +45,18 @@ namespace WagerPlus.Bot
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
+                    // Discord Services
                     services.AddSingleton(_client);
                     services.AddSingleton<CommandService>();
                     services.AddSingleton<InteractionService>();
 
+                    // Monetized Messaging Service
+                    services.AddSingleton<MonetizedMessageHandler>();
+
+                    /////////////////////////////////
                     //    ==-Command Logic-==     //
                     ///////////////////////////////
-                    ///
+                    
                     // Currency Commands
 
 
@@ -123,6 +128,8 @@ namespace WagerPlus.Bot
             _client.Ready += ClientReady;
             _client.InteractionCreated += HandleInteractionAsync;
             _client.MessageReceived += HandleCommandAsync;
+            var monetizedMessageHandler = _services.GetRequiredService<MonetizedMessageHandler>();
+            _client.MessageReceived += monetizedMessageHandler.HandleMessageAsync;
             _client.Disconnected += exception =>
             {
                 Console.WriteLine($"{DateTime.Now} - Bot disconnected: {exception?.Message ?? "Unknown reason"}");

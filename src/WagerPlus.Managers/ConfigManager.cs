@@ -48,6 +48,63 @@ namespace WagerPlus.Managers
             _dataManager.CurrencyConfigFile.IsCurrencySetupComplete = isComplete;
             _dataManager.SaveAndReloadCurrencyConfigFile();
         }
+
+        public List<ulong> GetMonetizedChannels()
+        {
+            return _dataManager.CurrencyConfigFile.MonetizedChannels;
+        }
+
+        public void AddToMonetizedChannels(ulong channelId)
+        {
+            _dataManager.CurrencyConfigFile.MonetizedChannels.Add(channelId);
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
+
+        public void RemoveFromMonetizedChannels(ulong channelId)
+        {
+            foreach (ulong channel in _dataManager.CurrencyConfigFile.MonetizedChannels)
+            {
+                if (channel.Equals(channelId))
+                {
+                    _dataManager.CurrencyConfigFile.MonetizedChannels.Remove(channel);
+                    _dataManager.SaveAndReloadCurrencyConfigFile();
+                }
+            }
+        }
+
+        public bool IsChannelMonetized(ulong channelId)
+        {
+            foreach (ulong channel in _dataManager.CurrencyConfigFile.MonetizedChannels)
+            {
+                if (channel.Equals(channelId))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int GetMessageValueAmount()
+        {
+            return _dataManager.CurrencyConfigFile.MessageValue;
+        }
+
+        public void SetMessageValueAmount(int amount)
+        {
+            _dataManager.CurrencyConfigFile.MessageValue = amount;
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
+
+        public TimeSpan GetMessageCooldownAmount()
+        {
+            return _dataManager.CurrencyConfigFile.MessageCooldown;
+        }
+
+        public void SetMessageCooldownAmount(TimeSpan seconds)
+        {
+            _dataManager.CurrencyConfigFile.MessageCooldown = seconds;
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
         #endregion
 
         #region Discord Config

@@ -7,7 +7,7 @@ using Discord.Interactions;
 using WagerPlus.Core.Models;
 using WagerPlus.Managers;
 
-namespace WagerPlus.CommandLogic.RegisterUserCommands
+namespace WagerPlus.CommandLogic.SetupCommands
 {
     public class RegisterUserLogic : Logic
     {

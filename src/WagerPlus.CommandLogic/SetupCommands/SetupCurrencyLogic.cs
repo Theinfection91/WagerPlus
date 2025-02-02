@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Discord.Interactions;
 using WagerPlus.Managers;
 
-namespace WagerPlus.CommandLogic.CurrencyCommands
+namespace WagerPlus.CommandLogic.SetupCommands
 {
     public class SetupCurrencyLogic : Logic
     {
