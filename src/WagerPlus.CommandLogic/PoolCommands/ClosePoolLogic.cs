@@ -22,39 +22,32 @@ namespace WagerPlus.CommandLogic.PoolCommands
         public string ClosePoolProcess(SocketInteractionContext context, string poolIdOne, string poolIdTwo)
         {
             // Check if given Id's match exactly
-            if (poolIdOne.Equals(poolIdTwo))
-            {
-                // Check if given Id is in database
-                if (_poolManager.IsPoolIdInDatabase(poolIdOne))
-                {
-                    // Grab pool
-                    Pool? pool = _poolManager.GetPoolById(poolIdOne);
+            if (!poolIdOne.Equals(poolIdTwo))
+                return $"The ID's entered did not match. Make sure the P is capital as well. You entered: '{poolIdOne}' - '{poolIdTwo}'";
 
-                    // Check if invoker is owner of pool (or admin)
-                    if (context.User is not SocketGuildUser guildUser)
-                    {
-                        return "This command must be used in a guild.";
-                    }
-                    bool IsAdmin = guildUser.GuildPermissions.Administrator;
-                    if (_poolManager.IsUserPoolOwner(context.User.Id, pool) || IsAdmin)
-                    {
-                        // Check current status
-                        if (_poolManager.IsPoolOpen(pool))
-                        {
-                            // Change status
-                            _poolManager.SetPoolStatus(pool, PoolStatus.Closed);
-
-                            _poolManager.SaveAndReloadBettingPoolsDatabase();
-
-                            return $"{pool.Id} is now {pool.Status} for wagers!";
-                        }
-                        return $"The pool is already {pool.Status}.";
-                    }
-                    return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
-                }
+            // Check if given Id is in database
+            if (!_poolManager.IsPoolIdInDatabase(poolIdOne))
                 return $"Given pool ID not found in Database: {poolIdOne}";
-            }
-            return $"The ID's entered did not match. Make sure the P is capital as well. You entered: '{poolIdOne}' - '{poolIdTwo}'";
+
+            // Grab pool
+            Pool? pool = _poolManager.GetPoolById(poolIdOne);
+
+            // Check if invoker is owner of pool (or admin)
+            if (context.User is not SocketGuildUser guildUser)
+                return "This command must be used in a guild.";
+            bool IsAdmin = guildUser.GuildPermissions.Administrator;
+            if (!_poolManager.IsUserPoolOwner(context.User.Id, pool) || !IsAdmin)
+                return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
+
+            // Check if pool is open
+            if (!_poolManager.IsPoolOpen(pool))
+                return $"The pool is already closed.";
+
+            // Change status
+            _poolManager.SetPoolStatus(pool, PoolStatus.Closed);
+            _poolManager.SaveAndReloadBettingPoolsDatabase();
+
+            return $"{pool.Id} is now closed for wagers.";
         }
     }
 }

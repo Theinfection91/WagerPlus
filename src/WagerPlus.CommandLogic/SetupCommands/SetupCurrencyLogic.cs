@@ -19,14 +19,14 @@ namespace WagerPlus.CommandLogic.SetupCommands
 
         public string SetupCurrencyProcess(string currencyName, string currencyAbbreviation)
         {
-            if (!_configManager.GetIsCurrencySetupComplete())
-            {
-                _configManager.SetCurrencyName(currencyName);
-                _configManager.SetCurrentAbbreviation(currencyAbbreviation);
-                _configManager.SetIsCurrencySetupComplete(true);
-                return $"{_configManager.GetIsCurrencySetupComplete()} - {_configManager.GetCurrencyName()} - {_configManager.GetCurrencyAbbreviation()}";
-            }
-            return $"Currency setup is already set to {_configManager.GetIsCurrencySetupComplete()}";
+            if (_configManager.GetIsCurrencySetupComplete())
+                return $"Currency setup is already set to {_configManager.GetIsCurrencySetupComplete()}";
+
+            _configManager.SetCurrencyName(currencyName);
+            _configManager.SetCurrentAbbreviation(currencyAbbreviation);
+            _configManager.SetIsCurrencySetupComplete(true);
+
+            return $"{_configManager.GetIsCurrencySetupComplete()} - {_configManager.GetCurrencyName()} - {_configManager.GetCurrencyAbbreviation()}";
         }
     }
 }

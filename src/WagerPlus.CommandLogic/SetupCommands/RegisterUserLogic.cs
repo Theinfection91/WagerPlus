@@ -22,21 +22,20 @@ namespace WagerPlus.CommandLogic.SetupCommands
         public string RegisterUserProcess(SocketInteractionContext context)
         {
             // Check if user is registered already
-            if (!_userProfileManager.IsUserRegistered(context.User.Id))
-            {
-                // TODO: Decide on new user current amount
-                UserProfile userProfile = new(context.User.Username, context.User.Id)
-                {
-                    Currency = new()
-                    {
-                        Total = 50
-                    }
-                };
-                _userProfileManager.RegisterNewUserProfile(userProfile);
+            if (_userProfileManager.IsUserRegistered(context.User.Id))
+                return $"The given discord ID is already registered in the database: {context.User.Id} - {context.User.Username}";
 
-                return $"New User Profile has been registered to - {context.User.Username} ({context.User.Username})";
-            }
-            return $"The given discord ID is already registered in the database: {context.User.Id} - {context.User.Username}";
+            // TODO: Decide on new user currency amount
+            UserProfile userProfile = new(context.User.Username, context.User.Id)
+            {
+                Currency = new()
+                {
+                    Total = 50
+                }
+            };
+            _userProfileManager.RegisterNewUserProfile(userProfile);
+
+            return $"New User Profile has been registered to - {context.User.Username} ({context.User.Username})";
         }
     }
 }
