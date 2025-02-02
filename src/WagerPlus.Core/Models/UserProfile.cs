@@ -26,5 +26,15 @@ namespace WagerPlus.Core.Models
             DisplayName = displayName;
             DiscordId = discordId;
         }
+
+        public bool IsNewWagerWinRecord(int amount)
+        {
+            return amount > LargestWin;
+        }
+
+        public bool IsNewWagerLossRecord(int amount)
+        {
+            return amount > LargestLoss;
+        }
     }
 }

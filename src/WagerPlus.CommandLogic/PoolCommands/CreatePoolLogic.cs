@@ -32,7 +32,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                         Id = newId
                     };
                     _poolManager.AddPool(fixedPool);
-                    return $"A new {poolType.ToString()} Odds Pool named {fixedPool.Name} has been created by {fixedPool.OwnerDisplayName}! The Pool ID generated is: **{fixedPool.Id}** \n\nAdd two targets with `/pool add_target` then use `/pool lock_targets` - Change odds with `/pool set_odds` before a pool is opened or targets or locked!";
+                    return $"A new {poolType.ToString()} Odds Pool named {fixedPool.Name} has been created by {fixedPool.OwnerDisplayName}! The Pool ID generated is: **{fixedPool.Id}** \n\nSet targets with `/pool set_target` then use `/pool lock_targets` - Change odds with `/pool set_odds` before a pool is opened or targets are locked!";
 
                 case PoolType.Dynamic:
                     DynamicPool dynamicPool = new(name, poolType, context.User.Id, context.User.Username, description)
@@ -40,7 +40,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                         Id = newId
                     };
                     _poolManager.AddPool(dynamicPool);
-                    return $"A new {poolType.ToString()} Odds Pool named {dynamicPool.Name} has been created by {dynamicPool.OwnerDisplayName}! The Pool ID generated is: **{dynamicPool.Id}** \n\nAdd two targets with `/pool add_target` then use `/pool lock_targets` - Change odds with `/pool set_odds` before a pool is opened or targets or locked!\"";
+                    return $"A new {poolType.ToString()} Odds Pool named {dynamicPool.Name} has been created by {dynamicPool.OwnerDisplayName}! The Pool ID generated is: **{dynamicPool.Id}** \n\nSet targets with `/pool set_target` then use `/pool lock_targets` - Change odds with `/pool set_odds` before a pool is opened or targets are locked!";
 
                 default:
                     return "Invalid PoolType given.";

@@ -40,11 +40,13 @@ namespace WagerPlus.Bot.SlashCommands
             [Summary("currency_abbrev", "The abbreviation for it (Ex. SB, $Ix, BUX")] string currencyAbbreviation)
         {
             var result = _setupCurrencyLogic.SetupCurrencyProcess(currencyName, currencyAbbreviation);
-            await RespondAsync(result);
+            await RespondAsync(result, ephemeral: true);
         }
 
         [SlashCommand("monetize_channel", "Add channel to Monetized channels list.")]
         [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
         public async Task MonetizeChannelAsync(
             [Summary("channel", "The channel to monetize")] IMessageChannel channel)
         {
@@ -54,6 +56,8 @@ namespace WagerPlus.Bot.SlashCommands
 
         [SlashCommand("demonetize_channel", "Remove channel from Monetized channels list.")]
         [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
         public async Task DemonetizeChannelAsync(
             [Summary("channel", "The channel to demonetize")] IMessageChannel channel)
         {

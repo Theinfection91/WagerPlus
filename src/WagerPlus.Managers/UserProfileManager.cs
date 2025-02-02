@@ -66,6 +66,11 @@ namespace WagerPlus.Managers
             return null;
         }
 
+        public void AddToWagerWins(UserProfile userProfile)
+        {
+            userProfile.WagersWon++;
+        }
+
         public void RegisterNewUserProfile(UserProfile userProfile)
         {
             _dataManager.UserProfileList.Users.Add(userProfile);

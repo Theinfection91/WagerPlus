@@ -18,15 +18,15 @@ namespace WagerPlus.Bot.SlashCommands
         private CreatePoolLogic _createPoolLogic;
         private LockTargetsLogic _lockTargetsLogic;
         private SetOddsLogic _setOddsLogic;
-        private AddTargetLogic _addTargetLogic;
+        private SetTargetLogic _setTargetLogic;
         private SubmitWinnerLogic _submitWinnerLogic;
 
-        public PoolCommands(CreatePoolLogic createPoolLogic, LockTargetsLogic addChoiceLogic, SetOddsLogic editOddsLogic, AddTargetLogic addTargetLogic, SubmitWinnerLogic submitWinnerLogic)
+        public PoolCommands(CreatePoolLogic createPoolLogic, LockTargetsLogic addChoiceLogic, SetOddsLogic editOddsLogic, SetTargetLogic setTargetLogic, SubmitWinnerLogic submitWinnerLogic)
         {
             _createPoolLogic = createPoolLogic;
             _lockTargetsLogic = addChoiceLogic;
             _setOddsLogic = editOddsLogic;
-            _addTargetLogic = addTargetLogic;
+            _setTargetLogic = setTargetLogic;
             _submitWinnerLogic = submitWinnerLogic;
         }
 
@@ -61,16 +61,17 @@ namespace WagerPlus.Bot.SlashCommands
             await RespondAsync(result);
         }
 
-        [SlashCommand("add_target", "Add a target for a choice in given pool.")]
+        [SlashCommand("set_target", "Add two targets to given pool.")]
         [RequireCurrencySetup]
         [RequireUserRegistered]
-        public async Task AddTargetAsync(
+        public async Task SetTargetAsync(
             [Summary("pool_id", "The pool ID to add a target to")] string poolId,
+            [Summary("target_position", "The position to set the target at")] PoolTarget targetPosition,
             [Summary("target_name", "The name you want to give the target")] string name,
             [Summary("odds", "The odds to set for the target")] decimal odds,
             [Summary("description", "Optional description of the target")] string? description = null)
         {
-            var result = _addTargetLogic.AddTargetProcess(Context, poolId, name, odds, description);
+            var result = _setTargetLogic.SetTargetProcess(Context, poolId, targetPosition, name, odds, description);
             await RespondAsync(result);
         }
 

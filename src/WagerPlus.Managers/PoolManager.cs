@@ -74,26 +74,32 @@ namespace WagerPlus.Managers
         public bool IsTargetNameUnique(string poolId, string targetName)
         {
             Pool? pool = GetPoolById(poolId);
-            foreach (var target in pool.Targets)
-            {
-                if (string.Equals(target.Value.Name, targetName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return false;
-                }
-            }
-            return true;
+
+            if (pool == null)
+                return true; // Assuming null means no existing pool, thus unique.
+
+            // If both targets are null, name is unique
+            if (pool.TargetOne == null && pool.TargetTwo == null)
+                return true;
+
+            // If only TargetOne is null but TargetTwo exists, check TargetTwo
+            if (pool.TargetOne == null)
+                return pool.TargetTwo.Name != targetName;
+
+            // If only TargetTwo is null but TargetOne exists, check TargetOne
+            if (pool.TargetTwo == null)
+                return pool.TargetOne.Name != targetName;
+
+            // If both exist, check both names
+            return pool.TargetOne.Name != targetName && pool.TargetTwo.Name != targetName;
         }
+
 
         public bool IsBothTargetsSetInPool(Pool pool)
         {
-            if (pool.Targets.Count == 2)
-            {
+            if (pool.TargetOne != null && pool.TargetTwo != null)
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool IsTargetsLocked(Pool pool)
@@ -108,19 +114,6 @@ namespace WagerPlus.Managers
                 return true;
             }
             return false;
-        }
-
-        public PoolTarget GetCorrectTargetEnum(Pool pool)
-        {
-
-            if (pool.Targets.Count == 0)
-            {
-                return PoolTarget.Target_1;
-            }
-            else
-            {
-                return PoolTarget.Target_2;
-            }
         }
 
         public Pool? GetPoolById(string poolId)

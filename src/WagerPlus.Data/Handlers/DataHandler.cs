@@ -44,12 +44,18 @@ namespace WagerPlus.Data.Handlers
         public T Load()
         {
             var json = File.ReadAllText(_filePath);
-            return JsonConvert.DeserializeObject<T>(json) ?? new T();
+            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            }) ?? new T();
         }
 
         public void Save(T data)
         {
-            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
             File.WriteAllText(_filePath, json);
         }
     }

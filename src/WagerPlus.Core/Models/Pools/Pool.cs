@@ -17,7 +17,9 @@ namespace WagerPlus.Core.Models.Pools
         public DateTime CreatedOn { get; set; }
 
         // Targets
-        public Dictionary<int, Target> Targets { get; set; }
+        //public Dictionary<int, Target> Targets { get; set; }
+        public Target? TargetOne { get; set; } = null;
+        public Target? TargetTwo { get; set; } = null;
         public bool IsTargetsLocked { get; set; }
 
         // Odds
@@ -53,7 +55,6 @@ namespace WagerPlus.Core.Models.Pools
             Description = description ?? string.Empty;
             Type = poolType;
             CreatedOn = DateTime.UtcNow;
-            Targets = [];
             IsTargetsLocked = false;
             IsWinningTargetSet = false;
             Status = PoolStatus.Closed;
@@ -63,9 +64,19 @@ namespace WagerPlus.Core.Models.Pools
             IsFresh = true;
         }
 
-        public void AddTargetToDictionary(Target target)
+        public void SetTargetToPosition(Target target)
         {
-            Targets.Add(Targets.Count + 1, target);
+            switch (target.PoolTarget)
+            {
+                case PoolTarget.Target_1:
+                    TargetOne = target; break;
+                                
+                case PoolTarget.Target_2:
+                    TargetTwo = target; break;
+
+                default:
+                    break;
+            }
         }
 
         public void AddWagerToList(Wager wager)
@@ -86,7 +97,7 @@ namespace WagerPlus.Core.Models.Pools
 
         public bool IsTargetsFull()
         {
-            return Targets.Count >= 2;
+            return TargetOne != null && TargetTwo != null;
         }
 
         public bool IsOddsDifferent()
@@ -96,14 +107,17 @@ namespace WagerPlus.Core.Models.Pools
 
         public string GetNameForTarget(PoolTarget poolTarget)
         {
-            foreach(var target in Targets.Values)
+            switch (poolTarget)
             {
-                if (target.PoolTarget.Equals(poolTarget))
-                {
-                    return target.Name;
-                }
+                case PoolTarget.Target_1:
+                    return TargetOne.Name;
+
+                case PoolTarget.Target_2:
+                    return TargetTwo.Name;
+
+                default:
+                    return "null";
             }
-            return "oops";
         }
 
         public int GetProjectedPayoutBasedOnWager(PoolTarget target, int wagerAmount)

@@ -47,13 +47,17 @@ namespace WagerPlus.CommandLogic.PoolCommands
                                 // Check current status
                                 if (!_poolManager.IsPoolOpen(pool))
                                 {
-                                    // Change status and time stamp
-                                    _poolManager.SetPoolStatus(pool, PoolStatus.Open);
-                                    pool.IsFresh = false;
+                                    if (pool.IsFresh)
+                                    {
+                                        // Change status and time stamp
+                                        _poolManager.SetPoolStatus(pool, PoolStatus.Open);
+                                        pool.IsFresh = false;
 
-                                    _poolManager.SaveAndReloadBettingPoolsDatabase();
+                                        _poolManager.SaveAndReloadBettingPoolsDatabase();
 
-                                    return $"{pool.Name} is now {pool.Status} for wagers!";
+                                        return $"{pool.Name} is now {pool.Status} for wagers!";
+                                    }
+                                    return $"Pool has already been opened for wagers once. Cannot open again.";
                                 }
                                 return $"The pool is already {pool.Status}.";
                             }

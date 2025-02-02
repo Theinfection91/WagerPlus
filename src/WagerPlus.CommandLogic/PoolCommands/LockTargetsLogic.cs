@@ -51,7 +51,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                     }
                     return $"The odds for both targets are set to **{pool.TargetOneOdds}**. Please change one using `/pool set_odds`";
                 }
-                return $"Incorrect amount of targets in the given pool. Must have two targets, pool currently has: {pool.Targets.Count}";
+                return $"Incorrect amount of targets in the given pool. Must have two targets.";
             }
             return $"The pool Id given was not found in the database: {poolId}";
         }
