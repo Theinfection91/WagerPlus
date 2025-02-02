@@ -50,25 +50,53 @@ namespace WagerPlus.CommandLogic.PoolCommands
             // Check current status
             if (_poolManager.IsPoolOpen(pool) && pool.Status != PoolStatus.Resolved)
                 return "The pool is open. Close it before resolving.";
+            if (pool.Status.Equals(PoolStatus.Resolved))
+                return "The pool has already been resolved.";
 
             // Check if winner has been set
             if (!pool.IsWinningTargetSet)
                 return $"A winner has not been submitted to **{pool.Id}** - Submit a winning target with `/pool submit_winner`";
 
-            // Award currency to winners based on WinningTarget
+            // Handle wins and losses
             foreach (var wager in pool.Wagers)
             {
+                // If wager contains winning target
                 if (wager.Target.Equals(pool.WinningTarget))
                 {
                     // Grab user profile
                     UserProfile? userProfile = _userProfileManager.GetUserProfile(wager.DiscordId);
                     if (userProfile != null)
                     {
+                        // Calculate payout and award to user
                         int payoutTotal = _wagerManager.GetWagerPayoutTotal(wager);
                         _currencyManager.AddAmountToUserCurrency(userProfile, payoutTotal);
+                        
+                        // Add to wager wins
+                        _userProfileManager.AddToWagerWins(userProfile);
+
+                        // Check if winnings is new record, if so set it
+                        if (userProfile.IsNewLargestWinRecord(payoutTotal))
+                            _userProfileManager.SetNewWagerWinRecord(userProfile, payoutTotal);
+                    }
+                }
+
+                // If wager doesn't contain the winning target
+                if (!wager.Target.Equals(pool.WinningTarget))
+                {
+                    // Grab user profile
+                    UserProfile? userProfile = _userProfileManager.GetUserProfile(wager.DiscordId);
+                    if (userProfile != null)
+                    {
+                        // Add to wager losses
+                        _userProfileManager.AddToWagerLosses(userProfile);
+
+                        // Check if lost wager amount sets new record, if so set it
+                        if (userProfile.IsNewLargestLossRecord(wager.Amount))
+                            _userProfileManager.SetNewWagerLossRecord(userProfile, wager.Amount);
                     }
                 }
             }
+
             // Clear all wagers in pool
             pool.ClearWagers();
 

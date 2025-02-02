@@ -18,8 +18,12 @@ namespace WagerPlus.Core.Models
         // Stats
         public int WagersWon { get; set; } = 0;
         public int WagersLost { get; set; } = 0;
+        public int LargestWagerPlaced { get; set; } = 0;
         public int LargestWin { get; set; } = 0;
         public int LargestLoss { get; set; } = 0;
+
+        // Trackers
+        public DateTime LastDailyReward { get; set; }
 
         public UserProfile(string displayName, ulong discordId)
         {
@@ -27,14 +31,19 @@ namespace WagerPlus.Core.Models
             DiscordId = discordId;
         }
 
-        public bool IsNewWagerWinRecord(int amount)
+        public bool IsNewLargestWinRecord(int amount)
         {
             return amount > LargestWin;
         }
 
-        public bool IsNewWagerLossRecord(int amount)
+        public bool IsNewLargestLossRecord(int amount)
         {
             return amount > LargestLoss;
+        }
+
+        public bool IsNewLargestWagerPlaced(int amount)
+        {
+            return amount > LargestWagerPlaced;
         }
     }
 }

@@ -71,6 +71,26 @@ namespace WagerPlus.Managers
             userProfile.WagersWon++;
         }
 
+        public void AddToWagerLosses(UserProfile userProfile)
+        {
+            userProfile.WagersLost++;
+        }
+
+        public void SetNewWagerWinRecord(UserProfile userProfile, int amount)
+        {
+            userProfile.LargestWin = amount;
+        }
+
+        public void SetNewWagerLossRecord(UserProfile userProfile, int amount)
+        {
+            userProfile.LargestLoss = amount;
+        }
+
+        public void SetNewWagerPlacedRecord(UserProfile userProfile, int amount)
+        {
+            userProfile.LargestWagerPlaced = amount;
+        }
+
         public void RegisterNewUserProfile(UserProfile userProfile)
         {
             _dataManager.UserProfileList.Users.Add(userProfile);

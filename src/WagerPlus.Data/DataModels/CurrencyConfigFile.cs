@@ -14,6 +14,7 @@ namespace WagerPlus.Data.DataModels
         public List<ulong> MonetizedChannels { get; set; } = [];
         public int MessageValue { get; set; } = 1;
         public TimeSpan MessageCooldown {  get; set; } = TimeSpan.FromSeconds(5);
+        public int DailyRewardAmount { get; set; } = 50;
 
         public CurrencyConfigFile() { }
     }

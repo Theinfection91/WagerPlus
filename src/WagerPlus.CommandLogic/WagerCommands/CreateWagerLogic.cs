@@ -62,9 +62,14 @@ namespace WagerPlus.CommandLogic.WagerCommands
 
             // Subtract wager amount from user
             _currencyManager.SubtractAmountFromUserCurrency(userProfile, wagerAmount);
+
             // Create wager and add to pool
             Wager newWager = new(context.User.Id, context.User.Username, target, wagerAmount, pool.GetOddsForChoice(target), description);
             pool.AddWagerToList(newWager);
+
+            // Check if wager is new record
+            if (userProfile.IsNewLargestWagerPlaced(newWager.Amount))
+                _userProfileManager.SetNewWagerPlacedRecord(userProfile, newWager.Amount);
 
             // Save and reload
             _poolManager.SaveAndReloadBettingPoolsDatabase();
