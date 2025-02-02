@@ -47,7 +47,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
             pool?.SetTargetToPosition(target);
 
             // Submit odds amounts to correct target position
-            pool.EditChoiceOddsAmount(targetPosition, odds);
+            pool?.EditChoiceOddsAmount(targetPosition, odds);
 
             // Save and reload Pools - return message
             _poolManager.SaveAndReloadBettingPoolsDatabase();

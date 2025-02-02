@@ -71,53 +71,6 @@ namespace WagerPlus.CommandLogic.WagerCommands
             _userProfileManager.SaveAndReloadUserProfileList();
 
             return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Id}. Target: {newWager.Target} - Amount: {newWager.Amount}";
-
-            if (wagerAmount > 0)
-            {
-                // Check if pool by given name exists
-                if (_poolManager.IsPoolIdInDatabase(poolId))
-                {
-                    // Grab pool
-                    Pool? pool = _poolManager.GetPoolById(poolId);
-
-                    // Check if pool is open for wagers
-                    if (_poolManager.IsPoolOpen(pool))
-                    {
-                        // Get user profile
-                        UserProfile? userProfile = _userProfileManager.GetUserProfile(context.User.Id);
-
-                        // Check if user has already placed wager in pool
-                        if (!_wagerManager.IsUserInWagersList(userProfile.DiscordId, pool.Wagers))
-                        {
-                            // Check if user has enough currency for given wager amount
-                            if (_currencyManager.HasEnoughFunds(userProfile, wagerAmount))
-                            {
-                                // Check if wager will net any profit
-                                if (_wagerManager.IsWagerProfitable(wagerAmount, pool.GetMinimumBetForProfit(target)))
-                                {
-                                    // Subtract wager amount from user
-                                    _currencyManager.SubtractAmountFromUserCurrency(userProfile, wagerAmount);
-                                    // Create wager and add to pool
-                                    Wager newWager = new(context.User.Id, context.User.Username, target, wagerAmount, pool.GetOddsForChoice(target), description);
-                                    pool.AddWagerToList(newWager);
-
-                                    // Save and reload
-                                    _poolManager.SaveAndReloadBettingPoolsDatabase();
-                                    _userProfileManager.SaveAndReloadUserProfileList();
-
-                                    return $"{newWager.DisplayName} ({newWager.DiscordId}) has created a new wager in {pool.Id}. Target: {newWager.Target} - Amount: {newWager.Amount}";
-                                }
-                                return $"A wager amount of {wagerAmount} at {pool.GetOddsForChoice(target)} would not net any profit. The minimum bet at those odds would be **{pool.GetMinimumBetForProfit(target)}**";
-                            }
-                            return $"Not enough funds for given wager amount. Wager Amount: {wagerAmount} - Total Currency: {userProfile.Currency.GetTotalCurrency()}";
-                        }
-                        return $"User with the given ID already found in Wagers list in given pool. ID: {context.User.Id} - Pool: {pool.Id}";
-                    }
-                    return $"{pool.Id} is not currently open for wagers yet.";
-                }
-                return $"The pool Id given was not found in the database: {poolId}";
-            }
-            return $"A wager amount can not be 0 or less.";
         }
     }
 }
