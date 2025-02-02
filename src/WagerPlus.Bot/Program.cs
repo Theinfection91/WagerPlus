@@ -71,6 +71,8 @@ namespace WagerPlus.Bot
                     services.AddSingleton<SetOddsLogic>();
                                       
                     // Setup Commands
+                    services.AddSingleton<DemonetizeChannelLogic>();
+                    services.AddSingleton<MonetizeChannelLogic>();
                     services.AddSingleton<RegisterUserLogic>();
                     services.AddSingleton<SetupCurrencyLogic>();
 
@@ -88,6 +90,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<ConfigManager>();
                     services.AddSingleton<CurrencyManager>();
                     services.AddSingleton<DataManager>();
+                    services.AddSingleton<MessageManager>();
                     services.AddSingleton<PoolManager>();
                     services.AddSingleton<WagerManager>();
                     services.AddSingleton<UserProfileManager>();

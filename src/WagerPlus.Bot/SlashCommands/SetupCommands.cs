@@ -1,4 +1,5 @@
-﻿using Discord.Interactions;
+﻿using Discord;
+using Discord.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,14 @@ namespace WagerPlus.Bot.SlashCommands
     [Group("setup", "Commands for setting up currency, user profiles and more.")]
     public class SetupCommands : InteractionModuleBase<SocketInteractionContext>
     {
+        private DemonetizeChannelLogic _demonetizeChannelLogic;
+        private MonetizeChannelLogic _monetizeChannelLogic;
         private RegisterUserLogic _registerUserLogic;
         private SetupCurrencyLogic _setupCurrencyLogic;
-        public SetupCommands(RegisterUserLogic registerUserLogic, SetupCurrencyLogic setupCurrencyLogic)
+        public SetupCommands(DemonetizeChannelLogic demonetizeChannelLogic, MonetizeChannelLogic monetizeChannelLogic, RegisterUserLogic registerUserLogic, SetupCurrencyLogic setupCurrencyLogic)
         {
+            _demonetizeChannelLogic = demonetizeChannelLogic;
+            _monetizeChannelLogic = monetizeChannelLogic;
             _registerUserLogic = registerUserLogic;
             _setupCurrencyLogic = setupCurrencyLogic;
         }
@@ -36,6 +41,24 @@ namespace WagerPlus.Bot.SlashCommands
         {
             var result = _setupCurrencyLogic.SetupCurrencyProcess(currencyName, currencyAbbreviation);
             await RespondAsync(result);
+        }
+
+        [SlashCommand("monetize_channel", "Add channel to Monetized channels list.")]
+        [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        public async Task MonetizeChannelAsync(
+            [Summary("channel", "The channel to monetize")] IMessageChannel channel)
+        {
+            var result = _monetizeChannelLogic.MonetizeChannelProcess(channel.Id);
+            await RespondAsync(ephemeral: true, embed: result);
+        }
+
+        [SlashCommand("demonetize_channel", "Remove channel from Monetized channels list.")]
+        [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        public async Task DemonetizeChannelAsync(
+            [Summary("channel", "The channel to demonetize")] IMessageChannel channel)
+        {
+            var result = _demonetizeChannelLogic.DemonetizeChannelProcess(channel.Id);
+            await RespondAsync(ephemeral: true, embed: result);
         }
     }
 }

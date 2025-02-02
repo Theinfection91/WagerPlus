@@ -62,12 +62,13 @@ namespace WagerPlus.Managers
 
         public void RemoveFromMonetizedChannels(ulong channelId)
         {
-            foreach (ulong channel in _dataManager.CurrencyConfigFile.MonetizedChannels)
+            for (int i = 0; i < _dataManager.CurrencyConfigFile.MonetizedChannels.Count; i++)
             {
-                if (channel.Equals(channelId))
+                if (_dataManager.CurrencyConfigFile.MonetizedChannels[i].Equals(channelId))
                 {
-                    _dataManager.CurrencyConfigFile.MonetizedChannels.Remove(channel);
+                    _dataManager.CurrencyConfigFile.MonetizedChannels.RemoveAt(i);
                     _dataManager.SaveAndReloadCurrencyConfigFile();
+                    break;
                 }
             }
         }

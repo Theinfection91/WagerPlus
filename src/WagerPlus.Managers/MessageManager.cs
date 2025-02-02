@@ -13,17 +13,19 @@ namespace WagerPlus.Managers
 {
     public class MessageManager
     {
+        public MessageManager() { }
+
         #region General Use Embeds
-        public static Embed CreateBasicEmbed(string title, string message)
+        public Embed CreateBasicEmbed(string title, string message)
         {
             return new EmbedBuilder()
             .WithTitle(title)
             .WithDescription(message)
-            .WithColor(Discord.Color.Blue)
+            .WithColor(Discord.Color.Green)
             .WithTimestamp(DateTimeOffset.UtcNow)
             .Build();
         }
-        public static Embed CreateErrorEmbed(string title, string message)
+        public Embed CreateErrorEmbed(string title, string message)
         {
             return new EmbedBuilder()
             .WithTitle($"{title} Error")
