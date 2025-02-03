@@ -153,6 +153,7 @@ namespace WagerPlus.Managers
         public void SetCanAnyoneCreatePools(bool trueOrFalse)
         {
             _dataManager.PermissionsConfigFile.CanAnyoneCreatePools = trueOrFalse;
+            _dataManager.SaveAndReloadPermissionsConfigFile();
         }
 
         public List<ulong> GetAllCertifiedBookies()
@@ -163,6 +164,7 @@ namespace WagerPlus.Managers
         public void AddBookieToList(ulong discordId)
         {
             _dataManager.PermissionsConfigFile.CertifiedBookies.Add(discordId);
+            _dataManager.SaveAndReloadPermissionsConfigFile();
         }
 
         public void RemoveBookieFromList(ulong discordId)
@@ -170,11 +172,13 @@ namespace WagerPlus.Managers
             for (int i = 0; i < _dataManager.PermissionsConfigFile.CertifiedBookies.Count; i++)
                 if (_dataManager.PermissionsConfigFile.CertifiedBookies[i].Equals(discordId))
                     _dataManager.PermissionsConfigFile.CertifiedBookies.RemoveAt(i);
+                    _dataManager.SaveAndReloadPermissionsConfigFile();
         }
 
         public void AddDeputyAdminToList(ulong discordId)
         {
             _dataManager.PermissionsConfigFile.DeputyAdmins.Add(discordId);
+            _dataManager.SaveAndReloadPermissionsConfigFile();
         }
 
         public void RemoveDeputyAdminFromList(ulong discordId)
@@ -182,6 +186,7 @@ namespace WagerPlus.Managers
             for (int i = 0; i < _dataManager.PermissionsConfigFile.DeputyAdmins.Count; i++)
                 if (_dataManager.PermissionsConfigFile.DeputyAdmins[i].Equals(discordId))
                     _dataManager.PermissionsConfigFile.DeputyAdmins.RemoveAt(i);
+                    _dataManager.SaveAndReloadPermissionsConfigFile();
         }
 
         public bool IsBookie(ulong discordId)

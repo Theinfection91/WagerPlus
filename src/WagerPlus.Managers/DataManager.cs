@@ -139,6 +139,12 @@ namespace WagerPlus.Managers
         {
             _permissionsConfigFileHandler.Save(PermissionsConfigFile);
         }
+
+        public void SaveAndReloadPermissionsConfigFile()
+        {
+            SavePermissionsConfigFile();
+            LoadPermissionsConfigFile();
+        }
         #endregion
 
         #region User Profile List Data
