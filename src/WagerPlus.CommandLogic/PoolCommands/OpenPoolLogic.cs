@@ -13,9 +13,11 @@ namespace WagerPlus.CommandLogic.PoolCommands
 {
     public class OpenPoolLogic : Logic
     {
+        private ConfigManager _configManager;
         private PoolManager _poolManager;
-        public OpenPoolLogic(PoolManager poolManager) : base("Open Pool")
+        public OpenPoolLogic(ConfigManager configManager, PoolManager poolManager) : base("Open Pool")
         {
+            _configManager = configManager;
             _poolManager = poolManager;
         }
 
@@ -36,8 +38,8 @@ namespace WagerPlus.CommandLogic.PoolCommands
             if (context.User is not SocketGuildUser guildUser)
                 return "This command must be used in a guild.";
             bool IsAdmin = guildUser.GuildPermissions.Administrator;
-            if (!_poolManager.IsUserPoolOwner(context.User.Id, pool) || !IsAdmin)
-                return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
+            if (!_poolManager.IsUserPoolOwner(context.User.Id, pool) && !_configManager.IsDeputyAdmin(context.User.Id) && !IsAdmin)
+                return $"You are not the owner of {pool.Id}, nor do you have Guild or Deputy Admin permissions... {pool.OwnerDisplayName} is the owner.";
 
             // Check if targets were set
             if (!_poolManager.IsBothTargetsSetInPool(pool))

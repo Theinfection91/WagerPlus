@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
+using Discord.WebSocket;
 using WagerPlus.Core.Enums.PoolEnums;
 using WagerPlus.Core.Models;
 using WagerPlus.Core.Models.Pools;
@@ -14,10 +15,12 @@ namespace WagerPlus.CommandLogic.PoolCommands
 {
     public class SetTargetLogic : Logic
     {
+        private ConfigManager _configManager;
         private PoolManager _poolManager;
 
-        public SetTargetLogic(PoolManager poolManager) : base("Set Pool Target")
+        public SetTargetLogic(ConfigManager configManager, PoolManager poolManager) : base("Set Pool Target")
         {
+            _configManager = configManager;
             _poolManager = poolManager;
         }
 
@@ -29,6 +32,13 @@ namespace WagerPlus.CommandLogic.PoolCommands
 
             // If found, grab correct pool
             Pool? pool = _poolManager.GetPoolById(poolId);
+
+            // Check if invoker is owner of pool (or admin)
+            if (context.User is not SocketGuildUser guildUser)
+                return "This command must be used in a guild.";
+            bool IsAdmin = guildUser.GuildPermissions.Administrator;
+            if (!_poolManager.IsUserPoolOwner(context.User.Id, pool) && !_configManager.IsDeputyAdmin(context.User.Id) && !IsAdmin)
+                return $"You are not the owner of {pool.Id}, nor do you have Guild or Deputy Admin permissions... {pool.OwnerDisplayName} is the owner.";
 
             // Check if targets locked
             if (_poolManager.IsTargetsLocked(pool))

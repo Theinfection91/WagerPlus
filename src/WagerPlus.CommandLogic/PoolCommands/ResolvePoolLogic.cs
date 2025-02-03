@@ -14,13 +14,15 @@ namespace WagerPlus.CommandLogic.PoolCommands
 {
     public class ResolvePoolLogic : Logic
     {
+        private ConfigManager _configManager;
         private CurrencyManager _currencyManager;
         private PoolManager _poolManager;
         private UserProfileManager _userProfileManager;
         private WagerManager _wagerManager;
 
-        public ResolvePoolLogic(CurrencyManager currencyManager, PoolManager poolManager, UserProfileManager userProfileManager, WagerManager wagerManager) : base("Resolve Pool")
+        public ResolvePoolLogic(ConfigManager configManager, CurrencyManager currencyManager, PoolManager poolManager, UserProfileManager userProfileManager, WagerManager wagerManager) : base("Resolve Pool")
         {
+            _configManager = configManager;
             _currencyManager = currencyManager;
             _poolManager = poolManager;
             _userProfileManager = userProfileManager;
@@ -44,8 +46,8 @@ namespace WagerPlus.CommandLogic.PoolCommands
             if (context.User is not SocketGuildUser guildUser)
                 return "This command must be used in a guild.";
             bool IsAdmin = guildUser.GuildPermissions.Administrator;
-            if (!_poolManager.IsUserPoolOwner(context.User.Id, pool) || !IsAdmin)
-                return $"You are not the owner of {pool.Id}, nor do you have admin permissions... {pool.OwnerDisplayName} is the owner.";
+            if (!_poolManager.IsUserPoolOwner(context.User.Id, pool) && !_configManager.IsDeputyAdmin(context.User.Id) && !IsAdmin)
+                return $"You are not the owner of {pool.Id}, nor do you have Guild or Deputy Admin permissions... {pool.OwnerDisplayName} is the owner.";
 
             // Check current status
             if (_poolManager.IsPoolOpen(pool) && pool.Status != PoolStatus.Resolved)
