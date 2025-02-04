@@ -6,6 +6,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WagerPlus.Bot.Handlers;
+using WagerPlus.CommandLogic.CurrencyCommands;
 using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.CommandLogic.SetupCommands;
 using WagerPlus.CommandLogic.TestCommands;
@@ -58,7 +59,7 @@ namespace WagerPlus.Bot
                     ///////////////////////////////
                     
                     // Currency Commands
-
+                    services.AddSingleton<ClaimDailyRewardLogic>();
 
                     // Pool Commands
                     services.AddSingleton<SetTargetLogic>();

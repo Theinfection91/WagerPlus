@@ -107,6 +107,17 @@ namespace WagerPlus.Managers
             _dataManager.CurrencyConfigFile.MessageCooldown = seconds;
             _dataManager.SaveAndReloadCurrencyConfigFile();
         }
+
+        public int GetDailyRewardAmount()
+        {
+            return _dataManager.CurrencyConfigFile.DailyRewardAmount;
+        }
+
+        public void SetDailyRewardAmount(int amount)
+        {
+            _dataManager.CurrencyConfigFile.DailyRewardAmount = amount;
+            _dataManager.SaveAndReloadCurrencyConfigFile();
+        }
         #endregion
 
         #region Discord Config

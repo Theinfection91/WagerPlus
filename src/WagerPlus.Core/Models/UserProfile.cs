@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ladderbot4.Data;
 
 namespace WagerPlus.Core.Models
 {
@@ -23,7 +24,7 @@ namespace WagerPlus.Core.Models
         public int LargestLoss { get; set; } = 0;
 
         // Trackers
-        public DateTime LastDailyReward { get; set; }
+        public DateTime LastDailyReward { get; set; } = DateTime.MinValue;
 
         public UserProfile(string displayName, ulong discordId)
         {
@@ -45,5 +46,17 @@ namespace WagerPlus.Core.Models
         {
             return amount > LargestWagerPlaced;
         }
+
+        public bool CanClaimDailyReward()
+        {
+            return DateTime.Now >= LastDailyReward.AddHours(24);
+        }
+
+        public TimeSpan GetDailyRewardCooldown()
+        {
+            DateTime nextClaimTime = LastDailyReward.AddHours(24);
+            return nextClaimTime - DateTime.Now;
+        }
+
     }
 }

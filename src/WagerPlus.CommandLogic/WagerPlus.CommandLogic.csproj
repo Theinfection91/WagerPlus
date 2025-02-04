@@ -12,8 +12,4 @@
     <ProjectReference Include="..\WagerPlus.Managers\WagerPlus.Managers.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CurrencyCommands\" />
-  </ItemGroup>
-
 </Project>
