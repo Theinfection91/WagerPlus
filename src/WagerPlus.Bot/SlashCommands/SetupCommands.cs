@@ -21,7 +21,8 @@ namespace WagerPlus.Bot.SlashCommands
         private MonetizeChannelLogic _monetizeChannelLogic;
         private RegisterUserLogic _registerUserLogic;
         private SetupCurrencyLogic _setupCurrencyLogic;
-        public SetupCommands(AddBookieLogic addBookieLogic, RemoveBookieLogic removeBookieLogic, AddDeputyAdminLogic addDeputyAdminLogic, RemoveDeputyAdminLogic removeDeputyAdminLogic, DemonetizeChannelLogic demonetizeChannelLogic, MonetizeChannelLogic monetizeChannelLogic, RegisterUserLogic registerUserLogic, SetupCurrencyLogic setupCurrencyLogic)
+        private UsersCanCreatePoolsLogic _usersCanCreatePoolsLogic;
+        public SetupCommands(AddBookieLogic addBookieLogic, RemoveBookieLogic removeBookieLogic, AddDeputyAdminLogic addDeputyAdminLogic, RemoveDeputyAdminLogic removeDeputyAdminLogic, DemonetizeChannelLogic demonetizeChannelLogic, MonetizeChannelLogic monetizeChannelLogic, RegisterUserLogic registerUserLogic, SetupCurrencyLogic setupCurrencyLogic, UsersCanCreatePoolsLogic usersCanCreatePoolsLogic)
         {
             _addBookieLogic = addBookieLogic;
             _removeBookieLogic = removeBookieLogic;
@@ -31,6 +32,7 @@ namespace WagerPlus.Bot.SlashCommands
             _monetizeChannelLogic = monetizeChannelLogic;
             _registerUserLogic = registerUserLogic;
             _setupCurrencyLogic = setupCurrencyLogic;
+            _usersCanCreatePoolsLogic = usersCanCreatePoolsLogic;
         }
 
         [RequireCurrencySetup]
@@ -71,6 +73,17 @@ namespace WagerPlus.Bot.SlashCommands
         {
             var result = _demonetizeChannelLogic.DemonetizeChannelProcess(channel.Id);
             await RespondAsync(ephemeral: true, embed: result);
+        }
+
+        [SlashCommand("users_can_create_pools", "Sets `Users Can Create Pools` to true or false")]
+        [RequireUserPermission(Discord.GuildPermission.Administrator)]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task UsersCanCreatePoolsAsync(
+            [Summary("true_or_false", "True or False for the option")] bool trueOrFalse)
+        {
+            var result = _usersCanCreatePoolsLogic.UsersCanCreatePoolsProcess(trueOrFalse);
+            await RespondAsync(result, ephemeral: true);
         }
 
         [SlashCommand("add_bookie", "Turns a regular user into a bookie")]

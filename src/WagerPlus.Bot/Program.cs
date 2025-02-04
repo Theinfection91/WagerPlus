@@ -81,6 +81,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<RemoveBookieLogic>();
                     services.AddSingleton<AddDeputyAdminLogic>();
                     services.AddSingleton<RemoveDeputyAdminLogic>();
+                    services.AddSingleton<UsersCanCreatePoolsLogic>();
 
                     // Test Commands
                     services.AddSingleton<Ping>();
