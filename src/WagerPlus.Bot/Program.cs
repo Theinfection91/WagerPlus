@@ -115,6 +115,9 @@ namespace WagerPlus.Bot
             _services = host.Services;
             _configManager = _services.GetRequiredService<ConfigManager>();
 
+            // Check discord token
+            _configManager.SetDiscordTokenProcess();
+
             await RunBotAsync();
         }
 
@@ -175,6 +178,9 @@ namespace WagerPlus.Bot
         {
             // Register SlashCommand modules
             await _interactionService.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
+
+            // Check guild ID
+            _configManager.SetGuildIdProcess();
 
             // Register commands to guild
             await _interactionService.RegisterCommandsToGuildAsync(_configManager.GetGuildId());

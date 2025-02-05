@@ -1,25 +1,18 @@
-﻿using Discord.WebSocket;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
+using Discord.WebSocket;
 using WagerPlus.Managers;
 
 namespace WagerPlus.Bot.Handlers
 {
     public class MonetizedMessageHandler
     {
-        private readonly DiscordSocketClient _client;
         private readonly ConfigManager _configManager;
         private readonly CurrencyManager _currencyManager;
         private readonly UserProfileManager _userProfileManager;
         private readonly ConcurrentDictionary<ulong, DateTime> _cooldownTracker;
 
-        public MonetizedMessageHandler(DiscordSocketClient client, ConfigManager configManager, CurrencyManager currencyManager, UserProfileManager userProfileManager)
+        public MonetizedMessageHandler(ConfigManager configManager, CurrencyManager currencyManager, UserProfileManager userProfileManager)
         {
-            _client = client;
             _configManager = configManager;
             _currencyManager = currencyManager;
             _userProfileManager = userProfileManager;
