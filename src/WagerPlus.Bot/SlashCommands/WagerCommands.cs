@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Interactions;
 using WagerPlus.Bot.PreconditionAttributes;
 using WagerPlus.CommandLogic.WagerCommands;
@@ -14,12 +15,14 @@ namespace WagerPlus.Bot.SlashCommands
     public class WagerCommands : InteractionModuleBase<SocketInteractionContext>
     {
         private CreateWagerLogic _createWagerLogic;
+        private DeleteWagerLogic _deleteWagerLogic;
         private MinimumWagerLogic _minimumWagerLogic;
         private SimulateWagerLogic _simulateWagerLogic;
 
-        public WagerCommands(CreateWagerLogic createWagerLogic, MinimumWagerLogic minimumWagerLogic, SimulateWagerLogic simulateWagerLogic)
+        public WagerCommands(CreateWagerLogic createWagerLogic, DeleteWagerLogic deleteWagerLogic, MinimumWagerLogic minimumWagerLogic, SimulateWagerLogic simulateWagerLogic)
         {
             _createWagerLogic = createWagerLogic;
+            _deleteWagerLogic = deleteWagerLogic;
             _minimumWagerLogic = minimumWagerLogic;
             _simulateWagerLogic = simulateWagerLogic;
         }
@@ -33,6 +36,18 @@ namespace WagerPlus.Bot.SlashCommands
             [Summary("wager_amount", "The amount the user is wagering")] int amount)
         {
             var result = _createWagerLogic.CreateWagerProcess(Context, poolId, target, amount);
+            await RespondAsync(result);
+        }
+
+        [SlashCommand("delete", "Bookie/Admin command to delete wagers in a pool")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        public async Task DeleteWagerAsync(
+            [Summary("pool_id", "The pool ID to create a wager in")] string poolId,
+            [Summary("user", "The user who created the wager.")] IUser user
+            )
+        {
+            var result = _deleteWagerLogic.DeleteWagerProcess(Context, poolId, user.Id);
             await RespondAsync(result);
         }
 
