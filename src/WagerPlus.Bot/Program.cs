@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WagerPlus.Bot.Handlers;
 using WagerPlus.CommandLogic.CurrencyCommands;
+using WagerPlus.CommandLogic.FunCommands.InvestCommands;
 using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.CommandLogic.SetupCommands;
 using WagerPlus.CommandLogic.TestCommands;
@@ -61,6 +62,9 @@ namespace WagerPlus.Bot
                     // Currency Commands
                     services.AddSingleton<ClaimDailyRewardLogic>();
 
+                    // Fun Commands
+                    services.AddSingleton<InvestBankLogic>();
+
                     // Pool Commands
                     services.AddSingleton<SetTargetLogic>();
                     services.AddSingleton<ClosePoolLogic>();
@@ -89,6 +93,7 @@ namespace WagerPlus.Bot
 
                     // Wager Commands
                     services.AddSingleton<CreateWagerLogic>();
+                    services.AddSingleton<DeleteWagerLogic>();
                     services.AddSingleton<MinimumWagerLogic>();
                     services.AddSingleton<SimulateWagerLogic>();
 
