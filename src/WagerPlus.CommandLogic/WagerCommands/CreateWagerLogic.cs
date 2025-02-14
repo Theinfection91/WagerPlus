@@ -54,7 +54,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
 
             // Check if user has enough currency for given wager amount
             if (!_currencyManager.HasEnoughFunds(userProfile, wagerAmount))
-                return $"Not enough funds for given wager amount. Wager Amount: {wagerAmount} - Total Currency: {userProfile.Currency.GetTotalCurrency()}";
+                return $"Not enough funds for given wager amount. Wager Amount: {wagerAmount} - Total Currency: {userProfile.MainCurrency.GetTotalCurrency()}";
 
             // Check if wager will net any profit
             if (!_wagerManager.IsWagerProfitable(wagerAmount, pool.GetMinimumBetForProfit(target)))

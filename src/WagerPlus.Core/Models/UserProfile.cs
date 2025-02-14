@@ -14,8 +14,8 @@ namespace WagerPlus.Core.Models
         public ulong DiscordId { get; set; }
 
         // Currency
-        public Currency Currency { get; set; }
-        public Wallet Wallet { get; set; }
+        public Currency MainCurrency { get; set; }
+        public Currency MiniGameCurrency { get; set; }
 
         // Stats
         public int WagersWon { get; set; } = 0;

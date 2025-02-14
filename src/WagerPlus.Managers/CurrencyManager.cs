@@ -16,12 +16,12 @@ namespace WagerPlus.Managers
 
         public bool HasEnoughFunds(UserProfile userProfile, int wagerAmount)
         {
-            return userProfile.Currency.GetTotalCurrency() >= wagerAmount;
+            return userProfile.MainCurrency.GetTotalCurrency() >= wagerAmount;
         }
 
         public int GetUserBalance(UserProfile userProfile)
         {
-            return userProfile.Currency.GetTotalCurrency();
+            return userProfile.MainCurrency.GetTotalCurrency();
         }
 
         public int GetWagerPayout(int wagerAmount, decimal wagerOdds)
@@ -31,12 +31,12 @@ namespace WagerPlus.Managers
 
         public void AddAmountToUserCurrency(UserProfile userProfile, int amount)
         {
-            userProfile.Currency.Add(amount);
+            userProfile.MainCurrency.Add(amount);
         }
 
         public void SubtractAmountFromUserCurrency(UserProfile userProfile, int amount)
         {
-            userProfile.Currency.Subtract(amount);
+            userProfile.MainCurrency.Subtract(amount);
         }
     }
 }

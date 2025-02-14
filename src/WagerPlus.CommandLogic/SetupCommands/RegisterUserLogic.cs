@@ -28,7 +28,7 @@ namespace WagerPlus.CommandLogic.SetupCommands
             // TODO: Decide on new user currency amount
             UserProfile userProfile = new(context.User.Username, context.User.Id)
             {
-                Currency = new()
+                MainCurrency = new()
                 {
                     Total = 50
                 }
