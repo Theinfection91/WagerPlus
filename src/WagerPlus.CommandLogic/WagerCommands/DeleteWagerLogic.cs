@@ -59,7 +59,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
             Wager? wager = _wagerManager.GetWagerInPoolFromDiscordId(pool, wagerDiscordId);
 
             // Refund the user's wager amount
-            _currencyManager.AddAmountToUserCurrency(userProfile, wager.Amount);
+            _currencyManager.AddAmountToUserMainCurrency(userProfile, wager.Amount);
 
             // Remove the wager
             _wagerManager.RemoveWagerFromPool(pool, wager);

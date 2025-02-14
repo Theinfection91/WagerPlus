@@ -50,7 +50,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
             if (pool.Wagers.Count > 0)
                 foreach (Wager wager in pool.Wagers)
                     if (_userProfileManager.IsUserRegistered(wager.DiscordId))
-                        _currencyManager.AddAmountToUserCurrency(_userProfileManager.GetUserProfile(wager.DiscordId), wager.Amount);
+                        _currencyManager.AddAmountToUserMainCurrency(_userProfileManager.GetUserProfile(wager.DiscordId), wager.Amount);
 
             _poolManager.RemovePool(pool);
             _userProfileManager.SaveAndReloadUserProfileList();

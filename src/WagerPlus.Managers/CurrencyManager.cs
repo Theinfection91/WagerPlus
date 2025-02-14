@@ -29,14 +29,24 @@ namespace WagerPlus.Managers
             return (int)(wagerAmount * wagerOdds);
         }
 
-        public void AddAmountToUserCurrency(UserProfile userProfile, int amount)
+        public void AddAmountToUserMainCurrency(UserProfile userProfile, int amount)
         {
             userProfile.MainCurrency.Add(amount);
         }
 
-        public void SubtractAmountFromUserCurrency(UserProfile userProfile, int amount)
+        public void SubtractAmountFromUserMainCurrency(UserProfile userProfile, int amount)
         {
             userProfile.MainCurrency.Subtract(amount);
+        }
+
+        public void AddAmountToUserMiniGameCurrency(UserProfile userProfile, int amount)
+        {
+            userProfile.MiniGameCurrency.Add(amount);
+        }
+
+        public void SubtractAmountFromUserMiniGameCurrency(UserProfile userProfile, int amount)
+        {
+            userProfile.MiniGameCurrency.Add(amount);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace WagerPlus.CommandLogic.CurrencyCommands
                 return $"You have already claimed your daily reward today. You have {remaining.Hours:D2}:{remaining.Minutes:D2}:{remaining.Seconds:D2} left.";
             }
 
-            _currencyManager.AddAmountToUserCurrency(userProfile, _configManager.GetDailyRewardAmount());
+            _currencyManager.AddAmountToUserMainCurrency(userProfile, _configManager.GetDailyRewardAmount());
             userProfile.LastDailyReward = DateTime.Now;
             _userProfileManager.SaveAndReloadUserProfileList();
 

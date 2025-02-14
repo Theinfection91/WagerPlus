@@ -71,7 +71,7 @@ namespace WagerPlus.CommandLogic.PoolCommands
                     {
                         // Calculate payout and award to user
                         int payoutTotal = _wagerManager.GetWagerPayoutTotal(wager);
-                        _currencyManager.AddAmountToUserCurrency(userProfile, payoutTotal);
+                        _currencyManager.AddAmountToUserMainCurrency(userProfile, payoutTotal);
                         
                         // Add to wager wins
                         _userProfileManager.AddToWagerWins(userProfile);

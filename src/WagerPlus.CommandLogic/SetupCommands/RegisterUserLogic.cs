@@ -31,6 +31,10 @@ namespace WagerPlus.CommandLogic.SetupCommands
                 MainCurrency = new()
                 {
                     Total = 50
+                },
+                MiniGameCurrency = new()
+                {
+                    Total = 500
                 }
             };
             _userProfileManager.RegisterNewUserProfile(userProfile);

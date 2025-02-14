@@ -61,7 +61,7 @@ namespace WagerPlus.CommandLogic.WagerCommands
                 return $"A wager amount of {wagerAmount} at {pool.GetOddsForChoice(target)} would not net any profit. The minimum wager amount you can place at those odds would be **{pool.GetMinimumBetForProfit(target)}**";
 
             // Subtract wager amount from user
-            _currencyManager.SubtractAmountFromUserCurrency(userProfile, wagerAmount);
+            _currencyManager.SubtractAmountFromUserMainCurrency(userProfile, wagerAmount);
 
             // Create wager and add to pool
             Wager newWager = new(context.User.Id, context.User.Username, target, wagerAmount, pool.GetOddsForChoice(target), description);

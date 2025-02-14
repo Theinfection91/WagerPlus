@@ -40,7 +40,7 @@ namespace WagerPlus.Bot.Handlers
             _cooldownTracker[userId] = now;
             if (_userProfileManager.IsUserRegistered(userId))
             {
-                _currencyManager.AddAmountToUserCurrency(_userProfileManager.GetUserProfile(userId), _configManager.GetMessageValueAmount());
+                _currencyManager.AddAmountToUserMainCurrency(_userProfileManager.GetUserProfile(userId), _configManager.GetMessageValueAmount());
                 _userProfileManager.SaveAndReloadUserProfileList();
             }
         }
