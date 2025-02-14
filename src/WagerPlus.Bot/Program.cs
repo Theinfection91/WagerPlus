@@ -98,8 +98,9 @@ namespace WagerPlus.Bot
                     services.AddSingleton<SimulateWagerLogic>();
 
                     ///////////////////////////////
-                    
+
                     // Managers
+                    services.AddSingleton<BankManager>();
                     services.AddSingleton<ConfigManager>();
                     services.AddSingleton<CurrencyManager>();
                     services.AddSingleton<DataManager>();
@@ -109,6 +110,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<UserProfileManager>();
 
                     // Data
+                    services.AddSingleton<BankVaultsHandler>();
                     services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
                     services.AddSingleton<DiscordCredentialHandler>();

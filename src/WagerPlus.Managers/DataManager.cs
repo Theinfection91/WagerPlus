@@ -15,6 +15,10 @@ namespace WagerPlus.Managers
         #region Fields and Constructor
         public string Name { get; set; } = "DataManager";
 
+        // Bank Vaults Data
+        public BankVaults BankVaults { get; set; }
+        private BankVaultsHandler _bankVaultsHandler;
+
         // Betting Pools Data
         public BettingPools BettingPoolsDatabase { get; set; }
         private BettingPoolsHandler _betttingPoolsHandler;
@@ -35,8 +39,11 @@ namespace WagerPlus.Managers
         public UserProfileList UserProfileList { get; set; }
         private readonly UserProfileHandler _userProfileHandler;
 
-        public DataManager(BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
+        public DataManager(BankVaultsHandler bankVaultsHandler, BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
         {
+            _bankVaultsHandler = bankVaultsHandler;
+            LoadBankVaults();
+            
             _betttingPoolsHandler = bettingPoolsHandler;
             LoadBettingPoolsDatabase();
 
@@ -51,6 +58,18 @@ namespace WagerPlus.Managers
 
             _userProfileHandler = userProfileHandler;
             LoadUserProfileList();
+        }
+        #endregion
+
+        #region Bank Vaults Data
+        public void LoadBankVaults()
+        {
+            BankVaults = _bankVaultsHandler.Load();
+        }
+
+        public void SaveBankVaults(BankVaults bankVaults)
+        {
+            _bankVaultsHandler.Save(bankVaults);
         }
         #endregion
 

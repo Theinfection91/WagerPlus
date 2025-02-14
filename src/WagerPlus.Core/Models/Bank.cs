@@ -8,8 +8,16 @@ namespace WagerPlus.Core.Models
 {
     public class Bank
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
-        public Vault Vault { get; set; }
+        public int Total { get; set; }
+        public Dictionary<string, int> Accounts { get; set; }
+
+        public Bank(string id, string name)
+        {
+            Id = id;
+            Name = name;
+            Accounts = [];
+        }
     }
 }
