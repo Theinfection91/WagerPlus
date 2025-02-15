@@ -47,7 +47,7 @@ namespace WagerPlus.Payments
                 Amount = new AmountWithBreakdown
                 {
                     CurrencyCode = currency,
-                    MValue = "value0",
+                    MValue = amount.ToString(),
                 },
             },
                     },
@@ -104,7 +104,7 @@ namespace WagerPlus.Payments
             //}
         }
 
-        public async Task<bool> CaptureOrderAsync(OrdersCaptureInput ordersCaptureInput, string discordUserId)
+        public async Task<bool> CaptureOrderAsync(OrdersCaptureInput ordersCaptureInput, ulong discordUserId)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace WagerPlus.Payments
             }
         }
 
-        private Task AwardCurrencyToUser(string discordUserId, decimal amount)
+        private Task AwardCurrencyToUser(ulong discordUserId, decimal amount)
         {
             var coins = (int)(amount * 100); // Example: $1 = 100 coins
             Console.WriteLine($"User {discordUserId} donated ${amount}. Awarded {coins} coins.");

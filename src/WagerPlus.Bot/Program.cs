@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WagerPlus.Bot.Handlers;
 using WagerPlus.CommandLogic.CurrencyCommands;
+using WagerPlus.CommandLogic.DonationCommands;
 using WagerPlus.CommandLogic.FunCommands.InvestCommands;
 using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.CommandLogic.SetupCommands;
@@ -14,6 +15,7 @@ using WagerPlus.CommandLogic.TestCommands;
 using WagerPlus.CommandLogic.WagerCommands;
 using WagerPlus.Data.Handlers;
 using WagerPlus.Managers;
+using WagerPlus.Payments;
 
 namespace WagerPlus.Bot
 {
@@ -55,12 +57,18 @@ namespace WagerPlus.Bot
                     // Monetized Messaging Service
                     services.AddSingleton<MonetizedMessageHandler>();
 
+                    // PayPal Service
+                    services.AddSingleton<PayPalClient>();
+
                     /////////////////////////////////
                     //    ==-Command Logic-==     //
                     ///////////////////////////////
                     
                     // Currency Commands
                     services.AddSingleton<ClaimDailyRewardLogic>();
+
+                    // Donation Commands
+                    services.AddSingleton<TestDonateLogic>();
 
                     // Fun Commands
                     services.AddSingleton<InvestBankLogic>();
