@@ -18,8 +18,9 @@ namespace WagerPlus.Payments
 
         public PayPalClient(ConfigManager configManager)
         {
+            Console.WriteLine("PayPal Client Check");
             _configManager = configManager;
-            _isProduction = configManager.GetIsPayPalInProduction()); // Assumes "true" for production, "false" for sandbox
+            _isProduction = configManager.GetIsPayPalInProduction(); // Assumes "true" for production, "false" for sandbox
 
             _client = new PaypalServerSdkClient.Builder()
                 .ClientCredentialsAuth(
@@ -32,7 +33,7 @@ namespace WagerPlus.Payments
                 .Build();
         }
 
-        public async Task<string> CreateOrderAsync(decimal amount, string currency = "USD")
+        public async Task<OrdersCaptureInput> CreateOrderAsync(decimal amount, string currency = "USD")
         {
             OrdersCreateInput ordersCreateInput = new OrdersCreateInput
             {
@@ -57,13 +58,13 @@ namespace WagerPlus.Payments
             try
             {
                 ApiResponse<Order> result = await _client.OrdersController.OrdersCreateAsync(ordersCreateInput);
-                return result.Data.Intent;
+                return new OrdersCaptureInput(result.Data.Id, "application/json");
             }
             catch (ApiException e)
             {
                 // TODO: Handle exception here
                 Console.WriteLine(e.Message);
-                return "Whoopsies. Check console for error.";
+                return null;
             }
 
             //var orderRequest = new OrderRequest()
@@ -103,15 +104,15 @@ namespace WagerPlus.Payments
             //}
         }
 
-        public async Task<bool> CaptureOrderAsync(string orderId, string discordUserId)
+        public async Task<bool> CaptureOrderAsync(OrdersCaptureInput ordersCaptureInput, string discordUserId)
         {
             try
             {
-                var captureResult = await _client.OrdersController.OrdersCaptureAsync(orderId);
+                var captureResult = await _client.OrdersController.OrdersCaptureAsync(ordersCaptureInput);
 
-                if (captureResult.Data.Status == "COMPLETED")
+                if (captureResult.Data.Status == OrderStatus.Completed)
                 {
-                    decimal amount = decimal.Parse(captureResult.Data.PurchaseUnits[0].Payments.Captures[0].Amount.Value);
+                    decimal amount = decimal.Parse(captureResult.Data.PurchaseUnits[0].Payments.Captures[0].Amount.MValue);
                     string payerEmail = captureResult.Data.Payer.EmailAddress;
 
                     Console.WriteLine($"Payment successful! {amount} USD received from {payerEmail}");
