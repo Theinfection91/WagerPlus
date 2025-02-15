@@ -114,6 +114,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
                     services.AddSingleton<DiscordCredentialHandler>();
+                    services.AddSingleton<PayPalConfigHandler>();
                     services.AddSingleton<PermissionsConfigHandler>();
                     services.AddSingleton<UserProfileHandler>();
                 })

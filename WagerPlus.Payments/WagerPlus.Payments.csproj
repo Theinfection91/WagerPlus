@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="PayPalServerSDK" Version="0.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\WagerPlus.Managers\WagerPlus.Managers.csproj" />
+  </ItemGroup>
+
 </Project>

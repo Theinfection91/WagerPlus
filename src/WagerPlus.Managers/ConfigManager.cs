@@ -248,6 +248,23 @@ namespace WagerPlus.Managers
         }
         #endregion
 
+        #region PayPal Config
+        public string GetPayPalClientId()
+        {
+            return _dataManager.PayPalConfigFile.ClientId;
+        }
+
+        public string GetPayPalClientSecret()
+        {
+            return _dataManager.PayPalConfigFile.ClientSecret;
+        }
+
+        public bool GetIsPayPalInProduction()
+        {
+            return _dataManager.PayPalConfigFile.IsPayPalInProduction;
+        }
+        #endregion
+
         #region Permissions Config
         public bool GetCanAnyoneCreatePools()
         {

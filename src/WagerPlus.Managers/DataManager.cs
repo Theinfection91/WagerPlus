@@ -31,6 +31,10 @@ namespace WagerPlus.Managers
         public DiscordCredentialFile DiscordConfigFile { get; set; }
         private readonly DiscordCredentialHandler _discordConfigHandler;
 
+        // PayPal Config
+        public PayPalConfigFile PayPalConfigFile { get; set; }
+        private readonly PayPalConfigHandler _payPalConfigHandler;
+
         // Permissions Config
         public PermissionsConfigFile PermissionsConfigFile { get; set; }
         private PermissionsConfigHandler _permissionsConfigFileHandler;
@@ -39,7 +43,7 @@ namespace WagerPlus.Managers
         public UserProfileList UserProfileList { get; set; }
         private readonly UserProfileHandler _userProfileHandler;
 
-        public DataManager(BankVaultsHandler bankVaultsHandler, BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
+        public DataManager(BankVaultsHandler bankVaultsHandler, BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, PayPalConfigHandler payPalConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
         {
             _bankVaultsHandler = bankVaultsHandler;
             LoadBankVaults();
@@ -52,6 +56,9 @@ namespace WagerPlus.Managers
 
             _discordConfigHandler = discordConfigHandler;
             LoadDiscordConfigFile();
+
+            _payPalConfigHandler = payPalConfigHandler;
+            LoadPayPalConfigFile();
 
             _permissionsConfigFileHandler = permissionsConfigHandler;
             LoadPermissionsConfigFile();
@@ -145,6 +152,18 @@ namespace WagerPlus.Managers
         {
             SaveDiscordConfigFile(DiscordConfigFile);
             LoadDiscordConfigFile();
+        }
+        #endregion
+
+        #region PayPal Configuration
+        public void LoadPayPalConfigFile()
+        {
+            PayPalConfigFile = _payPalConfigHandler.Load();
+        }
+
+        public void SavePayPalConfigFile()
+        {
+            _payPalConfigHandler.Save(PayPalConfigFile);
         }
         #endregion
 
