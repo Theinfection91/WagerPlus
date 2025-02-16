@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WagerPlus.Bot": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
