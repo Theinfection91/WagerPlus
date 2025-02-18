@@ -11,6 +11,5 @@ namespace WagerPlus.MyTournament.Models
         public string Id { get; set; }
         public int MaxTeams { get; set; }
         public List<MetaTeam>? Teams { get; set; }
-        public List<MetaWager>? Wagers { get; set; }
     }
 }

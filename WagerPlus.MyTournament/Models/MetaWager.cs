@@ -8,5 +8,6 @@ namespace WagerPlus.MyTournament.Models
 {
     public class MetaWager
     {
+
     }
 }
