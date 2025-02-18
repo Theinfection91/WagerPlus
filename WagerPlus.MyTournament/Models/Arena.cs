@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace WagerPlus.MyTournament.Models
 {
-    public class Tournament
+    public class Arena
     {
         public string Id { get; set; }
-        public int MaxTeams { get; set; }
-        public List<MetaTeam>? Teams { get; set; }
-        public List<MetaWager>? Wagers { get; set; }
+        public string Name { get; set; }
+        public int Capacity { get; set; }
     }
 }
