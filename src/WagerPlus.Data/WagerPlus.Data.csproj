@@ -14,4 +14,8 @@
     <ProjectReference Include="..\WagerPlus.Core\WagerPlus.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataModels\MyTournament\" />
+  </ItemGroup>
+
 </Project>
