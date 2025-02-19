@@ -9,18 +9,19 @@ namespace WagerPlus.MyTournament.Models
     public class Match
     {
         public Guid Id { get; set; }
-
+        public int Order { get; set; }
         public MetaTeam HomeTeam { get; set; }
         public MetaTeam AwayTeam { get; set; }
-
         public List<MetaWager> Wagers { get; set; }
-        public int BestOf { get; set; }
 
-        public Match(MetaTeam homeTeam, MetaTeam awayTeam, int bestOf)
+
+
+        public Match(int orderNumber, MetaTeam homeTeam, MetaTeam awayTeam)
         {
+            Id = Guid.NewGuid();
+            Order = orderNumber;
             HomeTeam = homeTeam;
             AwayTeam = awayTeam;
-            BestOf = bestOf;
             Wagers = [];
         }
     }

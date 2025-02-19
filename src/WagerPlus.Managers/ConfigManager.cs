@@ -222,7 +222,7 @@ namespace WagerPlus.Managers
         public void SetCommandPrefix(string prefix)
         {
             _dataManager.DiscordConfigFile.CommandPrefix = prefix;
-            _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
+            _dataManager.SaveDiscordConfigFile();
         }
 
         public string GetDiscordToken()
@@ -233,7 +233,7 @@ namespace WagerPlus.Managers
         public void SetDiscordToken(string discordToken)
         {
             _dataManager.DiscordConfigFile.DiscordBotToken = discordToken;
-            _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
+            _dataManager.SaveDiscordConfigFile();
         }
 
         public ulong GetGuildId()
@@ -244,7 +244,7 @@ namespace WagerPlus.Managers
         public void SetGuildId(ulong guildId)
         {
             _dataManager.DiscordConfigFile.GuildId = guildId;
-            _dataManager.SaveDiscordConfigFile(_dataManager.DiscordConfigFile);
+            _dataManager.SaveDiscordConfigFile();
         }
         #endregion
 

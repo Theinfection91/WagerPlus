@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Discord;
 using WagerPlus.Core.Models.Pools;
 using WagerPlus.Data.DataModels;
+using WagerPlus.Data.DataModels.MyTournament;
 using WagerPlus.Data.Handlers;
 
 namespace WagerPlus.Managers
@@ -31,6 +32,10 @@ namespace WagerPlus.Managers
         public DiscordCredentialFile DiscordConfigFile { get; set; }
         private readonly DiscordCredentialHandler _discordConfigHandler;
 
+        // MyTournament Data
+        public MyTournamentMatrix MyTournamentMatrix { get; set; }
+        private readonly MyTournamentHandler _myTournamentHandler;
+
         // PayPal Config
         public PayPalConfigFile PayPalConfigFile { get; set; }
         private readonly PayPalConfigHandler _payPalConfigHandler;
@@ -43,7 +48,7 @@ namespace WagerPlus.Managers
         public UserProfileList UserProfileList { get; set; }
         private readonly UserProfileHandler _userProfileHandler;
 
-        public DataManager(BankVaultsHandler bankVaultsHandler, BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, PayPalConfigHandler payPalConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
+        public DataManager(BankVaultsHandler bankVaultsHandler, BettingPoolsHandler bettingPoolsHandler, CurrencyConfigHandler currencyConfigHandler, DiscordCredentialHandler discordConfigHandler, MyTournamentHandler myTournamentHandler, PayPalConfigHandler payPalConfigHandler, PermissionsConfigHandler permissionsConfigHandler, UserProfileHandler userProfileHandler)
         {
             _bankVaultsHandler = bankVaultsHandler;
             LoadBankVaults();
@@ -56,6 +61,9 @@ namespace WagerPlus.Managers
 
             _discordConfigHandler = discordConfigHandler;
             LoadDiscordConfigFile();
+
+            _permissionsConfigFileHandler = permissionsConfigHandler;
+            LoadMyTournamentMatrix();
 
             _payPalConfigHandler = payPalConfigHandler;
             LoadPayPalConfigFile();
@@ -143,15 +151,33 @@ namespace WagerPlus.Managers
             DiscordConfigFile = _discordConfigHandler.Load();
         }
 
-        public void SaveDiscordConfigFile(DiscordCredentialFile discordConfigFile)
+        public void SaveDiscordConfigFile()
         {
-            _discordConfigHandler.Save(discordConfigFile);
+            _discordConfigHandler.Save(DiscordConfigFile);
         }
 
         public void SaveAndReloadDiscordConfigFile()
         {
-            SaveDiscordConfigFile(DiscordConfigFile);
+            SaveDiscordConfigFile();
             LoadDiscordConfigFile();
+        }
+        #endregion
+
+        #region MyTournament Data
+        public void LoadMyTournamentMatrix()
+        {
+            MyTournamentMatrix = _myTournamentHandler.Load();
+        }
+
+        public void SaveMyTournamentMatrix()
+        {
+            _myTournamentHandler.Save(MyTournamentMatrix);
+        }
+
+        public void SaveAndReloadMyTournamentMatrix()
+        {
+            SaveMyTournamentMatrix();
+            LoadMyTournamentMatrix();
         }
         #endregion
 

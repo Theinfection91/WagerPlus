@@ -35,22 +35,5 @@ namespace WagerPlus.Bot.SlashCommands
 
             }
         }
-
-        [Group("my_tournament", "Invest in your own mini RNG tournaments.")]
-        public class MyTournamentCommands : InteractionModuleBase<SocketInteractionContext>
-        {
-            public MyTournamentCommands()
-            {
-
-            }
-
-            [SlashCommand("begin", "Start the onboarding process of MyTournament.")]
-            [RequireCurrencySetup]
-            [RequireUserRegistered]
-            public async Task MyTournamentBeginAsync()
-            {
-
-            }
-        }
     }
 }

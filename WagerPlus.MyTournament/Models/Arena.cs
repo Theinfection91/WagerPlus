@@ -10,6 +10,13 @@ namespace WagerPlus.MyTournament.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public int Level { get; set; }
         public int Capacity { get; set; }
+
+        public Arena(string id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

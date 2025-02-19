@@ -9,6 +9,7 @@ using WagerPlus.Bot.Handlers;
 using WagerPlus.CommandLogic.CurrencyCommands;
 using WagerPlus.CommandLogic.DonationCommands;
 using WagerPlus.CommandLogic.FunCommands.InvestCommands;
+using WagerPlus.CommandLogic.FunCommands.MyTournamentCommands;
 using WagerPlus.CommandLogic.PoolCommands;
 using WagerPlus.CommandLogic.SetupCommands;
 using WagerPlus.CommandLogic.TestCommands;
@@ -73,6 +74,9 @@ namespace WagerPlus.Bot
                     // Fun Commands
                     services.AddSingleton<InvestBankLogic>();
 
+                    // MyTournament Commands
+                    services.AddSingleton<MyTournamentBeginLogic>();
+
                     // Pool Commands
                     services.AddSingleton<SetTargetLogic>();
                     services.AddSingleton<ClosePoolLogic>();
@@ -113,6 +117,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<CurrencyManager>();
                     services.AddSingleton<DataManager>();
                     services.AddSingleton<MessageManager>();
+                    services.AddSingleton<MyTournamentManager>();
                     services.AddSingleton<PoolManager>();
                     services.AddSingleton<WagerManager>();
                     services.AddSingleton<UserProfileManager>();
@@ -122,6 +127,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<BettingPoolsHandler>();
                     services.AddSingleton<CurrencyConfigHandler>();
                     services.AddSingleton<DiscordCredentialHandler>();
+                    services.AddSingleton<MyTournamentHandler>();
                     services.AddSingleton<PayPalConfigHandler>();
                     services.AddSingleton<PermissionsConfigHandler>();
                     services.AddSingleton<UserProfileHandler>();
