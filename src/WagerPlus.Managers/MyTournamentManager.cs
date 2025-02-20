@@ -25,5 +25,11 @@ namespace WagerPlus.Managers
             }
             return false;
         }
+
+        public void AddTournamentToDatabase(Tournament tournament)
+        {
+            _dataManager.MyTournamentMatrix.Tournaments.Add(tournament);
+            _dataManager.SaveAndReloadMyTournamentMatrix();
+        }
     }
 }

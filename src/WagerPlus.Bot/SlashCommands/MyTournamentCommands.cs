@@ -12,10 +12,10 @@ namespace WagerPlus.Bot.SlashCommands
     [Group("my_tournament", "Invest in your own mini RNG tournaments.")]
     public class MyTournamentCommands : InteractionModuleBase<SocketInteractionContext>
     {
-        private MyTournamentRegisterLogic _myTournamentBeginLogic;
+        private MyTournamentRegisterLogic _myTournamentRegisterLogic;
         public MyTournamentCommands(MyTournamentRegisterLogic myTournamentBeginLogic)
         {
-            _myTournamentBeginLogic = myTournamentBeginLogic;
+            _myTournamentRegisterLogic = myTournamentBeginLogic;
         }
 
         [SlashCommand("register", "Start the onboarding process of MyTournament.")]
@@ -23,7 +23,8 @@ namespace WagerPlus.Bot.SlashCommands
         [RequireUserRegistered]
         public async Task MyTournamentRegisterAsync()
         {
-
+            var result = _myTournamentRegisterLogic.MyTournamentRegisterProcess(Context);
+            await RespondAsync(result, ephemeral: true);
         }
 
         [SlashCommand("hub", "Show all pertinent information about your tournament.")]
@@ -32,7 +33,8 @@ namespace WagerPlus.Bot.SlashCommands
         [RequireMyTournamentRegistered]
         public async Task MyTournamentHubAsync()
         {
-
+            var result = "Yup";
+            await RespondAsync(result, ephemeral: true);
         }
     }
 }

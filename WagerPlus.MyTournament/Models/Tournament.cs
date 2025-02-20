@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WagerPlus.MyTournament.Enums;
+using WagerPlus.MyTournament.Models.Arenas;
 using WagerPlus.MyTournament.Models.Staff;
 
 namespace WagerPlus.MyTournament.Models
@@ -13,6 +15,7 @@ namespace WagerPlus.MyTournament.Models
         public ulong Id { get; set; } // User's Discord ID
         public int Level { get; set; } = 1;
         public int Experience { get; set; } = 0;
+        public int Reputation { get; set; } = 0;
 
         // Funds
         public int Bankroll { get; set; } = 1000;
@@ -33,8 +36,8 @@ namespace WagerPlus.MyTournament.Models
         public Promoter Promoter { get; set; }
         public TeamCoordinator TeamCoordinator { get; set; }
 
-        // Active and Timestamp Info
-        public bool IsActive { get; set; } = false;
+        // Phase and Timestamp Info
+        public TournamentPhase Phase { get; set; } = TournamentPhase.Executive;
         public DateTime TimeStarted { get; set; }
         public DateTime TimeEnded { get; set; }
 
@@ -44,6 +47,7 @@ namespace WagerPlus.MyTournament.Models
         public Tournament(ulong discordId)
         {
             Id = discordId;
+            Arena = new TheKillingFields();
         }
     }
 }
