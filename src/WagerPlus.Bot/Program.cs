@@ -16,6 +16,7 @@ using WagerPlus.CommandLogic.TestCommands;
 using WagerPlus.CommandLogic.WagerCommands;
 using WagerPlus.Data.Handlers;
 using WagerPlus.Managers;
+using WagerPlus.MyTournament.Utilities;
 using WagerPlus.Payments;
 
 namespace WagerPlus.Bot
@@ -60,6 +61,9 @@ namespace WagerPlus.Bot
 
                     // PayPal Service
                     services.AddSingleton<PayPalClient>();
+
+                    // RNGMachine Service
+                    services.AddSingleton<RNGMachine>();
 
                     /////////////////////////////////
                     //    ==-Command Logic-==     //

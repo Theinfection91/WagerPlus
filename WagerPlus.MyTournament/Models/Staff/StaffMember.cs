@@ -21,11 +21,16 @@ namespace WagerPlus.MyTournament.Models.Staff
         public int Experience { get; set; }
 
         // Mood
-        public StaffMood Mood { get; set; }
+        public StaffMood Mood { get; set; } = StaffMood.Neutral;
 
         public StaffMember(string name) : base(name)
         {
 
+        }
+
+        public void CalculateSalary()
+        {
+            Salary = (Drive + Adaptability + Experience) * 3; 
         }
     }
 }

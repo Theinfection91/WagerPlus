@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WagerPlus.MyTournament.Models;
+using WagerPlus.MyTournament.Models.Staff;
+using WagerPlus.MyTournament.Utilities;
 
 namespace WagerPlus.Managers
 {
     public class MyTournamentManager : DataDriven
     {
-        public MyTournamentManager(DataManager dataManager) : base("MyTournamentManager", dataManager)
+        public RNGMachine RNGMachine { get; set; }
+        public List<StaffMember> HiringPool { get; private set; }
+        public MyTournamentManager(DataManager dataManager, RNGMachine rngMachine) : base("MyTournamentManager", dataManager)
         {
-
+            RNGMachine = rngMachine;
         }
 
         public bool IsUserRegistered(ulong discordId)
@@ -24,6 +28,18 @@ namespace WagerPlus.Managers
                 }
             }
             return false;
+        }
+
+        public void GenerateHiringPool(int level)
+        {
+            if (level < 5)
+            {
+
+            }
+            if (level >= 5)
+            {
+
+            }
         }
 
         public void AddTournamentToDatabase(Tournament tournament)
