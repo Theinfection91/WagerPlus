@@ -14,11 +14,14 @@ namespace WagerPlus.MyTournament.Models
         public int Level { get; set; } = 1;
         public int Experience { get; set; } = 0;
 
+        // Funds
+        public int Bankroll { get; set; } = 1000;
+
         // Arena
         public Arena Arena { get; set; }
 
         // Teams
-        public int MaxTeams { get; set; } = 6;
+        public int MaxTeams { get; set; } = 8;
         public List<MetaTeam>? CurrentTeams { get; set; } = [];
 
         // Matches and History
@@ -32,8 +35,11 @@ namespace WagerPlus.MyTournament.Models
 
         // Active and Timestamp Info
         public bool IsActive { get; set; } = false;
-        public DateTime Started { get; set; }
-        public DateTime Ended { get; set; }
+        public DateTime TimeStarted { get; set; }
+        public DateTime TimeEnded { get; set; }
+
+        // Misc.
+        public int Completed { get; set; }
 
         public Tournament(ulong discordId)
         {

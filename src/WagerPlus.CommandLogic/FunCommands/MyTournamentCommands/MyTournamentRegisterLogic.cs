@@ -7,10 +7,10 @@ using WagerPlus.Managers;
 
 namespace WagerPlus.CommandLogic.FunCommands.MyTournamentCommands
 {
-    public class MyTournamentBeginLogic : Logic
+    public class MyTournamentRegisterLogic : Logic
     {
         private MyTournamentManager _myTournamentManager;
-        public MyTournamentBeginLogic(MyTournamentManager myTournamentManager) : base("MyTournament Begin")
+        public MyTournamentRegisterLogic(MyTournamentManager myTournamentManager) : base("MyTournament Begin")
         {
             _myTournamentManager = myTournamentManager;
         }

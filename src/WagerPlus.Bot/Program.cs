@@ -75,7 +75,7 @@ namespace WagerPlus.Bot
                     services.AddSingleton<InvestBankLogic>();
 
                     // MyTournament Commands
-                    services.AddSingleton<MyTournamentBeginLogic>();
+                    services.AddSingleton<MyTournamentRegisterLogic>();
 
                     // Pool Commands
                     services.AddSingleton<SetTargetLogic>();

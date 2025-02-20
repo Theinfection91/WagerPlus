@@ -62,7 +62,7 @@ namespace WagerPlus.Managers
             _discordConfigHandler = discordConfigHandler;
             LoadDiscordConfigFile();
 
-            _permissionsConfigFileHandler = permissionsConfigHandler;
+            _myTournamentHandler = myTournamentHandler;
             LoadMyTournamentMatrix();
 
             _payPalConfigHandler = payPalConfigHandler;

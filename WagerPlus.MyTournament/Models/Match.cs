@@ -11,7 +11,9 @@ namespace WagerPlus.MyTournament.Models
         public Guid Id { get; set; }
         public int Order { get; set; }
         public MetaTeam HomeTeam { get; set; }
+        public decimal HomeTeamOdds { get; set; }
         public MetaTeam AwayTeam { get; set; }
+        public decimal AwayTeamOdds { get; set; }
         public List<MetaWager> Wagers { get; set; }
 
 
