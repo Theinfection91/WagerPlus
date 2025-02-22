@@ -8,7 +8,7 @@ namespace WagerPlus.MyTournament.Enums
 {
     public enum TournamentPhase
     {
-        Executive, // Move Arenas, Fire/Hire Staff
+        Executive, // Move/Level-up Arenas, Fire/Hire Staff
         Planning, // Generating Combatants, Teams, and the Matches to be Played
         Hype, // Pre-Tournament Phase to allow ticket sales and set wagers
         Active, // Tournament is underway

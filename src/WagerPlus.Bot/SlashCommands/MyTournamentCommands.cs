@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord.Interactions;
+using WagerPlus.Bot.Buttons;
 using WagerPlus.Bot.PreconditionAttributes;
 using WagerPlus.CommandLogic.FunCommands.MyTournamentCommands;
 
@@ -13,9 +14,12 @@ namespace WagerPlus.Bot.SlashCommands
     public class MyTournamentCommands : InteractionModuleBase<SocketInteractionContext>
     {
         private MyTournamentRegisterLogic _myTournamentRegisterLogic;
-        public MyTournamentCommands(MyTournamentRegisterLogic myTournamentBeginLogic)
+        private MyTournamentButtonHandler _myTournamentButtonHandler;
+
+        public MyTournamentCommands(MyTournamentRegisterLogic myTournamentBeginLogic, MyTournamentButtonHandler myTournamentButtonHandler)
         {
             _myTournamentRegisterLogic = myTournamentBeginLogic;
+            _myTournamentButtonHandler = myTournamentButtonHandler;
         }
 
         [SlashCommand("register", "Start the onboarding process of MyTournament.")]
@@ -35,6 +39,16 @@ namespace WagerPlus.Bot.SlashCommands
         {
             var result = "Yup";
             await RespondAsync(result, ephemeral: true);
+        }
+
+        [SlashCommand("hiring_pool", "Show all candidates for Staff Members in the hiring pool.")]
+        [RequireCurrencySetup]
+        [RequireUserRegistered]
+        [RequireMyTournamentRegistered]
+        public async Task MyTournamentHiringPoolAsync()
+        {
+            var components = _myTournamentButtonHandler.GetHiringPoolButtons();
+            await RespondAsync("Lets see", components: components, ephemeral: true);
         }
     }
 }

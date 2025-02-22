@@ -5,6 +5,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WagerPlus.Bot.Buttons;
 using WagerPlus.Bot.Handlers;
 using WagerPlus.CommandLogic.CurrencyCommands;
 using WagerPlus.CommandLogic.DonationCommands;
@@ -58,6 +59,9 @@ namespace WagerPlus.Bot
 
                     // Monetized Messaging Service
                     services.AddSingleton<MonetizedMessageHandler>();
+
+                    // MyTournament Button Service
+                    services.AddSingleton<MyTournamentButtonHandler>();
 
                     // PayPal Service
                     services.AddSingleton<PayPalClient>();

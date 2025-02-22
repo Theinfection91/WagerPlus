@@ -18,7 +18,7 @@ namespace WagerPlus.MyTournament.Models
         public int Reputation { get; set; } = 0;
 
         // Funds
-        public int Bankroll { get; set; } = 1000;
+        public int Bankroll { get; set; } = 3000;
 
         // Arena
         public Arena Arena { get; set; }
@@ -35,9 +35,16 @@ namespace WagerPlus.MyTournament.Models
         public Bookkeeper Bookkeeper { get; set; }
         public Promoter Promoter { get; set; }
         public TeamCoordinator TeamCoordinator { get; set; }
+        public List<StaffMember> HiringPool { get; set; }
+
+        // Trackers
+        public bool HasUsedReroll { get; set; }
+        public bool HasHandledBookkeeper { get; set; }
+        public bool HasHandledPromoter { get; set; }
+        public bool HasHandledTeamCoordinator { get; set; }
 
         // Phase and Timestamp Info
-        public TournamentPhase Phase { get; set; } = TournamentPhase.Executive;
+        public TournamentPhase Phase { get; set; }
         public DateTime TimeStarted { get; set; }
         public DateTime TimeEnded { get; set; }
 
@@ -48,6 +55,30 @@ namespace WagerPlus.MyTournament.Models
         {
             Id = discordId;
             Arena = new TheKillingFields();
+            Phase = TournamentPhase.Executive;
+        }
+
+        public void EmployStaffMember(StaffMember newStaffMember)
+        {
+            if (newStaffMember is Bookkeeper)
+            {
+                Bookkeeper = (Bookkeeper)newStaffMember;
+            }
+            if (newStaffMember is Promoter)
+            {
+                Promoter = (Promoter)newStaffMember;
+            }
+            if (newStaffMember is  TeamCoordinator)
+            {
+                TeamCoordinator = (TeamCoordinator)newStaffMember;
+            }
+        }
+
+        public void ResetExecutiveHandles()
+        {
+            HasHandledBookkeeper = false;
+            HasHandledPromoter = false;
+            HasHandledTeamCoordinator = false;
         }
     }
 }

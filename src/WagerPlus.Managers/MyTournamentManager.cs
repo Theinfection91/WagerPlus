@@ -12,10 +12,21 @@ namespace WagerPlus.Managers
     public class MyTournamentManager : DataDriven
     {
         public RNGMachine RNGMachine { get; set; }
-        public List<StaffMember> HiringPool { get; private set; }
         public MyTournamentManager(DataManager dataManager, RNGMachine rngMachine) : base("MyTournamentManager", dataManager)
         {
             RNGMachine = rngMachine;
+        }
+
+        public Tournament? GetUserTournament(ulong discordId)
+        {
+            foreach (Tournament tournament in _dataManager.MyTournamentMatrix.Tournaments)
+            {
+                if (tournament.Id.Equals(discordId))
+                {
+                    return tournament;
+                }
+            }
+            return null;
         }
 
         public bool IsUserRegistered(ulong discordId)
@@ -30,16 +41,30 @@ namespace WagerPlus.Managers
             return false;
         }
 
-        public void GenerateHiringPool(int level)
+        public List<StaffMember> GenerateHiringPool(int level)
         {
+            List<StaffMember> candidates = [];
             if (level < 5)
             {
-
+                candidates.Add(RNGMachine.GenerateRandomBookkeeper(false));
+                candidates.Add(RNGMachine.GenerateRandomBookkeeper(false));
+                candidates.Add(RNGMachine.GenerateRandomPromoter(false));
+                candidates.Add(RNGMachine.GenerateRandomPromoter(false));
+                candidates.Add(RNGMachine.GenerateRandomTeamCoordinator(false));
+                candidates.Add(RNGMachine.GenerateRandomTeamCoordinator(false));
+                return candidates;
             }
             if (level >= 5)
             {
-
+                candidates.Add(RNGMachine.GenerateRandomBookkeeper(true));
+                candidates.Add(RNGMachine.GenerateRandomBookkeeper(true));
+                candidates.Add(RNGMachine.GenerateRandomPromoter(true));
+                candidates.Add(RNGMachine.GenerateRandomPromoter(true));
+                candidates.Add(RNGMachine.GenerateRandomTeamCoordinator(true));
+                candidates.Add(RNGMachine.GenerateRandomTeamCoordinator(true));
+                return candidates;
             }
+            return candidates;
         }
 
         public void AddTournamentToDatabase(Tournament tournament)
