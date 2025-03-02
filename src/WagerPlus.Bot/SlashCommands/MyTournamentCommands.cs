@@ -48,7 +48,7 @@ namespace WagerPlus.Bot.SlashCommands
         public async Task MyTournamentHiringPoolAsync()
         {
             var components = _myTournamentButtonHandler.GetHiringPoolButtons();
-            await RespondAsync("Lets see", components: components, ephemeral: true);
+            await RespondAsync("Lets see", components: components, ephemeral: true); 
         }
     }
 }
